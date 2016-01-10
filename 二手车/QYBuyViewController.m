@@ -12,18 +12,26 @@
 #import "QYCarModel.h"
 #import "QYCarTableViewCell.h"
 #import "QYCarTableViewController.h"
+#import "QYCityListViewController.h"
+#import "QYCityModel.h"
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableDictionary *parameters;//请求的参数
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftbarBtnItem;
+@property (nonatomic, strong) NSString *price;
+@property (nonatomic, assign) NSInteger pageIndex;
+@property (nonatomic, strong) NSDictionary *cityModel;
 @end
 
 @implementation QYBuyViewController
 static NSString *cellIdentifier = @"MTCell";
 
 #pragma mark - ************* 懒加载
+//数据
 - (NSMutableArray *)dataArray {
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
@@ -32,7 +40,15 @@ static NSString *cellIdentifier = @"MTCell";
 }
 
 
-#pragma mark - ************* 子视图 ********************
+
+#pragma mark - *************** 切换城市或定位
+- (IBAction)switchCity:(UIBarButtonItem *)sender {
+    QYCityListViewController *cityVC = [[QYCityListViewController alloc] init];
+    
+    [self.navigationController pushViewController:cityVC animated:YES];
+}
+
+#pragma mark - ************* 子视图
 - (void)addSubViews {
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KSCREENW, KSCReENH) style:UITableViewStylePlain];
@@ -47,15 +63,13 @@ static NSString *cellIdentifier = @"MTCell";
 
 #pragma mark - *************  请求数据
 
-- (void)downloadDataFromNetwork {
-    
-     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = @"http://dingjia.che300.com/api/v224/util/car/car_list";
-
+- (void)downloadDataFromNetwork:(NSDictionary *)parameters {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
-    NSDictionary *parameters = @{@"app_channel":@"local",@"app_type":@"ios_csb",@"city":@"11",@"device_id":@"44D1E5AA-9A6C-4ED8-A9BE-AF70CB4179E5",@"page":@"1",@"platform":@"ios",@"postDateSort":@"desc",@"prov":@"11",@"version":@"2.2.4"};
+//    NSDictionary *parameters = @{@"city":@"11",@"page":@"1",@"prov":@"11"};
     
-    [manager POST:urlStr parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    [manager POST:kCarsListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
         self.dataArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
         [self.tableView reloadData];
@@ -63,7 +77,6 @@ static NSString *cellIdentifier = @"MTCell";
         NSLog(@"%@",error);
     }];
 }
-
 
 - (UIImage *)loadImageFormNetWork:(NSString *)imageUrl {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -101,7 +114,7 @@ static NSString *cellIdentifier = @"MTCell";
     return cell;
 }
 
-#pragma mark - ************* tableView delegate ******************
+#pragma mark - ************* tableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -121,11 +134,33 @@ static NSString *cellIdentifier = @"MTCell";
     }
 }
 
+
+
+
+#pragma mark - ***************** viewDidLoad
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+    if (self.cityModel) {
+        _pageIndex = 1;
+        _parameters = [NSMutableDictionary dictionary];
+        [_parameters setValue:self.cityModel[@"city_id"] forKey:@"city"];
+        [_parameters setValue:@(_pageIndex) forKey:@"page"];
+        [_parameters setValue:self.cityModel[@"prov_id"] forKey:@"prov"];
+        _leftbarBtnItem.title = self.cityModel[@"city_name"];
+        
+    }else {
+        _pageIndex = 1;
+        _parameters = [NSMutableDictionary dictionary];
+        [_parameters setValue:@1 forKey:@"city"];
+        [_parameters setValue:@(_pageIndex) forKey:@"page"];
+        [_parameters setValue:@1 forKey:@"prov"];
+    }
+    [self downloadDataFromNetwork:self.parameters];
     [self addSubViews];
     
-    [self downloadDataFromNetwork];
+    
 }
 
 - (void)didReceiveMemoryWarning {

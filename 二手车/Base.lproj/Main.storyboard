@@ -51,13 +51,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Etn-gp-F6w">
-                        <barButtonItem key="leftBarButtonItem" title="全国" id="F0b-Sg-KeE"/>
+                        <barButtonItem key="leftBarButtonItem" title="北京" id="F0b-Sg-KeE">
+                            <connections>
+                                <action selector="switchCity:" destination="sJA-Is-FK7" id="ayT-XC-3WP"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="leftbarBtnItem" destination="F0b-Sg-KeE" id="uUl-7V-Bhh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLo-SC-qd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="291.5" y="-354.5"/>
+            <point key="canvasLocation" x="303.5" y="-363.5"/>
         </scene>
         <!--Main Tab Bar View Controller-->
         <scene sceneID="bR8-Qm-6RG">

@@ -10,6 +10,8 @@
 #import "QYCarModel.h"
 #import "UIImageView+webCache.h"
 
+
+
 @implementation QYCarTableViewCell
 
 - (void)awakeFromNib {

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "14B0B2494CEEAD75FC2013F1CD551FFFCCFA3302",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C6F274E0F8783DCDF20390397491E40CD94B223F" : 0,
+    "14B0B2494CEEAD75FC2013F1CD551FFFCCFA3302" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CCAEE35F-3F66-4B07-BCD8-5E0938A3132A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C6F274E0F8783DCDF20390397491E40CD94B223F" : "%E6%98%9F%E6%98%9F%E4%BA%8C%E6%89%8B%E8%BD%A6\/",
+    "14B0B2494CEEAD75FC2013F1CD551FFFCCFA3302" : "%E4%BA%8C%E6%89%8B%E8%BD%A6\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "二手车",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "二手车.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/patrikstars\/OldCarDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "14B0B2494CEEAD75FC2013F1CD551FFFCCFA3302"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kangdeO\/starUsedCar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C6F274E0F8783DCDF20390397491E40CD94B223F"
+    }
+  ]
+}

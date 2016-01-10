@@ -13,19 +13,21 @@
 - (instancetype)initWithDict:(NSDictionary *)dict {
     if (self = [super init]) {
         _picUrls = dict[@"picUrls"];
-        _name = dict[@"name"];
+        _name = dict[@"title"];
         _price = dict[@"price"];
         _eval_price = dict[@"eval_price"];
         _model_price = dict[@"model_price"];
         _next_year_eval_price = dict[@"next_year_eval_price"];
         _gear_type = dict[@"gear_type"];
-        _discharge_standard = dict[@"discharge_standard"];
         _register_date = dict[@"register_date"];
         _mile_age = dict[@"mile_age"];
         _liter = dict[@"liter"];
-        _color = dict[@"color"];
-        
-        
+        _vpr = dict[@"vpr"];
+        _car_desc = dict[@"car_desc"];
+        _dealer_name = dict[@"dealer_name"];
+        _brand_name = dict[@"brand_name"];
+        _city = dict[@"city"];
+        _carId = dict[@"id"];
     }
     return self;
 }

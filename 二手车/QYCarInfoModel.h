@@ -10,20 +10,26 @@
 
 @interface QYCarInfoModel : NSObject
 
+@property (nonatomic, strong) NSString *city;
+@property (nonatomic, strong) NSString *carId;
+
 @property (nonatomic, strong) NSArray *picUrls;//图片数组
 @property (nonatomic, strong) NSString *name;//名字
 @property (nonatomic, strong) NSString *price;//价格
 @property (nonatomic, strong) NSString *eval_price;//现车估价
 @property (nonatomic, strong) NSString *model_price;//新车价格
 @property (nonatomic, strong) NSString *next_year_eval_price;//下一年的估价
+@property (nonatomic, strong) NSString *vpr;
+
 
 @property (nonatomic, strong) NSString *gear_type;//汽车档位类型
-@property (nonatomic, strong) NSString *discharge_standard;//放电标准
 @property (nonatomic, strong) NSString *register_date;//注册日期
 @property (nonatomic, strong) NSString *mile_age;//公里
 @property (nonatomic, strong) NSString *liter;//排量(升)
-@property (nonatomic, strong) NSString *color;//颜色
+@property (nonatomic, strong) NSString *dealer_name;//商家名称
+@property (nonatomic, strong) NSString *brand_name;
 
+@property (nonatomic, strong) NSString *car_desc;//描述
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 + (instancetype)carInfoWithDict:(NSDictionary *)dict;

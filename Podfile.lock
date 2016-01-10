@@ -19,13 +19,21 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
+  - MJRefresh (3.1.0)
+  - SDWebImage (3.7.4):
+    - SDWebImage/Core (= 3.7.4)
+  - SDWebImage/Core (3.7.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
   - FMDB (~> 2.5)
+  - MJRefresh (~> 3.1.0)
+  - SDWebImage (~> 3.7.3)
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
 
 COCOAPODS: 0.39.0
