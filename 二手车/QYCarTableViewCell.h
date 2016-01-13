@@ -8,18 +8,19 @@
 
 #import <UIKit/UIKit.h>
 @class QYCarModel;
+@class QYCarInfoModel;
 
 @interface QYCarTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *carNameLable;
-@property (weak, nonatomic) IBOutlet UILabel *priceLable;
-@property (weak, nonatomic) IBOutlet UILabel *dataAndMileLable;
-@property (weak, nonatomic) IBOutlet UILabel *vprLable;
+// 第二种cell  头标题
+@property (weak, nonatomic) IBOutlet UILabel *sectionTitle_label;
+// 第三种cell  描述
+@property (weak, nonatomic) IBOutlet UILabel *desc_label;
+
+@property (nonatomic, strong) QYCarModel *model;//car模型
+@property (nonatomic, strong) QYCarInfoModel *headerModel;//头cell
+@property (nonatomic, strong) QYCarInfoModel *carInforModel;//基本信息
 
 
-
-
-@property (nonatomic, strong) QYCarModel *model;
 
 @end

@@ -47,8 +47,8 @@
     [self addLable];
     
     self.smallScrollView.contentSize = CGSizeMake(self.arrayList.count * kLableWidth, 40);
-    CGFloat contentX = self.childViewControllers.count * KSCREENW;
-    self.BigScrollView.contentSize = CGSizeMake(contentX, KSCReENH);
+    CGFloat contentX = self.childViewControllers.count * kScreenWidth;
+    self.BigScrollView.contentSize = CGSizeMake(contentX, kScreenHeight);
     self.BigScrollView.pagingEnabled = YES;
     self.BigScrollView.bounces = NO;
     
@@ -122,9 +122,9 @@
 //    }else if (offsetX > offsetMax) {
 //        offsetX = offsetMax;
 //    }
-    CGFloat offsetX = titleLabel.frame.origin.x - KSCREENW / 2;
+    CGFloat offsetX = titleLabel.frame.origin.x - kScreenWidth / 2;
     offsetX = offsetX > 0 ? (offsetX + kLableWidth / 2) : 0;
-    offsetX = offsetX > self.smallScrollView.contentSize.width - KSCREENW ? self.smallScrollView.contentSize.width - KSCREENW : offsetX;
+    offsetX = offsetX > self.smallScrollView.contentSize.width - kScreenWidth ? self.smallScrollView.contentSize.width - kScreenWidth : offsetX;
     
     CGPoint offest = CGPointMake(offsetX, 0);
     [self.smallScrollView setContentOffset:offest animated:YES];

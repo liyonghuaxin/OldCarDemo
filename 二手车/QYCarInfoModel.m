@@ -13,7 +13,7 @@
 - (instancetype)initWithDict:(NSDictionary *)dict {
     if (self = [super init]) {
         _picUrls = dict[@"picUrls"];
-        _name = dict[@"title"];
+        _title = dict[@"title"];
         _price = dict[@"price"];
         _eval_price = dict[@"eval_price"];
         _model_price = dict[@"model_price"];
@@ -24,7 +24,7 @@
         _liter = dict[@"liter"];
         _vpr = dict[@"vpr"];
         _car_desc = dict[@"car_desc"];
-        _dealer_name = dict[@"dealer_name"];
+        _source_name = dict[@"source_name"];
         _brand_name = dict[@"brand_name"];
         _city = dict[@"city"];
         _carId = dict[@"id"];

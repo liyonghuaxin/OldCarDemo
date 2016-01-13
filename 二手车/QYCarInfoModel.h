@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *carId;
 
 @property (nonatomic, strong) NSArray *picUrls;//图片数组
-@property (nonatomic, strong) NSString *name;//名字
+@property (nonatomic, strong) NSString *title;//名字
 @property (nonatomic, strong) NSString *price;//价格
 @property (nonatomic, strong) NSString *eval_price;//现车估价
 @property (nonatomic, strong) NSString *model_price;//新车价格
@@ -26,7 +26,7 @@
 @property (nonatomic, strong) NSString *register_date;//注册日期
 @property (nonatomic, strong) NSString *mile_age;//公里
 @property (nonatomic, strong) NSString *liter;//排量(升)
-@property (nonatomic, strong) NSString *dealer_name;//商家名称
+@property (nonatomic, strong) NSString *source_name;//来源
 @property (nonatomic, strong) NSString *brand_name;
 
 @property (nonatomic, strong) NSString *car_desc;//描述

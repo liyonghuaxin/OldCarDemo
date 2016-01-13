@@ -7,29 +7,38 @@
 //
 
 #import "QYBuyViewController.h"
+#import "QYCarDetailsViewController.h"
+#import "QYCityListViewController.h"
+#import "QYSearchViewController.h"
+#import "QYBrandViewController.h"
+
+#import "QYCityModel.h"
+#import "QYCarModel.h"
+
 #import "Header.h"
 #import <AFNetworking.h>
-#import "QYCarModel.h"
 #import "QYCarTableViewCell.h"
-#import "QYCarTableViewController.h"
-#import "QYCityListViewController.h"
-#import "QYCityModel.h"
+
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *dataArray;//保存数据的数组
 @property (nonatomic, strong) NSMutableDictionary *parameters;//请求的参数
+@property (nonatomic, strong) UIBarButtonItem *leftbarBtnItem;//导航栏左侧的item
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftbarBtnItem;
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, assign) NSInteger pageIndex;
 @property (nonatomic, strong) NSDictionary *cityModel;
+
+@property (weak, nonatomic) IBOutlet UIButton *sortBtn;
+@property (weak, nonatomic) IBOutlet UIButton *brandBtn;
+@property (weak, nonatomic) IBOutlet UIButton *priceBtn;
+@property (weak, nonatomic) IBOutlet UIButton *vprBtn;
 @end
 
 @implementation QYBuyViewController
-static NSString *cellIdentifier = @"MTCell";
-
+static NSString *cellIdtifier = @"carCell";
 #pragma mark - ************* 懒加载
 //数据
 - (NSMutableArray *)dataArray {
@@ -39,26 +48,70 @@ static NSString *cellIdentifier = @"MTCell";
     return _dataArray;
 }
 
-
-
-#pragma mark - *************** 切换城市或定位
-- (IBAction)switchCity:(UIBarButtonItem *)sender {
+#pragma mark - *************** 点击事件
+// 切换城市
+- (void)switchCity:(UIBarButtonItem *)sender {
     QYCityListViewController *cityVC = [[QYCityListViewController alloc] init];
+    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:cityVC];
+    self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:navigaVC animated:YES completion:nil];
     
-    [self.navigationController pushViewController:cityVC animated:YES];
+}
+
+// 搜素
+- (void)searchCars:(UIBarButtonItem *)sender {
+    QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
+    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
+    self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:navigaVC animated:YES completion:nil];
+}
+
+// buttons 事件
+- (IBAction)btnsClick:(UIButton *)sender {
+    switch (sender.tag) {
+        case sortButtonTag:{//点击排序
+            
+        }
+            break;
+        case brandButtonTag:{//点击品牌
+            QYBrandViewController *brandVC = [[QYBrandViewController alloc] init];
+            UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:brandVC];
+            self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self presentViewController:navigaVC animated:YES completion:nil];
+            
+        }
+            break;
+        case priceButtonTag:{//点击价格
+            
+        }
+            break;
+        case vprButotonTag:{//点击性能
+            
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - ************* 子视图
 - (void)addSubViews {
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KSCREENW, KSCReENH) style:UITableViewStylePlain];
+
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight-44) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 80;
-    //注册单元格
-    [_tableView registerNib:[UINib nibWithNibName:@"QYCarTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
+    //注册
+//    [_tableView registerNib:[[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:self options:nil][0] forCellReuseIdentifier:cellIdtifier];
+    
+    //barBtnItem
+    _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
+    self.navigationItem.leftBarButtonItem = _leftbarBtnItem;
+    
+    UIBarButtonItem *rightBarBtnItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchCars:)];
+    self.navigationItem.rightBarButtonItem = rightBarBtnItem;
 }
 
 #pragma mark - *************  请求数据
@@ -102,13 +155,10 @@ static NSString *cellIdentifier = @"MTCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
-    QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil) {
-        cell = [[QYCarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdtifier];
+    if (cell == nil) {
+        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][0];
     }
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.dataArray[indexPath.row];
     return cell;
@@ -118,10 +168,8 @@ static NSString *cellIdentifier = @"MTCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    QYCarTableViewController *carVC = [[UIStoryboard storyboardWithName:@"CarStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"carTableVC"];
-    
+    QYCarDetailsViewController *carVC = [[QYCarDetailsViewController alloc] init];
     carVC.carModel = self.dataArray[indexPath.row];
-
     [self.navigationController pushViewController:carVC animated:YES];
     
 }
@@ -137,10 +185,17 @@ static NSString *cellIdentifier = @"MTCell";
 
 
 
-#pragma mark - ***************** viewDidLoad
+#pragma mark - ***************** life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self addSubViews];
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
     if (self.cityModel) {
         _pageIndex = 1;
@@ -158,9 +213,6 @@ static NSString *cellIdentifier = @"MTCell";
         [_parameters setValue:@1 forKey:@"prov"];
     }
     [self downloadDataFromNetwork:self.parameters];
-    [self addSubViews];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -168,14 +220,6 @@ static NSString *cellIdentifier = @"MTCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

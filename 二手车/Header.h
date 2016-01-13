@@ -10,10 +10,6 @@
 #define Header_h
 
 //屏幕的大小和长宽
-#define KSCREEN      [UIScreen mainScreen].bounds
-#define KSCREENW     [UIScreen mainScreen].bounds.size.width
-#define KSCReENH     [UIScreen mainScreen].bounds.size.height
-
 #define kScreenBounds    [UIScreen mainScreen].bounds
 #define kScreenWidth     [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight    [UIScreen mainScreen].bounds.size.height

@@ -19,7 +19,7 @@
     
     //设置导航控制栏的样式
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-  
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
 }

@@ -9,13 +9,14 @@
 #import "QYCityListViewController.h"
 #import "Header.h"
 #import "QYCityModel.h"
+
 @interface QYCityListViewController () <UITableViewDataSource,UITableViewDelegate>
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *keys;//索引键值
 @property (nonatomic, strong) NSDictionary *dict;//字典
-
 @property (nonatomic, strong) NSMutableArray *recentChooseArr;//最近选择
-@property (nonatomic, strong) cityModelBlock chooseCityModel;//传值选择的城市的模型
+
 
 @end
 
@@ -23,10 +24,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"选择城市";
+    //添加视图
     [self loadCityList];
     [self createTableView];
-
+    [self createNavigationBar];
 }
 #pragma mark - ********** 最近选择
 
@@ -39,6 +40,16 @@
     _keys = [keys sortedArrayUsingSelector:@selector(compare:)];
 }
 
+- (void)createNavigationBar {
+    self.title = @"选择城市";
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"prov_select"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
+    self.navigationItem.leftBarButtonItem = backItem;
+}
+#pragma mark - ********点击事件
+- (void)backToBuyVC {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - ********** 创建tableView
 - (void)createTableView {
@@ -106,7 +117,7 @@
     NSString *key = _keys[indexPath.section];
     NSArray *array = _dict[key];
     QYCityModel *model = [QYCityModel cityModelWithDict:array[indexPath.row]];
-//    _chooseCityModel(model);
+
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:model.city_id forKey:kCityId];
     [dict setValue:model.city_name forKey:kCityName];
@@ -122,22 +133,13 @@
     //持久化
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self.navigationController popViewControllerAnimated:YES];
+     [self dismissViewControllerAnimated:YES completion:nil];     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

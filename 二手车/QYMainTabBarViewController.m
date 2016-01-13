@@ -23,10 +23,6 @@
     tabBar.frame = self.tabBar.frame;
     tabBar.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
     [self.tabBar addSubview:tabBar];
-    
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
