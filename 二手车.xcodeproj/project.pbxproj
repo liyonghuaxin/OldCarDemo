@@ -19,6 +19,18 @@
 		CC584F111C393F22009F8690 /* QYGbaMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584F101C393F22009F8690 /* QYGbaMainViewController.m */; };
 		CC584F141C3943FB009F8690 /* QYTitleLable.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584F131C3943FB009F8690 /* QYTitleLable.m */; };
 		CC584F171C394780009F8690 /* QYRaiTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584F161C394780009F8690 /* QYRaiTableViewController.m */; };
+		CC5969ED1C49D098003B8044 /* QYPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC5969EC1C49D098003B8044 /* QYPhotosViewController.m */; };
+		CC596A131C49F640003B8044 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC5969F91C49F640003B8044 /* Info.plist */; };
+		CC596A141C49F640003B8044 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CC5969FB1C49F640003B8044 /* MASCompositeConstraint.m */; };
+		CC596A151C49F640003B8044 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CC5969FE1C49F640003B8044 /* MASConstraint.m */; };
+		CC596A161C49F640003B8044 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A001C49F640003B8044 /* MASConstraintMaker.m */; };
+		CC596A171C49F640003B8044 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A021C49F640003B8044 /* MASLayoutConstraint.m */; };
+		CC596A181C49F640003B8044 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A061C49F640003B8044 /* MASViewAttribute.m */; };
+		CC596A191C49F640003B8044 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A081C49F640003B8044 /* MASViewConstraint.m */; };
+		CC596A1A1C49F640003B8044 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A0A1C49F640003B8044 /* NSArray+MASAdditions.m */; };
+		CC596A1B1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A0D1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		CC596A1C1C49F640003B8044 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A0F1C49F640003B8044 /* View+MASAdditions.m */; };
+		CC596A1D1C49F640003B8044 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC596A121C49F640003B8044 /* ViewController+MASAdditions.m */; };
 		CC6860791C433BEB00F753F8 /* label_buy_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC6860701C433BEB00F753F8 /* label_buy_pre@3x.png */; };
 		CC68607A1C433BEB00F753F8 /* label_buy@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC6860711C433BEB00F753F8 /* label_buy@3x.png */; };
 		CC68607B1C433BEB00F753F8 /* label_my_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC6860721C433BEB00F753F8 /* label_my_pre@3x.png */; };
@@ -35,6 +47,8 @@
 		CC7491031C463F4400BF6D69 /* QYBrandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC7491011C463F4400BF6D69 /* QYBrandTableViewCell.xib */; };
 		CC7491071C465DE800BF6D69 /* QYSearchHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7491051C465DE800BF6D69 /* QYSearchHeaderCell.m */; };
 		CC7491531C4687CD00BF6D69 /* QYSearchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7491521C4687CD00BF6D69 /* QYSearchHeaderView.m */; };
+		CC784ABA1C493636002FA576 /* QYCustomCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC784AB81C493636002FA576 /* QYCustomCarCell.m */; };
+		CC784ABB1C493636002FA576 /* QYCustomCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC784AB91C493636002FA576 /* QYCustomCarCell.xib */; };
 		CC85CA901C3A01A90090E4DB /* QYRaiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA8E1C3A01A90090E4DB /* QYRaiTableViewCell.m */; };
 		CC85CA911C3A01A90090E4DB /* QYRaiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC85CA8F1C3A01A90090E4DB /* QYRaiTableViewCell.xib */; };
 		CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */; };
@@ -43,6 +57,9 @@
 		CC87EFE21C3F44AB006601D2 /* NewWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = CC87EFE11C3F44AB006601D2 /* NewWorking.m */; };
 		CC8913C81C41462400DA9BB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8913C71C41462400DA9BB0 /* Assets.xcassets */; };
 		CC8913FC1C41493100DA9BB0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */; };
+		CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */; };
+		CC91191D1C47BDDA00443C4E /* QYRearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */; };
+		CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9119201C47C0BE00443C4E /* QYSortView.m */; };
 		CC9879D61C4263000031E9A1 /* city_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC9879D51C4263000031E9A1 /* city_data.plist */; };
 		CC9879E11C4268F20031E9A1 /* QYCityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */; };
 		CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E31C4272B90031E9A1 /* QYCityModel.m */; };
@@ -263,6 +280,34 @@
 		CC584F131C3943FB009F8690 /* QYTitleLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYTitleLable.m; sourceTree = "<group>"; };
 		CC584F151C394780009F8690 /* QYRaiTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYRaiTableViewController.h; sourceTree = "<group>"; };
 		CC584F161C394780009F8690 /* QYRaiTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYRaiTableViewController.m; sourceTree = "<group>"; };
+		CC5969EB1C49D098003B8044 /* QYPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYPhotosViewController.h; sourceTree = "<group>"; };
+		CC5969EC1C49D098003B8044 /* QYPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYPhotosViewController.m; sourceTree = "<group>"; };
+		CC5969F91C49F640003B8044 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC5969FA1C49F640003B8044 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		CC5969FB1C49F640003B8044 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		CC5969FC1C49F640003B8044 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		CC5969FD1C49F640003B8044 /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		CC5969FE1C49F640003B8044 /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		CC5969FF1C49F640003B8044 /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		CC596A001C49F640003B8044 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		CC596A011C49F640003B8044 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		CC596A021C49F640003B8044 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		CC596A031C49F640003B8044 /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		CC596A041C49F640003B8044 /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		CC596A051C49F640003B8044 /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		CC596A061C49F640003B8044 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		CC596A071C49F640003B8044 /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		CC596A081C49F640003B8044 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		CC596A091C49F640003B8044 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		CC596A0A1C49F640003B8044 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		CC596A0B1C49F640003B8044 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		CC596A0C1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		CC596A0D1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		CC596A0E1C49F640003B8044 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		CC596A0F1C49F640003B8044 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		CC596A101C49F640003B8044 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		CC596A111C49F640003B8044 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
+		CC596A121C49F640003B8044 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
 		CC6860701C433BEB00F753F8 /* label_buy_pre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "label_buy_pre@3x.png"; sourceTree = "<group>"; };
 		CC6860711C433BEB00F753F8 /* label_buy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "label_buy@3x.png"; sourceTree = "<group>"; };
 		CC6860721C433BEB00F753F8 /* label_my_pre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "label_my_pre@3x.png"; sourceTree = "<group>"; };
@@ -285,6 +330,9 @@
 		CC7491051C465DE800BF6D69 /* QYSearchHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSearchHeaderCell.m; sourceTree = "<group>"; };
 		CC7491511C4687CD00BF6D69 /* QYSearchHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSearchHeaderView.h; sourceTree = "<group>"; };
 		CC7491521C4687CD00BF6D69 /* QYSearchHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSearchHeaderView.m; sourceTree = "<group>"; };
+		CC784AB71C493636002FA576 /* QYCustomCarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCustomCarCell.h; sourceTree = "<group>"; };
+		CC784AB81C493636002FA576 /* QYCustomCarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCustomCarCell.m; sourceTree = "<group>"; };
+		CC784AB91C493636002FA576 /* QYCustomCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYCustomCarCell.xib; sourceTree = "<group>"; };
 		CC85CA8D1C3A01A90090E4DB /* QYRaiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYRaiTableViewCell.h; sourceTree = "<group>"; };
 		CC85CA8E1C3A01A90090E4DB /* QYRaiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYRaiTableViewCell.m; sourceTree = "<group>"; };
 		CC85CA8F1C3A01A90090E4DB /* QYRaiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYRaiTableViewCell.xib; sourceTree = "<group>"; };
@@ -297,6 +345,12 @@
 		CC87EFE11C3F44AB006601D2 /* NewWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWorking.m; sourceTree = "<group>"; };
 		CC8913C71C41462400DA9BB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityCustomCell.h; sourceTree = "<group>"; };
+		CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityCustomCell.m; sourceTree = "<group>"; };
+		CC91191B1C47BDDA00443C4E /* QYRearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYRearchResultViewController.h; sourceTree = "<group>"; };
+		CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYRearchResultViewController.m; sourceTree = "<group>"; };
+		CC91191F1C47C0BE00443C4E /* QYSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSortView.h; sourceTree = "<group>"; };
+		CC9119201C47C0BE00443C4E /* QYSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSortView.m; sourceTree = "<group>"; };
 		CC9879D51C4263000031E9A1 /* city_data.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = city_data.plist; sourceTree = "<group>"; };
 		CC9879DF1C4268F20031E9A1 /* QYCityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityListViewController.h; sourceTree = "<group>"; };
 		CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityListViewController.m; sourceTree = "<group>"; };
@@ -547,7 +601,7 @@
 		CC584EB21C393330009F8690 /* 二手车 */ = {
 			isa = PBXGroup;
 			children = (
-				CC584F0B1C393BFA009F8690 /* Source */,
+				CC584F0B1C393BFA009F8690 /* otherFrameWork */,
 				CC85CA9E1C3A174F0090E4DB /* tool */,
 				CC584EE61C3933C1009F8690 /* Main */,
 				CC584EEA1C3934FF009F8690 /* 买车 */,
@@ -603,6 +657,7 @@
 		CC584EEA1C3934FF009F8690 /* 买车 */ = {
 			isa = PBXGroup;
 			children = (
+				CC91191E1C47C00600443C4E /* 买车 */,
 				CC9879D91C42668B0031E9A1 /* Models */,
 				CC9879D81C4266830031E9A1 /* Views */,
 				CC9879D71C4266750031E9A1 /* Controllers */,
@@ -622,13 +677,14 @@
 			name = Vender;
 			sourceTree = "<group>";
 		};
-		CC584F0B1C393BFA009F8690 /* Source */ = {
+		CC584F0B1C393BFA009F8690 /* otherFrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				CC5969F81C49F640003B8044 /* Masonry */,
 				CC9879D51C4263000031E9A1 /* city_data.plist */,
 				CC9879E51C429D5A0031E9A1 /* brand.plist */,
 			);
-			name = Source;
+			name = otherFrameWork;
 			sourceTree = "<group>";
 		};
 		CC584F0D1C393DFF009F8690 /* 我 */ = {
@@ -652,6 +708,39 @@
 				CC85CA8F1C3A01A90090E4DB /* QYRaiTableViewCell.xib */,
 			);
 			name = "攻略";
+			sourceTree = "<group>";
+		};
+		CC5969F81C49F640003B8044 /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				CC5969F91C49F640003B8044 /* Info.plist */,
+				CC5969FA1C49F640003B8044 /* MASCompositeConstraint.h */,
+				CC5969FB1C49F640003B8044 /* MASCompositeConstraint.m */,
+				CC5969FC1C49F640003B8044 /* MASConstraint+Private.h */,
+				CC5969FD1C49F640003B8044 /* MASConstraint.h */,
+				CC5969FE1C49F640003B8044 /* MASConstraint.m */,
+				CC5969FF1C49F640003B8044 /* MASConstraintMaker.h */,
+				CC596A001C49F640003B8044 /* MASConstraintMaker.m */,
+				CC596A011C49F640003B8044 /* MASLayoutConstraint.h */,
+				CC596A021C49F640003B8044 /* MASLayoutConstraint.m */,
+				CC596A031C49F640003B8044 /* Masonry.h */,
+				CC596A041C49F640003B8044 /* MASUtilities.h */,
+				CC596A051C49F640003B8044 /* MASViewAttribute.h */,
+				CC596A061C49F640003B8044 /* MASViewAttribute.m */,
+				CC596A071C49F640003B8044 /* MASViewConstraint.h */,
+				CC596A081C49F640003B8044 /* MASViewConstraint.m */,
+				CC596A091C49F640003B8044 /* NSArray+MASAdditions.h */,
+				CC596A0A1C49F640003B8044 /* NSArray+MASAdditions.m */,
+				CC596A0B1C49F640003B8044 /* NSArray+MASShorthandAdditions.h */,
+				CC596A0C1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.h */,
+				CC596A0D1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m */,
+				CC596A0E1C49F640003B8044 /* View+MASAdditions.h */,
+				CC596A0F1C49F640003B8044 /* View+MASAdditions.m */,
+				CC596A101C49F640003B8044 /* View+MASShorthandAdditions.h */,
+				CC596A111C49F640003B8044 /* ViewController+MASAdditions.h */,
+				CC596A121C49F640003B8044 /* ViewController+MASAdditions.m */,
+			);
+			path = Masonry;
 			sourceTree = "<group>";
 		};
 		CC68606F1C433BD200F753F8 /* tableBar */ = {
@@ -680,6 +769,13 @@
 			name = tool;
 			sourceTree = "<group>";
 		};
+		CC91191E1C47C00600443C4E /* 买车 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "买车";
+			sourceTree = "<group>";
+		};
 		CC9879D71C4266750031E9A1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -687,12 +783,16 @@
 				CC584EF61C3938B1009F8690 /* QYBuyViewController.m */,
 				CCC44F881C4528B3008B3F63 /* QYCarDetailsViewController.h */,
 				CCC44F891C4528B3008B3F63 /* QYCarDetailsViewController.m */,
+				CC5969EB1C49D098003B8044 /* QYPhotosViewController.h */,
+				CC5969EC1C49D098003B8044 /* QYPhotosViewController.m */,
 				CC9879DF1C4268F20031E9A1 /* QYCityListViewController.h */,
 				CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */,
 				CC7490F91C46303600BF6D69 /* QYBrandViewController.h */,
 				CC7490FA1C46303600BF6D69 /* QYBrandViewController.m */,
 				CC6860851C438A8400F753F8 /* QYSearchViewController.h */,
 				CC6860861C438A8400F753F8 /* QYSearchViewController.m */,
+				CC91191B1C47BDDA00443C4E /* QYRearchResultViewController.h */,
+				CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -703,13 +803,20 @@
 				CC85CA921C3A10890090E4DB /* QYCarTableViewCell.h */,
 				CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */,
 				CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */,
+				CC91191F1C47C0BE00443C4E /* QYSortView.h */,
+				CC9119201C47C0BE00443C4E /* QYSortView.m */,
 				CC7490FF1C463F4400BF6D69 /* QYBrandTableViewCell.h */,
 				CC7491001C463F4400BF6D69 /* QYBrandTableViewCell.m */,
 				CC7491011C463F4400BF6D69 /* QYBrandTableViewCell.xib */,
+				CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */,
+				CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */,
 				CC7491041C465DE800BF6D69 /* QYSearchHeaderCell.h */,
 				CC7491051C465DE800BF6D69 /* QYSearchHeaderCell.m */,
 				CC7491511C4687CD00BF6D69 /* QYSearchHeaderView.h */,
 				CC7491521C4687CD00BF6D69 /* QYSearchHeaderView.m */,
+				CC784AB71C493636002FA576 /* QYCustomCarCell.h */,
+				CC784AB81C493636002FA576 /* QYCustomCarCell.m */,
+				CC784AB91C493636002FA576 /* QYCustomCarCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1047,6 +1154,7 @@
 				CC584EC31C393330009F8690 /* LaunchScreen.storyboard in Resources */,
 				CCC44EFD1C44FB49008B3F63 /* b31.jpg in Resources */,
 				CCC44F361C44FB49008B3F63 /* b88.jpg in Resources */,
+				CC784ABB1C493636002FA576 /* QYCustomCarCell.xib in Resources */,
 				CCC44F7C1C44FB49008B3F63 /* b158.jpg in Resources */,
 				CCC44EFC1C44FB49008B3F63 /* b30.jpg in Resources */,
 				CCC44F841C44FC8A008B3F63 /* icon_more.png in Resources */,
@@ -1183,6 +1291,7 @@
 				CCC44F141C44FB49008B3F63 /* b54.jpg in Resources */,
 				CCC44F091C44FB49008B3F63 /* b43.jpg in Resources */,
 				CCC44F271C44FB49008B3F63 /* b73.jpg in Resources */,
+				CC596A131C49F640003B8044 /* Info.plist in Resources */,
 				CCC44F511C44FB49008B3F63 /* b115.jpg in Resources */,
 				CCC44F611C44FB49008B3F63 /* b131.jpg in Resources */,
 				CCC44EEC1C44FB49008B3F63 /* b14.jpg in Resources */,
@@ -1276,22 +1385,37 @@
 				CC9879E11C4268F20031E9A1 /* QYCityListViewController.m in Sources */,
 				CCED83201C3FC0020025B3D1 /* QYCarInfoModel.m in Sources */,
 				CCC44F8A1C4528B3008B3F63 /* QYCarDetailsViewController.m in Sources */,
+				CC5969ED1C49D098003B8044 /* QYPhotosViewController.m in Sources */,
 				CC584F171C394780009F8690 /* QYRaiTableViewController.m in Sources */,
+				CC91191D1C47BDDA00443C4E /* QYRearchResultViewController.m in Sources */,
+				CC596A1C1C49F640003B8044 /* View+MASAdditions.m in Sources */,
 				CC7491021C463F4400BF6D69 /* QYBrandTableViewCell.m in Sources */,
 				CC85CA901C3A01A90090E4DB /* QYRaiTableViewCell.m in Sources */,
 				CC6860871C438A8400F753F8 /* QYSearchViewController.m in Sources */,
+				CC596A161C49F640003B8044 /* MASConstraintMaker.m in Sources */,
+				CC596A1A1C49F640003B8044 /* NSArray+MASAdditions.m in Sources */,
+				CC596A191C49F640003B8044 /* MASViewConstraint.m in Sources */,
 				CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */,
 				CC584EB81C393330009F8690 /* AppDelegate.m in Sources */,
 				CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */,
+				CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */,
+				CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */,
+				CC596A1D1C49F640003B8044 /* ViewController+MASAdditions.m in Sources */,
 				CC7491071C465DE800BF6D69 /* QYSearchHeaderCell.m in Sources */,
 				CC584EB51C393330009F8690 /* main.m in Sources */,
 				CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */,
 				CC87EFE21C3F44AB006601D2 /* NewWorking.m in Sources */,
+				CC596A1B1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				CC596A171C49F640003B8044 /* MASLayoutConstraint.m in Sources */,
 				CC7490FB1C46303600BF6D69 /* QYBrandViewController.m in Sources */,
 				CC584EF71C3938B1009F8690 /* QYBuyViewController.m in Sources */,
+				CC596A151C49F640003B8044 /* MASConstraint.m in Sources */,
 				CC584EE91C3933EE009F8690 /* QYMainTabBarViewController.m in Sources */,
 				CC584EEE1C3936EA009F8690 /* QYTabBar.m in Sources */,
+				CC596A141C49F640003B8044 /* MASCompositeConstraint.m in Sources */,
 				CC7490FE1C46361B00BF6D69 /* QYBrandModel.m in Sources */,
+				CC596A181C49F640003B8044 /* MASViewAttribute.m in Sources */,
+				CC784ABA1C493636002FA576 /* QYCustomCarCell.m in Sources */,
 				CC7491531C4687CD00BF6D69 /* QYSearchHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

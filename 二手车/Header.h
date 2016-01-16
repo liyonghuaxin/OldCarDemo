@@ -30,6 +30,8 @@
 #define kProv_id   @"prov_id"
 #define kcityModel  @"cityModel"
 
+// weak 修饰
+#define MTWeak(var, weakVar) __weak __typeof(&*var) weakVar = var
 
 #endif /* Header_h */
 

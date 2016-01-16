@@ -1,8 +1,8 @@
 //
-//  QYCarTableViewCell.h
+//  QYCustomCarCell.h
 //  二手车
 //
-//  Created by qingyun on 16/1/4.
+//  Created by qingyun on 16/1/15.
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
@@ -12,12 +12,21 @@
 
 typedef void(^photoBlock)(NSInteger index,NSMutableArray *images);
 
-@interface QYCarTableViewCell : UITableViewCell
+@interface QYCustomCarCell : UITableViewCell
 
 // 第四种cell  头标题
 @property (weak, nonatomic) IBOutlet UILabel *sectionTitle_label;
 // 第五种cell  描述
 @property (weak, nonatomic) IBOutlet UILabel *desc_label;
+
+// car info Cell 第3种
+@property (weak, nonatomic) IBOutlet UILabel *brand_label;
+@property (weak, nonatomic) IBOutlet UILabel *sourceName_label;
+@property (weak, nonatomic) IBOutlet UILabel *mileage_label;
+@property (weak, nonatomic) IBOutlet UILabel *regisData_label;
+@property (weak, nonatomic) IBOutlet UILabel *gearTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lites_lable;
+
 
 @property (nonatomic, strong) QYCarModel *model;//car模型
 @property (nonatomic, strong) QYCarInfoModel *headerModel;//头cell
@@ -25,6 +34,6 @@ typedef void(^photoBlock)(NSInteger index,NSMutableArray *images);
 
 @property (nonatomic, strong) photoBlock imagesBlock;
 
-@property (nonatomic, assign) NSInteger index;//当前的图片的下标
+
 
 @end

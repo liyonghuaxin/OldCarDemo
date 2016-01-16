@@ -18,6 +18,7 @@
 #import "Header.h"
 #import <AFNetworking.h>
 #import "QYCarTableViewCell.h"
+#import "QYSortView.h"
 
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -62,6 +63,7 @@ static NSString *cellIdtifier = @"carCell";
 - (void)searchCars:(UIBarButtonItem *)sender {
     QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
+    navigaVC.navigationBar.tintColor = [UIColor orangeColor];
     self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:navigaVC animated:YES completion:nil];
 }
@@ -70,7 +72,8 @@ static NSString *cellIdtifier = @"carCell";
 - (IBAction)btnsClick:(UIButton *)sender {
     switch (sender.tag) {
         case sortButtonTag:{//点击排序
-            
+            QYSortView *sortView = [[QYSortView alloc] initWithFrame:CGRectMake(0, 40, kScreenWidth, 200)];
+            [self.view addSubview:sortView];
         }
             break;
         case brandButtonTag:{//点击品牌
@@ -102,9 +105,7 @@ static NSString *cellIdtifier = @"carCell";
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 80;
-    
-    //注册
-//    [_tableView registerNib:[[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:self options:nil][0] forCellReuseIdentifier:cellIdtifier];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //barBtnItem
     _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
@@ -115,7 +116,7 @@ static NSString *cellIdtifier = @"carCell";
 }
 
 #pragma mark - *************  请求数据
-
+// 请求数据
 - (void)downloadDataFromNetwork:(NSDictionary *)parameters {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
@@ -157,7 +158,7 @@ static NSString *cellIdtifier = @"carCell";
     
     QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdtifier];
     if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][0];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][2];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.dataArray[indexPath.row];
@@ -170,24 +171,17 @@ static NSString *cellIdtifier = @"carCell";
     
     QYCarDetailsViewController *carVC = [[QYCarDetailsViewController alloc] init];
     carVC.carModel = self.dataArray[indexPath.row];
+    carVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:carVC animated:YES];
     
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutManager:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
-
 
 
 #pragma mark - ***************** life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+  
     self.view.backgroundColor = [UIColor whiteColor];
     [self addSubViews];
     
@@ -196,6 +190,9 @@ static NSString *cellIdtifier = @"carCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    
+    
     _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
     if (self.cityModel) {
         _pageIndex = 1;

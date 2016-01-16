@@ -14,23 +14,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Mv-I3e">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Mv-I3e">
                         <rect key="frame" x="10" y="5" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="R7P-zw-ob5"/>
+                            <constraint firstAttribute="width" constant="30" id="0yy-SJ-RTG"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yza-Gj-gEE">
-                        <rect key="frame" x="54" y="11" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yza-Gj-gEE">
+                        <rect key="frame" x="54" y="11" width="31" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ziK-Mv-I3e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RXf-xr-ONA"/>
-                    <constraint firstItem="ziK-Mv-I3e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="WbZ-dl-YSj"/>
-                    <constraint firstAttribute="bottom" secondItem="ziK-Mv-I3e" secondAttribute="bottom" constant="10" id="npk-Lf-6ZV"/>
+                    <constraint firstItem="yza-Gj-gEE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="2XE-5f-j6j"/>
+                    <constraint firstItem="ziK-Mv-I3e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ErN-Kc-dWj"/>
+                    <constraint firstItem="ziK-Mv-I3e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="P0D-Mf-NU9"/>
+                    <constraint firstAttribute="bottom" secondItem="yza-Gj-gEE" secondAttribute="bottom" constant="11" id="agc-Fs-BZm"/>
+                    <constraint firstAttribute="bottom" secondItem="ziK-Mv-I3e" secondAttribute="bottom" constant="8" id="eiT-6N-0GK"/>
+                    <constraint firstItem="yza-Gj-gEE" firstAttribute="leading" secondItem="ziK-Mv-I3e" secondAttribute="trailing" constant="14" id="kRw-wD-tD0"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yza-Gj-gEE" secondAttribute="trailing" constant="8" id="tqv-JI-FJh"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
