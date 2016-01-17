@@ -127,6 +127,7 @@ static NSString *cellIdtifier = @"carCell";
 // 第二个品牌选择
 - (void)brandBtnClick {
     QYBrandViewController *brandVC = [[QYBrandViewController alloc] init];
+//    brandVC
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:brandVC];
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigaVC animated:YES completion:^{
@@ -177,7 +178,7 @@ static NSString *cellIdtifier = @"carCell";
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 80;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     //barBtnItem
     _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];

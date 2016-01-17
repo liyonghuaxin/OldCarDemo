@@ -10,11 +10,15 @@
 #import "Header.h"
 #import "QYBrandModel.h"
 #import "QYBrandTableViewCell.h"
+#import <AFHTTPSessionManager.h>
+#import "QYServiceListView.h"
 
 @interface QYBrandViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *keys;
 @property (nonatomic, strong) NSMutableDictionary *dict;
+
+@property (nonatomic, strong) UIView *serviceView;
 @end
 
 @implementation QYBrandViewController
@@ -72,6 +76,37 @@ static NSString *cellIdentifier = @"brandCell";
     _keys = [dict[@"initial"] sortedArrayUsingSelector:@selector(compare:)];
 }
 
+#pragma mark - 请求车系列表
+
+- (void)loadServiceList:(NSDictionary *)parameters {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    [manager POST:kServiceListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *keys = responseObject[@"keys"];
+        NSDictionary *data = responseObject[@"data"];
+        [self addServiceListView:keys data:data];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@", error);
+    }];
+}
+
+#pragma mark - 加载车系视图
+- (void)addServiceListView:(NSArray *)keys data:(NSDictionary *)data {
+    QYServiceListView *serviceView = [[QYServiceListView alloc] initWithFrame:CGRectMake(kScreenWidth, 64, kScreenWidth/2, kScreenHeight)];
+    serviceView.keys = keys;
+    serviceView.data = data;
+    [self.view addSubview:serviceView];
+    _serviceView = serviceView;
+    
+    // 开始动画
+    [UIView animateWithDuration:0.3f animations:^{
+        CGPoint center = serviceView.center;
+        center.x = kScreenWidth * 3 / 4;
+        serviceView.center = center;
+    }];
+    
+}
+
 #pragma mark - table view dataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -113,9 +148,24 @@ static NSString *cellIdentifier = @"brandCell";
 
 // 点击cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (_serviceView) {
+        // 开始动画
+        [UIView animateWithDuration:0.3f animations:^{
+            CGPoint center = _serviceView.center;
+            center.x = kScreenWidth * 3 / 4;
+            _serviceView.center = center;
+        }];
+        [_serviceView removeFromSuperview];
+    }
+    NSArray *array = _dict[_keys[indexPath.section]];
+    QYBrandModel *brandModel = [[QYBrandModel alloc] initWithDict:array[indexPath.row]];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:brandModel.brandId forKey:@"brand"];
+    [self loadServiceList:dict];
    
 }
+
+
 
 
 @end

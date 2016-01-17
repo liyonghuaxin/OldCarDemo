@@ -62,6 +62,8 @@
     if (model.vpr.floatValue >= 60.0) {
         _vprLable.backgroundColor = [UIColor colorWithRed:95/255.0 green:196/255.0 blue:249/255.0 alpha:1];
         _vprLable.text = [NSString stringWithFormat:@"推荐指数:%.1f%%",[model.vpr floatValue]];
+        _vpr_label.layer.cornerRadius = 5;
+        _vpr_label.layer.masksToBounds = YES;
     }else {
         _vprLable.text = nil;
         _vprLable.backgroundColor = [UIColor whiteColor];

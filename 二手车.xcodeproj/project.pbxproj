@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		03476EED4C5E06FD6FFB7FC1 /* libPods-二手车.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED573C92A07C9E32BED39E2 /* libPods-二手车.a */; };
+		CC1A192C1C4BBD1C0061E01E /* QYServiceListView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1A192B1C4BBD1C0061E01E /* QYServiceListView.m */; };
+		CC1A192F1C4BD5F60061E01E /* QYServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1A192E1C4BD5F60061E01E /* QYServiceModel.m */; };
 		CC584EB51C393330009F8690 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584EB41C393330009F8690 /* main.m */; };
 		CC584EB81C393330009F8690 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584EB71C393330009F8690 /* AppDelegate.m */; };
 		CC584EC31C393330009F8690 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC584EC11C393330009F8690 /* LaunchScreen.storyboard */; };
@@ -256,6 +258,10 @@
 /* Begin PBXFileReference section */
 		165D6651F954D6CE7B4909B2 /* Pods-二手车.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-二手车.release.xcconfig"; path = "Pods/Target Support Files/Pods-二手车/Pods-二手车.release.xcconfig"; sourceTree = "<group>"; };
 		5ED573C92A07C9E32BED39E2 /* libPods-二手车.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-二手车.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC1A192A1C4BBD1C0061E01E /* QYServiceListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYServiceListView.h; sourceTree = "<group>"; };
+		CC1A192B1C4BBD1C0061E01E /* QYServiceListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYServiceListView.m; sourceTree = "<group>"; };
+		CC1A192D1C4BD5F60061E01E /* QYServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYServiceModel.h; sourceTree = "<group>"; };
+		CC1A192E1C4BD5F60061E01E /* QYServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYServiceModel.m; sourceTree = "<group>"; };
 		CC584EB01C393330009F8690 /* 二手车.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "二手车.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC584EB41C393330009F8690 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CC584EB61C393330009F8690 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -661,9 +667,9 @@
 			isa = PBXGroup;
 			children = (
 				CC91191E1C47C00600443C4E /* 买车 */,
-				CC9879D91C42668B0031E9A1 /* Models */,
-				CC9879D81C4266830031E9A1 /* Views */,
-				CC9879D71C4266750031E9A1 /* Controllers */,
+				CC9879D91C42668B0031E9A1 /* Model */,
+				CC9879D81C4266830031E9A1 /* View */,
+				CC9879D71C4266750031E9A1 /* Controller */,
 			);
 			name = "买车";
 			sourceTree = "<group>";
@@ -779,7 +785,7 @@
 			name = "买车";
 			sourceTree = "<group>";
 		};
-		CC9879D71C4266750031E9A1 /* Controllers */ = {
+		CC9879D71C4266750031E9A1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				CC584EF51C3938B1009F8690 /* QYBuyViewController.h */,
@@ -797,10 +803,10 @@
 				CC91191B1C47BDDA00443C4E /* QYSearchResultViewController.h */,
 				CC91191C1C47BDDA00443C4E /* QYSearchResultViewController.m */,
 			);
-			name = Controllers;
+			name = Controller;
 			sourceTree = "<group>";
 		};
-		CC9879D81C4266830031E9A1 /* Views */ = {
+		CC9879D81C4266830031E9A1 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				CC85CA921C3A10890090E4DB /* QYCarTableViewCell.h */,
@@ -813,6 +819,8 @@
 				CC7490FF1C463F4400BF6D69 /* QYBrandTableViewCell.h */,
 				CC7491001C463F4400BF6D69 /* QYBrandTableViewCell.m */,
 				CC7491011C463F4400BF6D69 /* QYBrandTableViewCell.xib */,
+				CC1A192A1C4BBD1C0061E01E /* QYServiceListView.h */,
+				CC1A192B1C4BBD1C0061E01E /* QYServiceListView.m */,
 				CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */,
 				CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */,
 				CC7491041C465DE800BF6D69 /* QYSearchHeaderCell.h */,
@@ -823,10 +831,10 @@
 				CC784AB81C493636002FA576 /* QYCustomCarCell.m */,
 				CC784AB91C493636002FA576 /* QYCustomCarCell.xib */,
 			);
-			name = Views;
+			name = View;
 			sourceTree = "<group>";
 		};
-		CC9879D91C42668B0031E9A1 /* Models */ = {
+		CC9879D91C42668B0031E9A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CC85CA971C3A15E50090E4DB /* QYCarModel.h */,
@@ -837,8 +845,10 @@
 				CC9879E31C4272B90031E9A1 /* QYCityModel.m */,
 				CC7490FC1C46361B00BF6D69 /* QYBrandModel.h */,
 				CC7490FD1C46361B00BF6D69 /* QYBrandModel.m */,
+				CC1A192D1C4BD5F60061E01E /* QYServiceModel.h */,
+				CC1A192E1C4BD5F60061E01E /* QYServiceModel.m */,
 			);
-			name = Models;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		CCC44E3F1C44FAAC008B3F63 /* BrandImages */ = {
@@ -1400,6 +1410,7 @@
 				CC596A161C49F640003B8044 /* MASConstraintMaker.m in Sources */,
 				CC596A1A1C49F640003B8044 /* NSArray+MASAdditions.m in Sources */,
 				CC596A191C49F640003B8044 /* MASViewConstraint.m in Sources */,
+				CC1A192F1C4BD5F60061E01E /* QYServiceModel.m in Sources */,
 				CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */,
 				CC584EB81C393330009F8690 /* AppDelegate.m in Sources */,
 				CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */,
@@ -1420,6 +1431,7 @@
 				CC584EEE1C3936EA009F8690 /* QYTabBar.m in Sources */,
 				CC596A141C49F640003B8044 /* MASCompositeConstraint.m in Sources */,
 				CC7490FE1C46361B00BF6D69 /* QYBrandModel.m in Sources */,
+				CC1A192C1C4BBD1C0061E01E /* QYServiceListView.m in Sources */,
 				CC596A181C49F640003B8044 /* MASViewAttribute.m in Sources */,
 				CC784ABA1C493636002FA576 /* QYCustomCarCell.m in Sources */,
 				CC7491531C4687CD00BF6D69 /* QYSearchHeaderView.m in Sources */,

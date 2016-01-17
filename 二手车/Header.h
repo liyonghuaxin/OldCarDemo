@@ -23,6 +23,8 @@
 //推荐汽车的基本url
 #define kRecommendCarsUrl @"http://dingjia.che300.com/app/CarDetail/loadRecommendCars?"
 
+// 车系列表的基本url
+#define kServiceListUrl   @"http://dingjia.che300.com/api/v224/util/brand/find_series_by_brand"
 
 //存储的键名
 #define kCityName  @"city_name"

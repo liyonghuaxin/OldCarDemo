@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class QYBrandModel;
+
+typedef void(^brandChangeBlock)(QYBrandModel *brandModel);
 
 @interface QYBrandViewController : UIViewController
+
+@property (nonatomic, strong) brandChangeBlock changeBrandBlock;//改变品牌
 
 @end
