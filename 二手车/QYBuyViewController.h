@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+
 typedef enum: NSInteger {
     sortButtonTag = 201,
     brandButtonTag = 202,
     priceButtonTag = 203,
     vprButotonTag = 204
 }BUTTONTAG;
-
 
 @interface QYBuyViewController : UIViewController
 

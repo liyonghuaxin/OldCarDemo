@@ -6,13 +6,16 @@
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
-#import "QYRearchResultViewController.h"
+#import "QYSearchResultViewController.h"
 
-@interface QYRearchResultViewController ()
+@interface QYSearchResultViewController () <UISearchResultsUpdating>
+
+@property (nonatomic, strong) NSArray *dataArray; // 查询的数据源
+@property (nonatomic, strong) NSArray *searchList;// 搜索结果
 
 @end
 
-@implementation QYRearchResultViewController
+@implementation QYSearchResultViewController
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,6 +27,27 @@
    
 }
 
+#pragma mark - UISearchResultsUpdating
+
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    if ([searchController.searchBar.text isEqualToString:@""]) {
+ 
+        return;
+    }
+
+    // 创建谓词
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.brandName CONTAINS[CD] %@",searchController.searchBar.text];
+
+    NSMutableArray *filterArray  = [NSMutableArray array];
+//    for (QYBrandModel *model in _sourceArray) {
+//        [filterArray addObject:model];
+//    }
+//    _searchList = [filterArray filteredArrayUsingPredicate:predicate];
+//    [_tableView reloadData];
+
+}
+
 #pragma mark - table view dataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -31,7 +55,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -42,17 +66,8 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-//    //搜索时
-//    if (_isSearching) {
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//        if(cell == nil) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//        }
-//        QYBrandModel *model = _searchList[indexPath.row];
-//        cell.textLabel.text = model.brandName;
-//        return cell;
-//    }
-    cell.textLabel.text = [NSString stringWithFormat:@"Cell %ld", (long)indexPath.row];
+    
+    cell.textLabel.text = @"222";
     
     return cell;
 }
@@ -64,14 +79,6 @@
     
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

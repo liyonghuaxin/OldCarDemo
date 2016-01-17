@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QYRearchResultViewController : UIViewController
+@interface QYSearchResultViewController : UITableViewController
+
+
 
 @end

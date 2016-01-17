@@ -58,12 +58,13 @@
 		CC8913C81C41462400DA9BB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8913C71C41462400DA9BB0 /* Assets.xcassets */; };
 		CC8913FC1C41493100DA9BB0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */; };
 		CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */; };
-		CC91191D1C47BDDA00443C4E /* QYRearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */; };
+		CC91191D1C47BDDA00443C4E /* QYSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC91191C1C47BDDA00443C4E /* QYSearchResultViewController.m */; };
 		CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9119201C47C0BE00443C4E /* QYSortView.m */; };
 		CC9879D61C4263000031E9A1 /* city_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC9879D51C4263000031E9A1 /* city_data.plist */; };
 		CC9879E11C4268F20031E9A1 /* QYCityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */; };
 		CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E31C4272B90031E9A1 /* QYCityModel.m */; };
 		CC9879E61C429D5A0031E9A1 /* brand.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC9879E51C429D5A0031E9A1 /* brand.plist */; };
+		CCA548361C4B6F0200F3FE19 /* QYPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA548351C4B6F0200F3FE19 /* QYPriceView.m */; };
 		CCC44D9F1C4499F2008B3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC44D9E1C4499F2008B3F63 /* Main.storyboard */; };
 		CCC44E361C44F994008B3F63 /* slider-default-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CCC44E351C44F994008B3F63 /* slider-default-track.png */; };
 		CCC44E381C44F9AD008B3F63 /* notification_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CCC44E371C44F9AD008B3F63 /* notification_bg.png */; };
@@ -347,8 +348,8 @@
 		CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityCustomCell.h; sourceTree = "<group>"; };
 		CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityCustomCell.m; sourceTree = "<group>"; };
-		CC91191B1C47BDDA00443C4E /* QYRearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYRearchResultViewController.h; sourceTree = "<group>"; };
-		CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYRearchResultViewController.m; sourceTree = "<group>"; };
+		CC91191B1C47BDDA00443C4E /* QYSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSearchResultViewController.h; sourceTree = "<group>"; };
+		CC91191C1C47BDDA00443C4E /* QYSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSearchResultViewController.m; sourceTree = "<group>"; };
 		CC91191F1C47C0BE00443C4E /* QYSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSortView.h; sourceTree = "<group>"; };
 		CC9119201C47C0BE00443C4E /* QYSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSortView.m; sourceTree = "<group>"; };
 		CC9879D51C4263000031E9A1 /* city_data.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = city_data.plist; sourceTree = "<group>"; };
@@ -357,6 +358,8 @@
 		CC9879E21C4272B90031E9A1 /* QYCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityModel.h; sourceTree = "<group>"; };
 		CC9879E31C4272B90031E9A1 /* QYCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityModel.m; sourceTree = "<group>"; };
 		CC9879E51C429D5A0031E9A1 /* brand.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = brand.plist; sourceTree = "<group>"; };
+		CCA548341C4B6F0200F3FE19 /* QYPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYPriceView.h; sourceTree = "<group>"; };
+		CCA548351C4B6F0200F3FE19 /* QYPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYPriceView.m; sourceTree = "<group>"; };
 		CCC44D9E1C4499F2008B3F63 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		CCC44E351C44F994008B3F63 /* slider-default-track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default-track.png"; sourceTree = "<group>"; };
 		CCC44E371C44F9AD008B3F63 /* notification_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notification_bg.png; sourceTree = "<group>"; };
@@ -791,8 +794,8 @@
 				CC7490FA1C46303600BF6D69 /* QYBrandViewController.m */,
 				CC6860851C438A8400F753F8 /* QYSearchViewController.h */,
 				CC6860861C438A8400F753F8 /* QYSearchViewController.m */,
-				CC91191B1C47BDDA00443C4E /* QYRearchResultViewController.h */,
-				CC91191C1C47BDDA00443C4E /* QYRearchResultViewController.m */,
+				CC91191B1C47BDDA00443C4E /* QYSearchResultViewController.h */,
+				CC91191C1C47BDDA00443C4E /* QYSearchResultViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -805,6 +808,8 @@
 				CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */,
 				CC91191F1C47C0BE00443C4E /* QYSortView.h */,
 				CC9119201C47C0BE00443C4E /* QYSortView.m */,
+				CCA548341C4B6F0200F3FE19 /* QYPriceView.h */,
+				CCA548351C4B6F0200F3FE19 /* QYPriceView.m */,
 				CC7490FF1C463F4400BF6D69 /* QYBrandTableViewCell.h */,
 				CC7491001C463F4400BF6D69 /* QYBrandTableViewCell.m */,
 				CC7491011C463F4400BF6D69 /* QYBrandTableViewCell.xib */,
@@ -1387,7 +1392,7 @@
 				CCC44F8A1C4528B3008B3F63 /* QYCarDetailsViewController.m in Sources */,
 				CC5969ED1C49D098003B8044 /* QYPhotosViewController.m in Sources */,
 				CC584F171C394780009F8690 /* QYRaiTableViewController.m in Sources */,
-				CC91191D1C47BDDA00443C4E /* QYRearchResultViewController.m in Sources */,
+				CC91191D1C47BDDA00443C4E /* QYSearchResultViewController.m in Sources */,
 				CC596A1C1C49F640003B8044 /* View+MASAdditions.m in Sources */,
 				CC7491021C463F4400BF6D69 /* QYBrandTableViewCell.m in Sources */,
 				CC85CA901C3A01A90090E4DB /* QYRaiTableViewCell.m in Sources */,
@@ -1400,6 +1405,7 @@
 				CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */,
 				CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */,
 				CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */,
+				CCA548361C4B6F0200F3FE19 /* QYPriceView.m in Sources */,
 				CC596A1D1C49F640003B8044 /* ViewController+MASAdditions.m in Sources */,
 				CC7491071C465DE800BF6D69 /* QYSearchHeaderCell.m in Sources */,
 				CC584EB51C393330009F8690 /* main.m in Sources */,

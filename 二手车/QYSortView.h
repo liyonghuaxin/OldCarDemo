@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^viewCloseBlock)(void);// 移除view
+typedef void(^changeParatBlock)(NSDictionary *dict);//选中的排序方式
+
 @interface QYSortView : UIView
 
+@property (nonatomic, strong) viewCloseBlock isCloseBlock;
+@property (nonatomic, strong) changeParatBlock changeParameterBlock;
 @end

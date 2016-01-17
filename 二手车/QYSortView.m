@@ -10,26 +10,66 @@
 
 @interface QYSortView ()  <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *data;
+@property (nonatomic, strong) NSArray *data;// 显示的数组
+@property (nonatomic, strong) NSArray *parametersArray; // 传值的数组
 @end
 @implementation QYSortView
 
+#pragma mark - 初始化 view
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.frame = frame;
+        
+        // 添加子视图
         [self createAndAddSubivews];
     }
     return self;
 }
+#pragma mark - 添加手势
+- (void)createAndAddTap:(UIView *)view {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeFromVC)];
+    tap.numberOfTapsRequired = 1;
+    [view addGestureRecognizer:tap];
+}
+
+// 移除视图
+- (void)removeFromVC {
+    if (_isCloseBlock) {
+        _isCloseBlock();
+    }
+}
+#pragma mark - 懒加载
+- (NSArray *)parametersArray {
+    if (_parametersArray == nil) {
+        _parametersArray = @[@{@"postDateSort":@"desc"},
+                             @{@"priceSort":@"desc"},
+                             @{@"priceSort":@"asc"},
+                             @{@"mileSort":@"asc"},
+                             @{@"regDateSort":@"desc"}];
+    }
+    return _parametersArray;
+}
 
 #pragma mark - 添加tablewView
 - (void)createAndAddSubivews {
-    UITableView *tablView = [[UITableView alloc] initWithFrame:self.frame];
+    UITableView *tablView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200)];
     [self addSubview:tablView];
     tablView.dataSource = self;
     tablView.delegate = self;
     tablView.rowHeight = 40;
-    
+
+   
     _data = @[@"默认排序",@"价格最高",@"价格最低",@"里程最短",@"车龄最短"];
+    
+    // 添加下面的view 用于点击
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, self.frame.size.width, self.frame.size.height -200)];
+    [self addSubview:tempView];
+    tempView.backgroundColor = [UIColor blackColor];
+    tempView.alpha = 0.5;
+    
+    
+    // 添加手势
+    [self createAndAddTap:tempView];
 }
 
 #pragma mark - table view dataSource
@@ -52,14 +92,17 @@
     }
     
     cell.textLabel.text = _data[indexPath.row];
-    
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:13];
     return cell;
 }
 
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (_changeParameterBlock) {
+        _changeParameterBlock(self.parametersArray[indexPath.row]);
+    }
     
 }
 
