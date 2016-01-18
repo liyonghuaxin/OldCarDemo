@@ -24,8 +24,10 @@
 
 - (void)setBrandModel:(QYBrandModel *)brandModel {
     _brandModel = brandModel;
-    _Brand_icon.image = [UIImage imageNamed:[NSString stringWithFormat:@"b%@.jpg",brandModel.brandId]];
+    
     _brand_name.text = brandModel.brandName;
+    _Brand_icon.image = [UIImage imageNamed:[NSString stringWithFormat:@"b%@.jpg",brandModel.brandId]];
+   
     
 }
 

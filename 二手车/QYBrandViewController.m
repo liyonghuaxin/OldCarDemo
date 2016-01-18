@@ -12,13 +12,18 @@
 #import "QYBrandTableViewCell.h"
 #import <AFHTTPSessionManager.h>
 #import "QYServiceListView.h"
+#import "QYServiceModel.h"
 
 @interface QYBrandViewController () <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *keys;
+@property (nonatomic, strong) NSMutableArray *keys;
 @property (nonatomic, strong) NSMutableDictionary *dict;
 
 @property (nonatomic, strong) UIView *serviceView;
+
+@property (nonatomic, strong) QYBrandModel *brandModel;// 用于传值的模型
+
+@property (nonatomic, assign) BOOL isAnimation;// 正在动画
 @end
 
 @implementation QYBrandViewController
@@ -72,8 +77,9 @@ static NSString *cellIdentifier = @"brandCell";
 
     _dict = [NSMutableDictionary dictionary];
     _dict = dict[@"brand"];
-    _keys = [NSArray array];
-    _keys = [dict[@"initial"] sortedArrayUsingSelector:@selector(compare:)];
+    _keys = [NSMutableArray array];
+    [_keys addObject:@"#"];
+    [_keys addObjectsFromArray: [dict[@"initial"] sortedArrayUsingSelector:@selector(compare:)]];
 }
 
 #pragma mark - 请求车系列表
@@ -84,6 +90,7 @@ static NSString *cellIdentifier = @"brandCell";
     [manager POST:kServiceListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *keys = responseObject[@"keys"];
         NSDictionary *data = responseObject[@"data"];
+        // 添加车系视图
         [self addServiceListView:keys data:data];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@", error);
@@ -96,15 +103,41 @@ static NSString *cellIdentifier = @"brandCell";
     serviceView.keys = keys;
     serviceView.data = data;
     [self.view addSubview:serviceView];
-    _serviceView = serviceView;
+    // 传递选择的车系
+    MTWeak(self, weakSelf);
+    serviceView.serviceBlcok = ^(QYServiceModel *serviceModel){
+        // 返回主视图控制器
+        if (serviceModel != nil) {
+            [weakSelf dismissViewControllerAnimated:YES completion:^{
+                if (_changeBrandBlock) {
+                    _changeBrandBlock(_brandModel, serviceModel);
+                }
+            }];
+        }else {
+            // 收起视图
+            [weakSelf closeServiceView];
+        }
+    };
     
+    _serviceView = serviceView;
     // 开始动画
     [UIView animateWithDuration:0.3f animations:^{
         CGPoint center = serviceView.center;
         center.x = kScreenWidth * 3 / 4;
         serviceView.center = center;
     }];
+    // 结束动画
+    _isAnimation = NO;
     
+}
+
+// 关闭车系的视图
+- (void)closeServiceView {
+    [UIView animateWithDuration:0.3f animations:^{
+        CGPoint center = _serviceView.center;
+        center.x = kScreenWidth * 5 / 4;
+        _serviceView.center = center;
+    }];
 }
 
 #pragma mark - table view dataSource
@@ -114,12 +147,24 @@ static NSString *cellIdentifier = @"brandCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }
     NSArray *array = _dict[_keys[section]];
     return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.textLabel.text = @"不限品牌";
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        return cell;
+    }
+
     QYBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
     if(cell == nil) {
         cell = [[QYBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
@@ -148,19 +193,31 @@ static NSString *cellIdentifier = @"brandCell";
 
 // 点击cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_serviceView) {
-        // 开始动画
-        [UIView animateWithDuration:0.3f animations:^{
-            CGPoint center = _serviceView.center;
-            center.x = kScreenWidth * 3 / 4;
-            _serviceView.center = center;
+    if (indexPath.section == 0) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (_changeBrandBlock) {
+                _changeBrandBlock(_brandModel, nil);
+            }
         }];
-        [_serviceView removeFromSuperview];
     }
+    
+    if (_isAnimation) {
+        return;
+    }else {
+        _isAnimation = YES;
+    }
+    
+    // 判断当前是否显示了车系视图
+    if (_serviceView) {
+        [self closeServiceView];
+    }
+    
     NSArray *array = _dict[_keys[indexPath.section]];
     QYBrandModel *brandModel = [[QYBrandModel alloc] initWithDict:array[indexPath.row]];
+    _brandModel = brandModel;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:brandModel.brandId forKey:@"brand"];
+    [dict setValue:@"1" forKey:@"unlimited"];
     [self loadServiceList:dict];
    
 }

@@ -11,16 +11,19 @@
 #import "QYCityListViewController.h"
 #import "QYSearchViewController.h"
 #import "QYBrandViewController.h"
+#import "AppDelegate.h"
 
 #import "QYCityModel.h"
 #import "QYCarModel.h"
+#import "QYBrandModel.h"
+#import "QYServiceModel.h"
 
 #import "Header.h"
 #import <AFNetworking.h>
 #import "QYCarTableViewCell.h"
 #import "QYSortView.h"
 #import "QYPriceView.h"
-#import "AppDelegate.h"
+
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -34,7 +37,6 @@
 @property (nonatomic, strong) NSString *price;// 价格范围
 @property (nonatomic, strong) NSDictionary *brandModel;// 品牌模型
 @property (nonatomic, assign) NSInteger pageIndex; // 页数
-@property (nonatomic, strong) NSDictionary *cityModel;// 城市
 @property (nonatomic, strong) NSDictionary *sortModel;// 排序方式
 
 
@@ -127,7 +129,38 @@ static NSString *cellIdtifier = @"carCell";
 // 第二个品牌选择
 - (void)brandBtnClick {
     QYBrandViewController *brandVC = [[QYBrandViewController alloc] init];
-//    brandVC
+    // 品牌参数的改变
+    MTWeak(self, weakSelf);
+    brandVC.changeBrandBlock = ^(QYBrandModel *brandModel, QYServiceModel *serviceModel) {
+        // 改变btn的title 及颜色
+        if (serviceModel != nil) {
+            if ([serviceModel.series isEqualToString:@"0"]) {
+                // 不限车系
+                [_brandBtn setTitle:brandModel.brandName forState:UIControlStateNormal];
+                [_brandBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+                [_parameters removeObjectForKey:kSeriesId];
+                [_parameters removeObjectForKey:kSeriesName];
+            }else {
+                [_brandBtn setTitle:serviceModel.seriesName forState:UIControlStateNormal];
+                [_brandBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+                [_parameters setObject:serviceModel.series forKey:kSeriesId];
+                [_parameters setObject:serviceModel.seriesName forKey:kSeriesName];
+                // 参数改变
+                [_parameters setObject:brandModel.brandId forKey:kBrandId];
+                [_parameters setObject:brandModel.brandName forKey:kBrandName];
+            }
+        }else {
+            // 点击不限品牌时
+            [_brandBtn setTitle:@"品牌" forState:UIControlStateNormal];
+            [_brandBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [_parameters removeObjectForKey:kSeriesId];
+            [_parameters removeObjectForKey:kSeriesName];
+            [_parameters removeObjectForKey:kBrandId];
+            [_parameters removeObjectForKey:kBrandName];
+        }
+        // 请求数据
+        [weakSelf changParameters];
+    };
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:brandVC];
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigaVC animated:YES completion:^{
@@ -195,7 +228,6 @@ static NSString *cellIdtifier = @"carCell";
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
 
     [manager POST:kCarsListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         self.dataArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -213,7 +245,7 @@ static NSString *cellIdtifier = @"carCell";
     
     QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdtifier];
     if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][2];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.dataArray[indexPath.row];
@@ -235,27 +267,37 @@ static NSString *cellIdtifier = @"carCell";
 //第一次请求数据
 - (void)fristLoadData {
     // 加载保存的城市
-    _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+    NSMutableDictionary *cityModel = [NSMutableDictionary dictionary];
+    cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
      _parameters = [NSMutableDictionary dictionary];
     _pageIndex = 1;
-    if (self.cityModel) {
-        [_parameters setValue:self.cityModel[@"city_id"] forKey:@"city"];
-        [_parameters setValue:@(_pageIndex) forKey:@"page"];
-        [_parameters setValue:self.cityModel[@"prov_id"] forKey:@"prov"];
-        _leftbarBtnItem.title = self.cityModel[@"city_name"];
-        
+    if (cityModel) {
+        [self changeCityParameters:cityModel];
     }else {
-        [_parameters setValue:@1 forKey:@"city"];
-        [_parameters setValue:@(_pageIndex) forKey:@"page"];
-        [_parameters setValue:@1 forKey:@"prov"];
+        [_parameters setValue:@1 forKey:kCityId];
+        [_parameters setValue:@(_pageIndex) forKey:kPage];
+        [_parameters setValue:@1 forKey:kProvId];
+        [self downloadDataFromNetwork:self.parameters];
     }
-    [self downloadDataFromNetwork:self.parameters];
+    
 }
 
-// 参数改变
+// 改变城市
+- (void)changeCityParameters:(NSMutableDictionary *)cityModel {
+    [_parameters removeAllObjects];
+    [_parameters setValue:cityModel[kCityId] forKey:kCityId];
+    [_parameters setValue:@(_pageIndex) forKey:kPage];
+    [_parameters setValue:cityModel[kProvId] forKey:kProvId];
+    [_parameters setValue:cityModel[kCityName] forKey:kCityName];
+    // 改变城市的名字
+    _leftbarBtnItem.title = cityModel[kCityName];
+     [self downloadDataFromNetwork:self.parameters];
+}
+
+
+// 改变其他参数 (不包括城市)
 - (void)changParameters {
-    // 加载保存的城市
-    _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+    [self downloadDataFromNetwork:self.parameters];
 //    price 20-35;
 //    priceSort desc 价格最高 asc最低
 //    vprSort desc
@@ -285,15 +327,14 @@ static NSString *cellIdtifier = @"carCell";
         [self fristLoadData];
         _isFristLoad = YES;
     }else {
-        // 不是第一次加载
-        
-        _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+        // 城市改变
+        NSMutableDictionary *cityModel = [NSMutableDictionary dictionary];
+        cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
         //判断城市有没有改变
-        if ([_cityModel[@"city_name"] isEqualToString:_leftbarBtnItem.title]) {
+        if ([cityModel[kCityName] isEqualToString:_leftbarBtnItem.title]) {
             return;
         }else {
-            // 城市改变
-           
+            [self changeCityParameters:cityModel];
         }
     }
 } 

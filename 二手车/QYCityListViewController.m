@@ -125,7 +125,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:model.city_id forKey:kCityId];
     [dict setValue:model.city_name forKey:kCityName];
-    [dict setValue:model.prov_id forKey:kProv_id];
+    [dict setValue:model.prov_id forKey:kProvId];
 
     //判断是否已经存在
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kcityModel]) {

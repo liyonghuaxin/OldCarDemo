@@ -130,7 +130,7 @@
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][4];
         cell.sectionTitle_label.text = @"基础信息";
     }else if (indexPath.row == 2) {//用第2个 cell
-        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][0];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][2];
         cell.infoModel = _dataDict;
     }else if (indexPath.row == 3) {//用第4个 cell
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][4];
@@ -148,7 +148,7 @@
         cell.sectionTitle_label.text = @"车辆推荐";
     }else {
         //用第0个 cell  推荐的车辆信息
-        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][2];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][0];
         QYCarModel *model = [[QYCarModel alloc] initWithDict:_recommendCarsArr[indexPath.row-6]];
         cell.model = model;
     }

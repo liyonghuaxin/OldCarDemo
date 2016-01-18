@@ -26,11 +26,19 @@
 // 车系列表的基本url
 #define kServiceListUrl   @"http://dingjia.che300.com/api/v224/util/brand/find_series_by_brand"
 
-//存储的键名
-#define kCityName  @"city_name"
-#define kCityId    @"city_id"
-#define kProv_id   @"prov_id"
-#define kcityModel  @"cityModel"
+// 请求参数的 键名
+#define kCityName         @"cityName"
+#define kCityId           @"city"
+#define kProvId          @"prov"
+#define kcityModel        @"cityModel"
+
+#define kPage             @"page"
+
+#define kBrandId          @"brand"
+#define kBrandName        @"brandName"
+#define kSeriesId         @"series"
+#define kSeriesName       @"seriesName"
+
 
 // weak 修饰
 #define MTWeak(var, weakVar) __weak __typeof(&*var) weakVar = var

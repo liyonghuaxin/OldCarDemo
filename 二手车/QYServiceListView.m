@@ -61,6 +61,23 @@
     titleLabel.text = @"收起";
     titleLabel.font = [UIFont systemFontOfSize:14];
    
+    // 添加手势
+    [self addTap2HeaerView:headerView];
+}
+
+#pragma mark - 添加移除视图的手势
+- (void)addTap2HeaerView:(UIView *)view {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeSelfView)];
+    tap.numberOfTapsRequired = 1;
+    [view addGestureRecognizer:tap];
+}
+
+#pragma mark - 手势事件
+// 移除当前的视图
+- (void)removeSelfView {
+    if (_serviceBlcok) {
+        _serviceBlcok(nil);
+    }
 }
 
 #pragma mark - table view dataSource
@@ -108,7 +125,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSArray *array = _data[_keys[indexPath.section]];
+    QYServiceModel *model = [[QYServiceModel alloc] initWithDict:array[indexPath.row]];
+    if (_serviceBlcok) {
+        _serviceBlcok(model);
+    }
    
 }
 
