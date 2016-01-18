@@ -126,7 +126,7 @@
     [dict setValue:model.city_id forKey:kCityId];
     [dict setValue:model.city_name forKey:kCityName];
     [dict setValue:model.prov_id forKey:kProv_id];
-    
+
     //判断是否已经存在
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kcityModel]) {
         //删除

@@ -54,7 +54,7 @@
     if (_imagesIndexBlcok) {
         _imagesIndexBlcok(_currentCount);
     }
-    [self dismissViewControllerAnimated:nil completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - 添加子视图
@@ -68,7 +68,7 @@
 
 // 添加scrollView
 - (void)addScrollView {
-    CGFloat kHeight = 240;
+    CGFloat kHeight = kScreenWidth * 0.64;
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, (kScreenHeight - kHeight)/2, kScreenWidth, kHeight)];
     [self.view addSubview:scrollView];
     scrollView.contentSize = CGSizeMake(kScreenWidth * _imagesArray.count, kHeight);
@@ -97,7 +97,7 @@
 - (void)addTitLabel {
     _titleLabel = [[UILabel alloc] init];
     [self.view addSubview:_titleLabel];
-    _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld",_currentCount,_imagesArray.count];
+    _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld",(long)_currentCount,(unsigned long)_imagesArray.count];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -110,7 +110,7 @@
 #pragma mark - Scroll view delegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     _currentCount = scrollView.contentOffset.x / scrollView.frame.size.width + 1;
-    _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld",_currentCount,_imagesArray.count];
+    _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld",(long)_currentCount,(unsigned long)_imagesArray.count];
 }
 
 @end

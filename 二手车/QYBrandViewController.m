@@ -54,8 +54,8 @@ static NSString *cellIdentifier = @"brandCell";
     [self.view addSubview:tableView];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.rowHeight = 40;
-    
+    tableView.sectionIndexColor = [UIColor grayColor];
+    tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     //注册
     [tableView registerNib:[UINib nibWithNibName:@"QYBrandTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
 }

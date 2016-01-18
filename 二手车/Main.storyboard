@@ -131,7 +131,7 @@
                                             <action selector="btnsClick:" destination="Sss-gu-rik" eventType="touchUpInside" id="f7e-uD-3UX"/>
                                         </connections>
                                     </button>
-                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpR-RR-dc9">
+                                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpR-RR-dc9">
                                         <rect key="frame" x="150" y="10" width="1" height="20"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -139,7 +139,7 @@
                                             <constraint firstAttribute="width" constant="1" id="pzK-Ku-78o"/>
                                         </constraints>
                                     </view>
-                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKK-jt-Eie">
+                                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKK-jt-Eie">
                                         <rect key="frame" x="300" y="10" width="1" height="20"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -147,7 +147,7 @@
                                             <constraint firstAttribute="height" constant="20" id="s6m-EQ-8zT"/>
                                         </constraints>
                                     </view>
-                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6n4-oV-vtl">
+                                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6n4-oV-vtl">
                                         <rect key="frame" x="450" y="10" width="1" height="20"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -182,7 +182,7 @@
                                     <constraint firstItem="o1z-6i-zNA" firstAttribute="width" secondItem="43E-eh-mCe" secondAttribute="width" id="uea-8A-IIU"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19k-JN-b7O">
+                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19k-JN-b7O">
                                 <rect key="frame" x="0.0" y="103" width="600" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

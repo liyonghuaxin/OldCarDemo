@@ -20,6 +20,7 @@
 #import "QYCarTableViewCell.h"
 #import "QYSortView.h"
 #import "QYPriceView.h"
+#import "AppDelegate.h"
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -102,8 +103,7 @@ static NSString *cellIdtifier = @"carCell";
     if (_openBtnIndex != sortButtonTag) {
         [_openView removeFromSuperview];
         QYSortView *sortView = [[QYSortView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight)];
-        [self.view addSubview:sortView];
-        
+        [[[UIApplication sharedApplication].delegate window] addSubview:sortView];
         //关闭这个view
         sortView.isCloseBlock = ^{
             _openBtnIndex = 0;
@@ -113,7 +113,7 @@ static NSString *cellIdtifier = @"carCell";
         //选择排序方式
         sortView.changeParameterBlock = ^(NSDictionary *dict){
             [_parameters setDictionary:dict];
-            _openView = sortView;
+            [_openView removeFromSuperview];
             _openBtnIndex = 0;
         };
         _openView = sortView;
@@ -142,7 +142,7 @@ static NSString *cellIdtifier = @"carCell";
     if (_openBtnIndex != priceButtonTag) {//当前打开的view不等于价格
         [_openView removeFromSuperview];
         QYPriceView *priceView = [[QYPriceView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight)];
-        [self.view addSubview:priceView];
+        [[[UIApplication sharedApplication].delegate window] addSubview:priceView];
         
         // 关闭view时改变
         priceView.isCloseBlock = ^{
@@ -173,12 +173,12 @@ static NSString *cellIdtifier = @"carCell";
 #pragma mark - ************* 子视图
 - (void)addSubViews {
 
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight-44) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight-160) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.rowHeight = 80;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.rowHeight = 84;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //barBtnItem
     _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
@@ -250,7 +250,6 @@ static NSString *cellIdtifier = @"carCell";
         [_parameters setValue:@1 forKey:@"prov"];
     }
     [self downloadDataFromNetwork:self.parameters];
-  
 }
 
 // 参数改变
@@ -286,10 +285,18 @@ static NSString *cellIdtifier = @"carCell";
         [self fristLoadData];
         _isFristLoad = YES;
     }else {
-        //参数改变
-//        [self ]
+        // 不是第一次加载
+        
+        _cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+        //判断城市有没有改变
+        if ([_cityModel[@"city_name"] isEqualToString:_leftbarBtnItem.title]) {
+            return;
+        }else {
+            // 城市改变
+           
+        }
     }
-}
+} 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -96,7 +96,7 @@
     _sourceName_label.text = infoModel.source_name;
     _mileage_label.text = [NSString stringWithFormat:@"%@万公里",infoModel.mile_age];
     _lites_lable.text = infoModel.liter;
-    _regisData_label.text = [NSString stringWithFormat:@"%@年%@月",[infoModel.register_date substringWithRange:NSMakeRange(0, 4)],[infoModel.register_date substringWithRange:NSMakeRange(5, 2)]];
+    _regisData_label.text = [NSString stringWithFormat:@"%@年%@月上牌",[infoModel.register_date substringWithRange:NSMakeRange(0, 4)],[infoModel.register_date substringWithRange:NSMakeRange(5, 2)]];
 }
 
 
@@ -151,7 +151,7 @@
     _imageCountLabel.textColor = [UIColor whiteColor];
     _imageCountLabel.backgroundColor = [UIColor blackColor];
     _imageCountLabel.textAlignment = NSTextAlignmentCenter;
-    _imageCountLabel.text = _imageCountLabel.text = [NSString stringWithFormat:@"%ld/%ld",_index,_headerModel.picUrls.count];
+    _imageCountLabel.text = _imageCountLabel.text = [NSString stringWithFormat:@"%ld/%ld",(long)_index,(unsigned long)_headerModel.picUrls.count];
 }
 
 #pragma mark - 点击图片
@@ -165,7 +165,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     _index = scrollView.contentOffset.x / scrollView.frame.size.width + 1;
     //更新lable的值
-    _imageCountLabel.text = _imageCountLabel.text = [NSString stringWithFormat:@"%ld/%ld",_index,_headerModel.picUrls.count];
+    _imageCountLabel.text = _imageCountLabel.text = [NSString stringWithFormat:@"%ld/%ld",(long)_index,(unsigned long)_headerModel.picUrls.count];
 }
 
 

@@ -122,7 +122,7 @@
                 _currentIndex = index;
                 [_tableView reloadData];
             };
-            [weakSelf presentViewController:photoVC animated:nil completion:nil];
+            [weakSelf presentViewController:photoVC animated:NO completion:nil];
         };
         cell.index = _currentIndex;
         cell.headerModel = _dataDict;
@@ -170,7 +170,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            return 400;
+            return (kScreenWidth * 0.64 +140);
             break;
         case 1:
             return 40;
@@ -190,7 +190,7 @@
         default:
             break;
     }
-    return 80;
+    return 84;
 }
 
 @end
