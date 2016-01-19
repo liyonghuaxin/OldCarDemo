@@ -17,6 +17,7 @@
 #import "QYCarModel.h"
 #import "QYBrandModel.h"
 #import "QYServiceModel.h"
+#import "QYParametersManager.h"
 
 #import "Header.h"
 #import <AFNetworking.h>
@@ -33,12 +34,13 @@
 @property (nonatomic, strong) UIBarButtonItem *leftbarBtnItem;// 导航栏左侧的item
 
 @property (nonatomic, assign) BOOL isFristLoad;// 判断是否是第一次加载界面
+
 // 搜索车源的参数
 @property (nonatomic, strong) NSString *price;// 价格范围
 @property (nonatomic, strong) NSDictionary *brandModel;// 品牌模型
 @property (nonatomic, assign) NSInteger pageIndex; // 页数
-@property (nonatomic, strong) NSDictionary *sortModel;// 排序方式
 
+@property (nonatomic, strong) NSArray *sortkeys;// 排序方式
 
 @property (weak, nonatomic) IBOutlet UIButton *sortBtn;
 @property (weak, nonatomic) IBOutlet UIButton *brandBtn;
@@ -59,10 +61,24 @@ static NSString *cellIdtifier = @"carCell";
     return _dataArray;
 }
 
+// 排序方式的键
+- (NSArray *)sortkeys {
+    if (_sortkeys == nil) {
+        _sortkeys = @[@"postDateSort",@"priceSort",@"mileSort",@"regDateSort"];
+    }
+    return _sortkeys;
+}
+
 #pragma mark - *************** 点击事件
-// 切换城市
+// 跳转到城市列表
 - (void)switchCity:(UIBarButtonItem *)sender {
     QYCityListViewController *cityVC = [[QYCityListViewController alloc] init];
+    // 回调
+    MTWeak(self, weakSelf);
+    cityVC.changeCityBlock = ^{
+        [weakSelf loadDataWithBasicParameters];
+    };
+    
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:cityVC];
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:navigaVC animated:YES completion:nil];
@@ -99,24 +115,48 @@ static NSString *cellIdtifier = @"carCell";
 }
 
 #pragma mark - 四个菜单的点击事件的具体实现
+
 // 点击第一个排序方式
 - (void)sortBtnClick {
-    //判断当前显示的本身
+    // 判断当前显示的本身
     if (_openBtnIndex != sortButtonTag) {
         [_openView removeFromSuperview];
         QYSortView *sortView = [[QYSortView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, kScreenHeight)];
         [[[UIApplication sharedApplication].delegate window] addSubview:sortView];
-        //关闭这个view
+        // 关闭这个view
         sortView.isCloseBlock = ^{
             _openBtnIndex = 0;
             [_openView removeFromSuperview];
         };
         
-        //选择排序方式
-        sortView.changeParameterBlock = ^(NSDictionary *dict){
-            [_parameters setDictionary:dict];
+        
+        /**
+         *  选择排序方式 只能有一种排序方式
+         */
+        MTWeak(self, weakSelf);
+        sortView.changeParameterBlock = ^(NSString *key, NSString *value, NSString *title){
+            // 移除当前的视图
             [_openView removeFromSuperview];
             _openBtnIndex = 0;
+            
+            // 改变当前排序的btn的颜色及标题
+            if ([title isEqualToString:@"默认排序"]) {
+                [weakSelf changBtnProperty:_sortBtn title:title titleColor:[UIColor darkGrayColor]];
+            }else {
+                [weakSelf changBtnProperty:_sortBtn title:title titleColor:[UIColor orangeColor]];
+            }
+            
+            // 判断现在是否已经有排序方式 如果有 移除当前的排序方式
+            for (NSString *sortModel in self.sortkeys) {
+                for (NSString *sortKey in _parameters.allKeys) {
+                    if ([sortModel isEqualToString:sortKey]) {
+                        [_parameters removeObjectForKey:sortKey];
+                    }
+                }
+            }
+            // 添加排序方式
+            [_parameters setObject:value forKey:key];
+            [weakSelf downloadDataFromNetwork:_parameters];
         };
         _openView = sortView;
         _openBtnIndex = sortButtonTag;
@@ -128,46 +168,50 @@ static NSString *cellIdtifier = @"carCell";
 
 // 第二个品牌选择
 - (void)brandBtnClick {
+    // 如果有打开的view 关闭
+    [_openView removeFromSuperview];
+    _openBtnIndex = 0;
+    
     QYBrandViewController *brandVC = [[QYBrandViewController alloc] init];
-    // 品牌参数的改变
+
+    /**
+     *  品牌参数的改变的回调 主要改变btn的标题及颜色 改变请求品牌的参数 然后请求数据
+     */
     MTWeak(self, weakSelf);
     brandVC.changeBrandBlock = ^(QYBrandModel *brandModel, QYServiceModel *serviceModel) {
-        // 改变btn的title 及颜色
+        // 判断选择的品牌类型
         if (serviceModel != nil) {
             if ([serviceModel.series isEqualToString:@"0"]) {
                 // 不限车系
-                [_brandBtn setTitle:brandModel.brandName forState:UIControlStateNormal];
-                [_brandBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+                [weakSelf changBtnProperty:_brandBtn title:brandModel.brandName titleColor:[UIColor orangeColor]];
                 [_parameters removeObjectForKey:kSeriesId];
                 [_parameters removeObjectForKey:kSeriesName];
+                [_parameters setObject:brandModel.brandId forKey:kBrandId];
+                [_parameters setObject:brandModel.brandName forKey:kBrandName];
             }else {
-                [_brandBtn setTitle:serviceModel.seriesName forState:UIControlStateNormal];
-                [_brandBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+                // 改变颜色
+                [weakSelf changBtnProperty:_brandBtn title:serviceModel.seriesName titleColor:[UIColor orangeColor]];
+                // 参数改变
                 [_parameters setObject:serviceModel.series forKey:kSeriesId];
                 [_parameters setObject:serviceModel.seriesName forKey:kSeriesName];
-                // 参数改变
                 [_parameters setObject:brandModel.brandId forKey:kBrandId];
                 [_parameters setObject:brandModel.brandName forKey:kBrandName];
             }
         }else {
             // 点击不限品牌时
-            [_brandBtn setTitle:@"品牌" forState:UIControlStateNormal];
-            [_brandBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [weakSelf changBtnProperty:_brandBtn title:@"品牌" titleColor:[UIColor darkGrayColor]];
             [_parameters removeObjectForKey:kSeriesId];
             [_parameters removeObjectForKey:kSeriesName];
             [_parameters removeObjectForKey:kBrandId];
             [_parameters removeObjectForKey:kBrandName];
         }
         // 请求数据
-        [weakSelf changParameters];
+        [weakSelf downloadDataFromNetwork:_parameters];
     };
+    
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:brandVC];
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:navigaVC animated:YES completion:^{
-        // 如果有打开的view 关闭
-        [_openView removeFromSuperview];
-        _openBtnIndex = 0;
-    }];
+    [self presentViewController:navigaVC animated:YES completion:nil];
 }
 
 // 点击第三个价格按钮
@@ -184,11 +228,24 @@ static NSString *cellIdtifier = @"carCell";
         };
         
         // 改变价格
-        priceView.changePriceBlock = ^(NSDictionary *dict){
-            [_parameters setDictionary:dict];
+        MTWeak(self, weakSelf);
+        priceView.changePriceBlock = ^(NSString *price, NSString *title){
+            // 改变btn的颜色和字体
+            if ([price isEqualToString:@"0"]) {
+                [weakSelf changBtnProperty:_priceBtn title:title titleColor:[UIColor darkGrayColor]];
+            }else {
+                [weakSelf changBtnProperty:_priceBtn title:title titleColor:[UIColor orangeColor]];
+            }
+            
+            // 移除视图
             [_openView removeFromSuperview];
             _openBtnIndex = 0;
+            
+            //改变价格参数 请求数据
+            [_parameters setObject:price forKey:Kprice];
+            [weakSelf downloadDataFromNetwork:_parameters];
         };
+        
         _openView = priceView;
         _openBtnIndex = priceButtonTag;
     }else {
@@ -201,6 +258,7 @@ static NSString *cellIdtifier = @"carCell";
 - (void)vprBtnClick {
     [_openView removeFromSuperview];
     _openBtnIndex = 0;
+    
 }
 
 #pragma mark - ************* 子视图
@@ -221,7 +279,7 @@ static NSString *cellIdtifier = @"carCell";
     self.navigationItem.rightBarButtonItem = rightBarBtnItem;
 }
 
-#pragma mark - *************  请求数据
+#pragma mark - 请求数据
 // 请求数据
 - (void)downloadDataFromNetwork:(NSDictionary *)parameters {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -252,7 +310,7 @@ static NSString *cellIdtifier = @"carCell";
     return cell;
 }
 
-#pragma mark - ************* tableView delegate
+#pragma mark - tableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -263,53 +321,25 @@ static NSString *cellIdtifier = @"carCell";
     
 }
 
-#pragma mark - 改变参数 或者 第一次进入界面重新请求数据
-//第一次请求数据
-- (void)fristLoadData {
-    // 加载保存的城市
-    NSMutableDictionary *cityModel = [NSMutableDictionary dictionary];
-    cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
-     _parameters = [NSMutableDictionary dictionary];
+#pragma mark - 公用方法
+
+// 请求数据 (改变城市)
+- (void)loadDataWithBasicParameters {
     _pageIndex = 1;
-    if (cityModel) {
-        [self changeCityParameters:cityModel];
-    }else {
-        [_parameters setValue:@1 forKey:kCityId];
-        [_parameters setValue:@(_pageIndex) forKey:kPage];
-        [_parameters setValue:@1 forKey:kProvId];
-        [self downloadDataFromNetwork:self.parameters];
-    }
-    
-}
-
-// 改变城市
-- (void)changeCityParameters:(NSMutableDictionary *)cityModel {
-    [_parameters removeAllObjects];
-    [_parameters setValue:cityModel[kCityId] forKey:kCityId];
-    [_parameters setValue:@(_pageIndex) forKey:kPage];
-    [_parameters setValue:cityModel[kProvId] forKey:kProvId];
-    [_parameters setValue:cityModel[kCityName] forKey:kCityName];
+    _parameters = [[QYParametersManager shaerdParameters] fristLoadParameters];
+    [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
     // 改变城市的名字
-    _leftbarBtnItem.title = cityModel[kCityName];
-     [self downloadDataFromNetwork:self.parameters];
-}
-
-
-// 改变其他参数 (不包括城市)
-- (void)changParameters {
+    _leftbarBtnItem.title = self.parameters[kCityName];
     [self downloadDataFromNetwork:self.parameters];
-//    price 20-35;
-//    priceSort desc 价格最高 asc最低
-//    vprSort desc
-//    brand 0
-//    mileSort asc
-//    regDateSort desc 车龄最短
-    
-//    默认排序 postDateSort desc
-    
 }
 
-#pragma mark - ***************** life cycle
+// 改变上面四个btn的颜色和文字
+- (void)changBtnProperty:(UIButton *)sender title:(NSString *)title titleColor:(UIColor *)color {
+    [sender setTitle:title forState:UIControlStateNormal];
+    [sender setTitleColor:color forState:UIControlStateNormal];
+}
+
+#pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -319,23 +349,11 @@ static NSString *cellIdtifier = @"carCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // 请求数据
-    
-    // 判断是第一次 还是改变参数
+    // 判断是否第一次
     if (!_isFristLoad) {
-        //第一次加载
-        [self fristLoadData];
+        _parameters = [NSMutableDictionary dictionary];
+        [self loadDataWithBasicParameters];
         _isFristLoad = YES;
-    }else {
-        // 城市改变
-        NSMutableDictionary *cityModel = [NSMutableDictionary dictionary];
-        cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
-        //判断城市有没有改变
-        if ([cityModel[kCityName] isEqualToString:_leftbarBtnItem.title]) {
-            return;
-        }else {
-            [self changeCityParameters:cityModel];
-        }
     }
 } 
 

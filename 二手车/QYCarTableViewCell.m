@@ -40,7 +40,7 @@
 
 
 @property (nonatomic, strong) UILabel *imageCountLabel;
-@property (nonatomic, strong) NSMutableArray *images;//总共的图片
+@property (nonatomic, strong) NSArray *images;//总共的图片
 
 
 
@@ -71,9 +71,7 @@
     }
 
     //请求图片
-    [_iconImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:nil options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-    }];
+    [_iconImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] options:0 progress:nil completed:nil];
 }
 
 // 第二种 头cell
@@ -88,6 +86,7 @@
     
     // 加载图片数组
     [self loadImagesForNetWork:headerModel.picUrls];
+    _images = headerModel.picUrls;
 }
 
 // 第三种cell
@@ -100,9 +99,6 @@
     _lites_lable.text = infoModel.liter;
     _regisData_label.text = [NSString stringWithFormat:@"%@年%@月上牌",[infoModel.register_date substringWithRange:NSMakeRange(0, 4)],[infoModel.register_date substringWithRange:NSMakeRange(5, 2)]];
 }
-
-
-
 
 
 #pragma mark - ***** srcollView
@@ -127,7 +123,7 @@
     tap.numberOfTapsRequired = 1;
     [_imagesScrollView addGestureRecognizer:tap];
     
-//    // 设置当前显示的页数
+    // 设置当前显示的页数
     _imagesScrollView.contentOffset = CGPointMake((_index-1) * kScreenWidth, 0);
 }
 
@@ -136,10 +132,8 @@
     _images = [NSMutableArray array];
     for (int i = 0; i < imagesUrlArray.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kScreenWidth, 0, kScreenWidth, _imagesScrollView.frame.size.height)];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imagesUrlArray[i]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [_images addObject:image];
-            [_imagesScrollView addSubview:imageView];
-        }];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imagesUrlArray[i]] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] completed:nil];
+         [_imagesScrollView addSubview:imageView];
     }
 
 }

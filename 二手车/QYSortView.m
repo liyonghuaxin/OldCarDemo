@@ -11,7 +11,8 @@
 @interface QYSortView ()  <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *data;// 显示的数组
-@property (nonatomic, strong) NSArray *parametersArray; // 传值的数组
+@property (nonatomic, strong) NSArray *valueArray; // 值
+@property (nonatomic, strong) NSArray *keyArray;// 键
 @end
 @implementation QYSortView
 
@@ -39,15 +40,21 @@
     }
 }
 #pragma mark - 懒加载
-- (NSArray *)parametersArray {
-    if (_parametersArray == nil) {
-        _parametersArray = @[@{@"postDateSort":@"desc"},
-                             @{@"priceSort":@"desc"},
-                             @{@"priceSort":@"asc"},
-                             @{@"mileSort":@"asc"},
-                             @{@"regDateSort":@"desc"}];
+
+// 键
+- (NSArray *)keyArray {
+    if (_keyArray == nil) {
+        _keyArray = @[@"postDateSort",@"priceSort",@"priceSort",@"mileSort",@"regDateSort"];
     }
-    return _parametersArray;
+    return _keyArray;
+}
+
+// 值
+- (NSArray *)valueArray {
+    if (_valueArray == nil) {
+        _valueArray = @[@"desc",@"desc",@"asc",@"asc",@"desc"];
+    }
+    return _valueArray;
 }
 
 #pragma mark - 添加tablewView
@@ -101,7 +108,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_changeParameterBlock) {
-        _changeParameterBlock(self.parametersArray[indexPath.row]);
+        _changeParameterBlock(self.keyArray[indexPath.row], self.valueArray[indexPath.row], _data[indexPath.row]);
     }
     
 }

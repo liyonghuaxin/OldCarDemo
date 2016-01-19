@@ -10,7 +10,7 @@
 @class QYCarModel;
 @class QYCarInfoModel;
 
-typedef void(^photoBlock)(NSInteger index,NSMutableArray *images);
+typedef void(^photoBlock)(NSInteger index,NSArray *images);
 
 @interface QYCarTableViewCell : UITableViewCell
 

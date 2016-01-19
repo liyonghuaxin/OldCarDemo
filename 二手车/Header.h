@@ -29,7 +29,7 @@
 // 请求参数的 键名
 #define kCityName         @"cityName"
 #define kCityId           @"city"
-#define kProvId          @"prov"
+#define kProvId           @"prov"
 #define kcityModel        @"cityModel"
 
 #define kPage             @"page"
@@ -38,10 +38,17 @@
 #define kBrandName        @"brandName"
 #define kSeriesId         @"series"
 #define kSeriesName       @"seriesName"
+#define Kprice            @"price"
+
 
 
 // weak 修饰
 #define MTWeak(var, weakVar) __weak __typeof(&*var) weakVar = var
+// 描述为空的字符串
+#define kNoDesc     @"暂无描述"
+
+
+
 
 #endif /* Header_h */
 

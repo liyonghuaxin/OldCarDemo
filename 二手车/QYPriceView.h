@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^viewCloseBlock)(void);// 关闭视图
-typedef void(^priceBlock)(NSDictionary *dict);// 改变价格
+typedef void(^priceBlock)(NSString *price, NSString *title);// 改变价格
 @interface QYPriceView : UIView
 
 @property (nonatomic, strong) viewCloseBlock isCloseBlock;

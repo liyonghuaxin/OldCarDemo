@@ -8,7 +8,7 @@
 
 #import "QYPriceView.h"
 
-#define Kprice @"price"
+#define kSelectBtnTag @"selectBtnTag"
 
 @interface QYPriceView ()
 @property (nonatomic, strong) NSArray *dataArray;// 显示的数组
@@ -16,13 +16,16 @@
 
 @property (nonatomic, strong) UITextField *lowTextField;// 低价格
 @property (nonatomic, strong) UITextField *highTextField;// 高价格
+
+@property (nonatomic, strong) UIButton *selectBtn;// 选中的btn
+
 @end
 
 @implementation QYPriceView
 #pragma mark - 初始化 view
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        _dataArray = @[@"不限",@"3万以下",@"3-5万",@"5-10万",@"10-15万",@"15-20万",@"20-25万",@"25-30万",@"30-50万",@"50万以上",@"50-100万",@"100万以上"];
+        _dataArray = @[@"不限",@"3万以下",@"3-5万",@"5-10万",@"10-15万",@"15-20万",@"20-25万",@"25-30万",@"30-50万",@"50-100万",@"100-200万",@"200万以上"];
         
         // 添加子视图
         [self createAndAddSubviews];
@@ -33,7 +36,7 @@
 #pragma mark - 懒加载
 - (NSArray *)priceArray {
     if (_priceArray == nil) {
-        _priceArray = @[@{Kprice:@"0"},@{Kprice:@"0-3"},@{Kprice:@"3-5"},@{Kprice:@"5-10",},@{Kprice:@"10-15"},@{Kprice:@"15-20"},@{Kprice:@"20-25"},@{Kprice:@"25-30"},@{Kprice:@"30-50"},@{Kprice:@"50-100"},@{Kprice:@"100"}];
+        _priceArray = @[@"0",@"0-3",@"3-5",@"5-10",@"10-15",@"15-20",@"20-25",@"25-30",@"30-50",@"50-100",@"100-200",@"200"];
     }
     return _priceArray;
 }
@@ -69,6 +72,8 @@
 
 #pragma mark - 价格区域的视图
 - (void)createAndAddPriceView {
+    NSInteger selectBtnTag =  [[NSUserDefaults standardUserDefaults] integerForKey:kSelectBtnTag];
+    
     UIView *priceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 300)];
     [self addSubview:priceView];
     priceView.backgroundColor = [UIColor whiteColor];
@@ -80,7 +85,7 @@
     guideLabel.textColor = [UIColor lightGrayColor];
     
     CGFloat marginX = 8;
-    CGFloat spaceX = 15;
+    CGFloat spaceX = 20;
     CGFloat spaceY = 10;
     CGFloat btnW = (self.frame.size.width - 2 * (marginX + spaceX)) / 3.0;
     CGFloat btnH = 40;
@@ -104,11 +109,12 @@
     UIButton *choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [priceView addSubview:choseBtn];
     choseBtn.frame = CGRectMake(marginX+(btnW+spaceX)*2, 40, btnW, btnH);
-    [choseBtn setBackgroundColor:[UIColor orangeColor]];
+    [choseBtn setBackgroundColor:[UIColor lightGrayColor]];
     choseBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [choseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    choseBtn.tag = 499;
     [choseBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [choseBtn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    [choseBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     // 添加图层属性
     CALayer *layer = [choseBtn layer];
     layer.cornerRadius = 5;
@@ -117,14 +123,25 @@
     for (int i = 0; i < _dataArray.count; i++) {
         CGFloat btnX = (i % 3) * (spaceX + btnW) + marginX;
         CGFloat btnY = (i / 3) * (spaceY + btnH) + 90;
+        
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [priceView addSubview:btn];
         btn.frame = CGRectMake(btnX, btnY, btnW, btnH);
         [btn setTitle:_dataArray[i] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        btn.tag = 500 + i;
         [btn addTarget:self action:@selector(choseFixPriceBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self addLayer:btn];
+        
+        //判断是否上次选中的btn
+        if (btn.tag == selectBtnTag) {
+            [btn setBackgroundColor:[UIColor orangeColor]];
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            
+        }else {
+            [self addLayer:btn];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }
+        
     }
 }
 
@@ -136,15 +153,37 @@
     layer.borderColor = [UIColor lightGrayColor].CGColor;
 }
 
-#pragma mark - 点击事件
-- (void)btnClick {
-    
+- (void)addSelectBtnLayer:(UIButton *)sender {
+    CALayer *layer = [sender layer];
+    layer.cornerRadius = 5;
 }
 
-- (void)choseFixPriceBtn:(UIButton *)sender {
+#pragma mark - 点击事件
+// 自定义价格
+- (void)btnClick:(UIButton *)sender {
+    if ([_highTextField.text isEqualToString:@""] | [_lowTextField.text isEqualToString:@""]) {
+        return;
+    }
+    // 保存选中的btn 下次进入时打开
+    [[NSUserDefaults standardUserDefaults] setObject:@499 forKey:kSelectBtnTag];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *priceStr = [NSString stringWithFormat:@"%@-%@", _lowTextField.text, _highTextField.text];
+    NSString *titleStr = [NSString stringWithFormat:@"%@-%@万", _lowTextField.text, _highTextField.text];
     if (_changePriceBlock) {
-        
-//        _changePriceBlock()
+        _changePriceBlock(priceStr, titleStr);
+    }
+}
+
+// 选择价格
+- (void)choseFixPriceBtn:(UIButton *)sender {
+    // 保存选中的btn 下次进入时打开
+    [[NSUserDefaults standardUserDefaults] setObject:@(sender.tag) forKey:kSelectBtnTag];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSInteger index = sender.tag - 500;
+    if (_changePriceBlock) {
+        _changePriceBlock(self.priceArray[index], _dataArray[index]);
     }
 }
 

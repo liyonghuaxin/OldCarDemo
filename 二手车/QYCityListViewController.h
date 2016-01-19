@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class QYCityModel;
-typedef void(^cityModelBlock)(QYCityModel *model);
+
+typedef void(^cityModelBlock)(void);
 
 @interface QYCityListViewController : UIViewController
 
+@property (nonatomic, strong) cityModelBlock changeCityBlock;
 
 @end

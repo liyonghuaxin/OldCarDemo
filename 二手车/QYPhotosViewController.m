@@ -9,7 +9,7 @@
 #import "QYPhotosViewController.h"
 #import "Header.h"
 #import "Masonry.h"
-
+#import <SDwebimage/UIImageView+WebCache.h>
 
 
 @interface QYPhotosViewController () <UIScrollViewDelegate>
@@ -85,10 +85,9 @@
 }
 
 - (void)addZoomView:(UIScrollView *)scrollview {
-    
     for (int i = 0; i < _imagesArray.count; i++) {
         UIImageView *zoomView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kScreenWidth, 0, kScreenWidth, scrollview.frame.size.height)];
-        zoomView.image = _imagesArray[i];
+        [zoomView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:_imagesArray[i]] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] options:0 progress:nil completed:nil];
         [scrollview addSubview:zoomView];
     }
 }

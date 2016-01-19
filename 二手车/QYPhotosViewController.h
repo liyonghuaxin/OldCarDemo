@@ -12,7 +12,7 @@ typedef void(^indexBlcok)(NSInteger index);
 
 @interface QYPhotosViewController : UIViewController
 
-@property (nonatomic, strong) NSArray *imagesArray;//传过来的图片
+@property (nonatomic, strong) NSArray *imagesArray;//传过来的图片url数组
 @property (nonatomic, assign) NSInteger currentCount;//当前显示图片的下标
 
 @property (nonatomic, strong) indexBlcok imagesIndexBlcok;

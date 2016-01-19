@@ -14,7 +14,7 @@
 #import "QYCarInfoModel.h"
 #import "QYCarTableViewCell.h"
 #import "QYPhotosViewController.h"
-
+#import "NSString+StringSize.h"
 
 
 @interface QYCarDetailsViewController () <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
@@ -114,7 +114,7 @@
     
         // 跳转到图片详情
         MTWeak(self, weakSelf);
-        cell.imagesBlock = ^(NSInteger index,NSMutableArray *images){
+        cell.imagesBlock = ^(NSInteger index,NSArray *images){
             QYPhotosViewController *photoVC = [[QYPhotosViewController alloc] init];
             photoVC.imagesArray = images;
             photoVC.currentCount = index;
@@ -137,11 +137,14 @@
         cell.sectionTitle_label.text = @"商家描述";
     }else if (indexPath.row == 4) {//用第3个 cell
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][3];
-        id desc = _dataDict.car_desc;
-            if ([desc  isEqual:[NSNull null]] ) {
-                cell.desc_label.text = @"暂无描述";
+            if ([_dataDict.car_desc  isEqual:[NSNull null]] ) {
+                cell.desc_label.text = kNoDesc;
             }else {
-                cell.desc_label.text = _dataDict.car_desc;
+                if ([_dataDict.car_desc isEqualToString:@""]) {
+                    cell.desc_label.text = kNoDesc;
+                }else {
+                    cell.desc_label.text = _dataDict.car_desc;
+                }
             }
     }else if (indexPath.row == 5) {//用第4个 cell
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:0][4];
@@ -181,8 +184,21 @@
         case 3:
             return 40;
             break;
-        case 4:
-            return 40;
+        case 4:{
+            CGFloat width = kScreenWidth - 18;
+            NSString *text;
+            if ([_dataDict.car_desc isEqual:[NSNull null]]) {
+                text = kNoDesc;
+            }else {
+                if ([_dataDict.car_desc isEqualToString:@""]) {
+                    text = kNoDesc;
+                }else {
+                    text = _dataDict.car_desc;
+                }
+            }
+            CGSize size = [text stringSizeWith:width Font:[UIFont systemFontOfSize:14]];
+            return size.height + 20;
+        }
             break;
         case 5:
             return 40;

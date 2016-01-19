@@ -16,7 +16,6 @@
 		CC584ECE1C393331009F8690 /* ___Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584ECD1C393331009F8690 /* ___Tests.m */; };
 		CC584ED91C393331009F8690 /* ___UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584ED81C393331009F8690 /* ___UITests.m */; };
 		CC584EE91C3933EE009F8690 /* QYMainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584EE81C3933EE009F8690 /* QYMainTabBarViewController.m */; };
-		CC584EEE1C3936EA009F8690 /* QYTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584EED1C3936EA009F8690 /* QYTabBar.m */; };
 		CC584EF71C3938B1009F8690 /* QYBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584EF61C3938B1009F8690 /* QYBuyViewController.m */; };
 		CC584F111C393F22009F8690 /* QYGbaMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584F101C393F22009F8690 /* QYGbaMainViewController.m */; };
 		CC584F141C3943FB009F8690 /* QYTitleLable.m in Sources */ = {isa = PBXBuildFile; fileRef = CC584F131C3943FB009F8690 /* QYTitleLable.m */; };
@@ -56,7 +55,9 @@
 		CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */; };
 		CC85CA961C3A10890090E4DB /* QYCarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */; };
 		CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA981C3A15E50090E4DB /* QYCarModel.m */; };
-		CC87EFE21C3F44AB006601D2 /* NewWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = CC87EFE11C3F44AB006601D2 /* NewWorking.m */; };
+		CC8902DD1C4DE0C0005F021A /* NSString+StringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8902DC1C4DE0C0005F021A /* NSString+StringSize.m */; };
+		CC8902DF1C4DE697005F021A /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8902DE1C4DE697005F021A /* slider-default-trackBackground.png */; };
+		CC8902E21C4DE823005F021A /* QYParametersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8902E11C4DE823005F021A /* QYParametersManager.m */; };
 		CC8913C81C41462400DA9BB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8913C71C41462400DA9BB0 /* Assets.xcassets */; };
 		CC8913FC1C41493100DA9BB0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */; };
 		CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */; };
@@ -276,8 +277,6 @@
 		CC584EDA1C393331009F8690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC584EE71C3933EE009F8690 /* QYMainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYMainTabBarViewController.h; sourceTree = "<group>"; };
 		CC584EE81C3933EE009F8690 /* QYMainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYMainTabBarViewController.m; sourceTree = "<group>"; };
-		CC584EEC1C3936EA009F8690 /* QYTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYTabBar.h; sourceTree = "<group>"; };
-		CC584EED1C3936EA009F8690 /* QYTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYTabBar.m; sourceTree = "<group>"; };
 		CC584EF51C3938B1009F8690 /* QYBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYBuyViewController.h; sourceTree = "<group>"; };
 		CC584EF61C3938B1009F8690 /* QYBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYBuyViewController.m; sourceTree = "<group>"; };
 		CC584F0C1C393C0A009F8690 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
@@ -348,8 +347,11 @@
 		CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYCarTableViewCell.xib; sourceTree = "<group>"; };
 		CC85CA971C3A15E50090E4DB /* QYCarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCarModel.h; sourceTree = "<group>"; };
 		CC85CA981C3A15E50090E4DB /* QYCarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCarModel.m; sourceTree = "<group>"; };
-		CC87EFE01C3F44AB006601D2 /* NewWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWorking.h; sourceTree = "<group>"; };
-		CC87EFE11C3F44AB006601D2 /* NewWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWorking.m; sourceTree = "<group>"; };
+		CC8902DB1C4DE0C0005F021A /* NSString+StringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringSize.h"; sourceTree = "<group>"; };
+		CC8902DC1C4DE0C0005F021A /* NSString+StringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringSize.m"; sourceTree = "<group>"; };
+		CC8902DE1C4DE697005F021A /* slider-default-trackBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default-trackBackground.png"; sourceTree = "<group>"; };
+		CC8902E01C4DE823005F021A /* QYParametersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYParametersManager.h; sourceTree = "<group>"; };
+		CC8902E11C4DE823005F021A /* QYParametersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYParametersManager.m; sourceTree = "<group>"; };
 		CC8913C71C41462400DA9BB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityCustomCell.h; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 		CC584EB31C393330009F8690 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CC8902DE1C4DE697005F021A /* slider-default-trackBackground.png */,
 				CCC44E3F1C44FAAC008B3F63 /* BrandImages */,
 				CCC44F821C44FBBE008B3F63 /* images */,
 				CC68606F1C433BD200F753F8 /* tableBar */,
@@ -657,8 +660,6 @@
 				CCC44D9E1C4499F2008B3F63 /* Main.storyboard */,
 				CC584EE71C3933EE009F8690 /* QYMainTabBarViewController.h */,
 				CC584EE81C3933EE009F8690 /* QYMainTabBarViewController.m */,
-				CC584EEC1C3936EA009F8690 /* QYTabBar.h */,
-				CC584EED1C3936EA009F8690 /* QYTabBar.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -772,8 +773,10 @@
 			isa = PBXGroup;
 			children = (
 				CC584F0C1C393C0A009F8690 /* Header.h */,
-				CC87EFE01C3F44AB006601D2 /* NewWorking.h */,
-				CC87EFE11C3F44AB006601D2 /* NewWorking.m */,
+				CC8902DB1C4DE0C0005F021A /* NSString+StringSize.h */,
+				CC8902DC1C4DE0C0005F021A /* NSString+StringSize.m */,
+				CC8902E01C4DE823005F021A /* QYParametersManager.h */,
+				CC8902E11C4DE823005F021A /* QYParametersManager.m */,
 			);
 			name = tool;
 			sourceTree = "<group>";
@@ -1246,6 +1249,7 @@
 				CCC44F4F1C44FB49008B3F63 /* b113.jpg in Resources */,
 				CCC44F2F1C44FB49008B3F63 /* b81.jpg in Resources */,
 				CCC44EE71C44FB49008B3F63 /* b9.jpg in Resources */,
+				CC8902DF1C4DE697005F021A /* slider-default-trackBackground.png in Resources */,
 				CCC44F771C44FB49008B3F63 /* b153.jpg in Resources */,
 				CCC44F3A1C44FB49008B3F63 /* b92.jpg in Resources */,
 				CCC44EEB1C44FB49008B3F63 /* b13.jpg in Resources */,
@@ -1421,18 +1425,18 @@
 				CC7491071C465DE800BF6D69 /* QYSearchHeaderCell.m in Sources */,
 				CC584EB51C393330009F8690 /* main.m in Sources */,
 				CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */,
-				CC87EFE21C3F44AB006601D2 /* NewWorking.m in Sources */,
 				CC596A1B1C49F640003B8044 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				CC596A171C49F640003B8044 /* MASLayoutConstraint.m in Sources */,
+				CC8902E21C4DE823005F021A /* QYParametersManager.m in Sources */,
 				CC7490FB1C46303600BF6D69 /* QYBrandViewController.m in Sources */,
 				CC584EF71C3938B1009F8690 /* QYBuyViewController.m in Sources */,
 				CC596A151C49F640003B8044 /* MASConstraint.m in Sources */,
 				CC584EE91C3933EE009F8690 /* QYMainTabBarViewController.m in Sources */,
-				CC584EEE1C3936EA009F8690 /* QYTabBar.m in Sources */,
 				CC596A141C49F640003B8044 /* MASCompositeConstraint.m in Sources */,
 				CC7490FE1C46361B00BF6D69 /* QYBrandModel.m in Sources */,
 				CC1A192C1C4BBD1C0061E01E /* QYServiceListView.m in Sources */,
 				CC596A181C49F640003B8044 /* MASViewAttribute.m in Sources */,
+				CC8902DD1C4DE0C0005F021A /* NSString+StringSize.m in Sources */,
 				CC784ABA1C493636002FA576 /* QYCustomCarCell.m in Sources */,
 				CC7491531C4687CD00BF6D69 /* QYSearchHeaderView.m in Sources */,
 			);

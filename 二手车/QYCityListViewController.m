@@ -41,7 +41,7 @@
 }
 
 - (void)createNavigationBar {
-    self.title = @"选择城市";
+    self.title = @"地区选择";
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"prov_select"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
     self.navigationItem.leftBarButtonItem = backItem;
@@ -137,7 +137,11 @@
     //持久化
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-     [self dismissViewControllerAnimated:YES completion:nil];     
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (_changeCityBlock) {
+            _changeCityBlock();
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

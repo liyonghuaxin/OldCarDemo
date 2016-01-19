@@ -7,7 +7,7 @@
 //
 
 #import "QYMainTabBarViewController.h"
-#import "QYTabBar.h"
+
 
 @interface QYMainTabBarViewController ()
 
@@ -19,10 +19,7 @@
     [super viewDidLoad];
     self.tabBar.translucent = YES;
 
-//    QYTabBar *tabBar = [[QYTabBar alloc] init];
-//    tabBar.frame = self.tabBar.frame;
-////    tabBar.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:1/255.0 alpha:1];
-//    [self.tabBar addSubview:tabBar];
+    self.tabBar.tintColor = [UIColor orangeColor];
 }
 
 - (void)didReceiveMemoryWarning {
