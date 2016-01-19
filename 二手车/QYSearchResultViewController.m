@@ -8,7 +8,7 @@
 
 #import "QYSearchResultViewController.h"
 
-@interface QYSearchResultViewController () <UISearchResultsUpdating>
+@interface QYSearchResultViewController ()
 
 @property (nonatomic, strong) NSArray *dataArray; // 查询的数据源
 @property (nonatomic, strong) NSArray *searchList;// 搜索结果
@@ -19,7 +19,7 @@
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,10 +36,10 @@
         return;
     }
 
-    // 创建谓词
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.brandName CONTAINS[CD] %@",searchController.searchBar.text];
-
-    NSMutableArray *filterArray  = [NSMutableArray array];
+//     创建谓词
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.brandName CONTAINS[CD] %@",searchController.searchBar.text];
+//    
+//    NSMutableArray *filterArray  = [NSMutableArray array];
 //    for (QYBrandModel *model in _sourceArray) {
 //        [filterArray addObject:model];
 //    }
@@ -55,7 +55,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _dataArray.count;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -36,11 +36,11 @@
 @property (nonatomic, assign) BOOL isFristLoad;// 判断是否是第一次加载界面
 
 // 搜索车源的参数
-@property (nonatomic, strong) NSString *price;// 价格范围
 @property (nonatomic, strong) NSDictionary *brandModel;// 品牌模型
 @property (nonatomic, assign) NSInteger pageIndex; // 页数
 
 @property (nonatomic, strong) NSArray *sortkeys;// 排序方式
+@property (nonatomic, assign) NSInteger sortModel;// 排序方式
 
 @property (weak, nonatomic) IBOutlet UIButton *sortBtn;
 @property (weak, nonatomic) IBOutlet UIButton *brandBtn;
@@ -64,7 +64,7 @@ static NSString *cellIdtifier = @"carCell";
 // 排序方式的键
 - (NSArray *)sortkeys {
     if (_sortkeys == nil) {
-        _sortkeys = @[@"postDateSort",@"priceSort",@"mileSort",@"regDateSort"];
+        _sortkeys = @[@"postDateSort",@"priceSort",@"mileSort",@"regDateSort",@"vprSort"];
     }
     return _sortkeys;
 }
@@ -129,7 +129,6 @@ static NSString *cellIdtifier = @"carCell";
             [_openView removeFromSuperview];
         };
         
-        
         /**
          *  选择排序方式 只能有一种排序方式
          */
@@ -145,7 +144,10 @@ static NSString *cellIdtifier = @"carCell";
             }else {
                 [weakSelf changBtnProperty:_sortBtn title:title titleColor:[UIColor orangeColor]];
             }
-            
+            if (_sortModel == 2) {
+                [_vprBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            }
+            _sortModel = 1;
             // 判断现在是否已经有排序方式 如果有 移除当前的排序方式
             for (NSString *sortModel in self.sortkeys) {
                 for (NSString *sortKey in _parameters.allKeys) {
@@ -242,7 +244,7 @@ static NSString *cellIdtifier = @"carCell";
             _openBtnIndex = 0;
             
             //改变价格参数 请求数据
-            [_parameters setObject:price forKey:Kprice];
+            [_parameters setObject:price forKey:kPrice];
             [weakSelf downloadDataFromNetwork:_parameters];
         };
         
@@ -256,9 +258,31 @@ static NSString *cellIdtifier = @"carCell";
 
 // 点击性价比的btn
 - (void)vprBtnClick {
-    [_openView removeFromSuperview];
-    _openBtnIndex = 0;
+    if (_openView) {
+        [_openView removeFromSuperview];
+        _openBtnIndex = 0;
+    }
     
+    // 判断现在是否已经有排序方式 如果有 移除当前的排序方式
+    for (NSString *sortModel in self.sortkeys) {
+        for (NSString *sortKey in _parameters.allKeys) {
+            if ([sortModel isEqualToString:sortKey]) {
+                [_parameters removeObjectForKey:sortKey];
+            }
+        }
+    }
+    if (_sortModel == 2) {
+        _sortModel = 0;
+        [_vprBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    }else  {
+        if (_sortModel == 1) {
+            [self changBtnProperty:_sortBtn title:@"默认排序" titleColor:[UIColor darkGrayColor]];
+        }
+        [_parameters setObject:@"desc" forKey:kVprSort];
+        [_vprBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        _sortModel = 2;
+    }
+    [self downloadDataFromNetwork:_parameters];
 }
 
 #pragma mark - ************* 子视图
@@ -330,6 +354,18 @@ static NSString *cellIdtifier = @"carCell";
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
     // 改变城市的名字
     _leftbarBtnItem.title = self.parameters[kCityName];
+    
+    // 改变价格btn 的名字和颜色
+    NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
+    if (priceBtnTitle) {
+        if ([_parameters[kPrice] isEqualToString:@"0"]) {
+            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
+        }else {
+            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
+            [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        }
+    }
+    
     [self downloadDataFromNetwork:self.parameters];
 }
 
@@ -344,10 +380,12 @@ static NSString *cellIdtifier = @"carCell";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self addSubViews];
+    self.title = @"二手车";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     
     // 判断是否第一次
     if (!_isFristLoad) {

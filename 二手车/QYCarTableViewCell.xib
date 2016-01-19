@@ -167,7 +167,7 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t8-r3-EJl">
-                        <rect key="frame" x="170" y="248" width="36" height="17"/>
+                        <rect key="frame" x="170" y="250" width="36" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="OCY-kT-zse"/>
                         </constraints>
@@ -195,7 +195,7 @@
                     <constraint firstItem="rhj-7A-vMu" firstAttribute="leading" secondItem="QQw-1M-iij" secondAttribute="leading" constant="10" id="MZP-sN-Nlo"/>
                     <constraint firstItem="rhj-7A-vMu" firstAttribute="top" secondItem="Qv5-aE-gAN" secondAttribute="bottom" constant="30" id="OLG-0H-ciA"/>
                     <constraint firstItem="YCT-bL-Sc0" firstAttribute="centerY" secondItem="i2s-s8-6hh" secondAttribute="centerY" id="R8n-8Y-6Le"/>
-                    <constraint firstItem="4t8-r3-EJl" firstAttribute="top" secondItem="Qv5-aE-gAN" secondAttribute="bottom" constant="8" id="Ruk-Rw-h8W"/>
+                    <constraint firstItem="4t8-r3-EJl" firstAttribute="top" secondItem="Qv5-aE-gAN" secondAttribute="bottom" constant="10" id="Ruk-Rw-h8W"/>
                     <constraint firstItem="JqU-vy-mcP" firstAttribute="height" secondItem="Ico-HC-U4z" secondAttribute="height" id="S1T-m7-G5d"/>
                     <constraint firstItem="Qv5-aE-gAN" firstAttribute="top" secondItem="QQw-1M-iij" secondAttribute="top" id="T6z-JA-M2d"/>
                     <constraint firstItem="Ico-HC-U4z" firstAttribute="top" secondItem="i2s-s8-6hh" secondAttribute="bottom" constant="12" id="VbC-yj-CZT"/>

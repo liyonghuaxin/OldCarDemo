@@ -103,6 +103,7 @@
 
 #pragma mark - ***** srcollView
 - (void)loadImagesForNetWork:(NSArray *)imagesUrlArray {
+    _imagesScrollView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth*0.64);
     _imagesScrollView.contentSize = CGSizeMake(kScreenWidth * imagesUrlArray.count, self.imagesScrollView.frame.size.height);
     _imagesScrollView.pagingEnabled = YES;
     _imagesScrollView.delegate = self;

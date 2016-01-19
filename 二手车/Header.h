@@ -38,9 +38,17 @@
 #define kBrandName        @"brandName"
 #define kSeriesId         @"series"
 #define kSeriesName       @"seriesName"
-#define Kprice            @"price"
 
+// 请求的价格参数
+#define kPrice            @"price"
 
+// 保存选中价格btn的标题
+#define KpriceBtnTitle    @"KpriceBtnTitle"
+// 保存选中价格btn 的tag
+#define kSelectBtnTag @"selectBtnTag"
+
+// 性价比排序 的键
+#define kVprSort          @"vprSort"
 
 // weak 修饰
 #define MTWeak(var, weakVar) __weak __typeof(&*var) weakVar = var

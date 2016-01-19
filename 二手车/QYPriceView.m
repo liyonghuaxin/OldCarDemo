@@ -7,8 +7,7 @@
 //
 
 #import "QYPriceView.h"
-
-#define kSelectBtnTag @"selectBtnTag"
+#import "Header.h"
 
 @interface QYPriceView ()
 @property (nonatomic, strong) NSArray *dataArray;// 显示的数组
@@ -109,15 +108,27 @@
     UIButton *choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [priceView addSubview:choseBtn];
     choseBtn.frame = CGRectMake(marginX+(btnW+spaceX)*2, 40, btnW, btnH);
-    [choseBtn setBackgroundColor:[UIColor lightGrayColor]];
     choseBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [choseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     choseBtn.tag = 499;
     [choseBtn setTitle:@"确定" forState:UIControlStateNormal];
     [choseBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    // 添加图层属性
-    CALayer *layer = [choseBtn layer];
-    layer.cornerRadius = 5;
+    choseBtn.layer.cornerRadius = 5;
+    if (choseBtn.tag == selectBtnTag) {
+        [choseBtn setBackgroundColor:[UIColor orangeColor]];
+    }else {
+        [choseBtn setBackgroundColor:[UIColor lightGrayColor]];
+    }
+    
+    //添加修饰的view 和 label
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(marginX+btnW+5, 60, 10, 2)];
+    [priceView addSubview:lineView];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(marginX+btnW*2+spaceX+3, 40, 15, 40)];
+    [priceView addSubview:label];
+    label.text = @"万";
+    label.font = [UIFont systemFontOfSize:14];
     
     // 固定可选择价格的区域
     for (int i = 0; i < _dataArray.count; i++) {
@@ -136,7 +147,7 @@
         if (btn.tag == selectBtnTag) {
             [btn setBackgroundColor:[UIColor orangeColor]];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            
+            [self addSelectBtnLayer:btn];
         }else {
             [self addLayer:btn];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -161,9 +172,12 @@
 #pragma mark - 点击事件
 // 自定义价格
 - (void)btnClick:(UIButton *)sender {
-    if ([_highTextField.text isEqualToString:@""] | [_lowTextField.text isEqualToString:@""]) {
+    NSString *lowPrice = _lowTextField.text;
+    NSString *highPrice = _highTextField.text;
+    if ([lowPrice isEqualToString:@""] | [highPrice isEqualToString:@""] | [lowPrice integerValue] >= [lowPrice integerValue]) {
         return;
     }
+    
     // 保存选中的btn 下次进入时打开
     [[NSUserDefaults standardUserDefaults] setObject:@499 forKey:kSelectBtnTag];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -177,11 +191,14 @@
 
 // 选择价格
 - (void)choseFixPriceBtn:(UIButton *)sender {
-    // 保存选中的btn 下次进入时打开
+    NSInteger index = sender.tag - 500;
+    
+    // 保存选中的btn信息 下次进入时打开
     [[NSUserDefaults standardUserDefaults] setObject:@(sender.tag) forKey:kSelectBtnTag];
+    [[NSUserDefaults standardUserDefaults] setObject:self.priceArray[index] forKey:kPrice];
+    [[NSUserDefaults standardUserDefaults] setObject:_dataArray[index] forKey:KpriceBtnTitle];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSInteger index = sender.tag - 500;
     if (_changePriceBlock) {
         _changePriceBlock(self.priceArray[index], _dataArray[index]);
     }
