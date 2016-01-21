@@ -12,12 +12,12 @@
 #import "QYCarModel.h"
 #import "QYCarTableViewCell.h"
 #import "QYCarDetailsViewController.h"
+#import <MJRefresh.h>
 
 @interface QYWatchCarListVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) UITableView *tableView;
-
 
 @end
 
@@ -25,40 +25,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _dataArray = [NSMutableArray array];
-    _dataArray = [[QYDBFileManager sharedDBManager] selectAllData:kWatchTable];
-
+    
+    // 加载本地数据
+    [self loadDataFromLocal];
     [self createAndAddSubviews];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
    
 }
 
+- (void)loadDataFromLocal {
+    _dataArray = [NSMutableArray array];
+    _dataArray = [[QYDBFileManager sharedDBManager] selectAllData:kWatchTable];
+    if (_dataArray.count > 0) {
+        [self setBarItem];
+    }
+    [_tableView.mj_header endRefreshing];
+    [_tableView reloadData];
+}
 #pragma mark - 添加子视图
 - (void)createAndAddSubviews {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    
-    [self setBarItem];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDataFromLocal)];
 }
 
 - (void)setBarItem {
-    UIBarButtonItem *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAllDatas)];
+    UIBarButtonItem  *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAllDatas)];
     self.navigationItem.rightBarButtonItem = deleteAllItem;
 }
+
+
 
 - (void)deleteAllDatas {
     [_dataArray removeAllObjects];
     [[QYDBFileManager sharedDBManager] deleteLocalAllData:kWatchTable];
+    [_tableView.mj_header endRefreshing];
+    self.navigationItem.rightBarButtonItem = nil;
     [_tableView reloadData];
 }
 
@@ -86,7 +96,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"newCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-200)/2, 50, 200, 20)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-200)/2, 200, 200, 20)];
     title.textAlignment = NSTextAlignmentCenter;
     title.text = @"浏览记录为空~";
     title.font = [UIFont systemFontOfSize:12];

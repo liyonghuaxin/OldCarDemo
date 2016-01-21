@@ -78,8 +78,9 @@
     // 收藏
     CGFloat btnX = 0;
     UIButton *starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    starBtn.backgroundColor = [UIColor lightGrayColor];
+    starBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:starBtn];
+    [starBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     starBtn.frame = CGRectMake(btnX, btnY, btnWidth, btnHeigth);
     
     // 判断是否收藏过
@@ -90,7 +91,7 @@
     
     [starBtn setImage:[UIImage imageNamed:@"detail_collect_btn_d.png"] forState:UIControlStateNormal];
     [starBtn setImage:[UIImage imageNamed:@"detail_collect_btn_h_d.png"] forState:UIControlStateSelected];
-    
+    starBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [starBtn setTitle:@"收藏" forState:UIControlStateNormal];
     [starBtn setTitle:@"已收藏" forState:UIControlStateSelected];
 
@@ -102,9 +103,16 @@
     callBtn.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:callBtn];
     callBtn.frame = CGRectMake(btn1X, btnY, btnWidth, btnHeigth);
+    callBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [callBtn setImage:[UIImage imageNamed:@"details_phone"] forState:UIControlStateNormal];
     [callBtn setTitle:@"联系商家" forState:UIControlStateNormal];
     [callBtn addTarget:self action:@selector(callClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 分割线
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight-40, kScreenWidth, 1)];
+    [self.view addSubview:lineView];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineView.alpha = 0.3;
 }
 
 #pragma mark - 事件
@@ -116,8 +124,10 @@
 
 - (void)starBtnClick:(UIButton *)sender {
     if (sender.selected == YES) {
-        NSLog(@"123443");
+        [[QYDBFileManager sharedDBManager] deleteLocalFromCarId:_carModel.carID tableName:kStarTable];
+        
     }else {
+        [[QYDBFileManager sharedDBManager] saveData2Local:_carModel class:kStarTable];
         NSLog(@"dfghhgh");
     }
     sender.selected = !sender.selected;

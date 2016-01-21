@@ -155,13 +155,13 @@
     FMResultSet *set;
     if ([name isEqualToString:kWatchTable]) {
         // 浏览历史
-        set = [_dataBase executeQuery:@"select *from watchTable where id = %@", carId];
+        set = [_dataBase executeQueryWithFormat:@"select *from watchTable where id = %@", carId];
     }else if ([name isEqualToString:kStarTable]) {
         // 收藏
-        set = [_dataBase executeQuery:@"select *from starTable where id = %@", carId];
+        set = [_dataBase executeQueryWithFormat:@"select *from starTable where id = %@", carId];
     }else if ([name isEqualToString:kCarTable]) {
         // 首页列表
-        set = [_dataBase executeQuery:@"select *from carTable where id = %@", carId];
+        set = [_dataBase executeQueryWithFormat:@"select *from carTable where id = %@", carId];
     }
     
     QYCarModel *carModel;

@@ -7,9 +7,14 @@
 //
 
 #import "QYMeTableViewController.h"
+#import "QYStarViewController.h"
+#import "QYWatchCarListVC.h"
+#import "SDImageCache.h"
+#import "QYAboutViewController.h"
 
 @interface QYMeTableViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *memeryTitle;
+
 
 @end
 
@@ -18,14 +23,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _iconImageView.image = [UIImage imageNamed:@"login_logo"];
-    _iconImageView.layer.cornerRadius = 27.5;
-    _iconImageView.layer.masksToBounds = YES;
+    [self setMemeryTitleLabel];
+}
+
+- (void)setMemeryTitleLabel {
+    CGFloat size = [[SDImageCache sharedImageCache] getSize];
+    if (size > 0) {
+        _memeryTitle.text = [NSString stringWithFormat:@"缓存%.2lfM",size/1024/1024];
+    }else {
+        _memeryTitle.text = @"暂无缓存";
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+   
 }
 
 #pragma mark - Table view data source
@@ -35,74 +48,60 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == 1) {
         return 1;
-    }else if (section == 1){
-        return 2;
     }
     return 2;
 }
 
+
 #pragma mark - tableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return 0.001;
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            // 收藏界面
+            QYStarViewController *starVC = [[QYStarViewController alloc] init];
+            starVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:starVC animated:YES];
+        }else {
+            // 浏览界面
+            QYWatchCarListVC *watchVC = [[QYWatchCarListVC alloc] init];
+            watchVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:watchVC animated:YES];
+        }
+    }else if (indexPath.section == 1) {
+        // 缓存管理
+        CGFloat size = [[SDImageCache sharedImageCache] getSize];
+        if (size > 0) {
+            NSString *titleNews = [NSString stringWithFormat:@"是否清除[ %.2lfM ]的缓存" , size / 1024 / 1024 ];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"清除缓存" message:titleNews preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                _memeryTitle.text = @"暂无缓存";
+                [[SDImageCache sharedImageCache] clearDisk];
+            }];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:okAction];
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }else {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"暂无缓存" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    }else if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"开发者信息" message:@"QQ:839632616\nTel:15737972326\nemail:kangdexingaaaaa@sina.com" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else if (indexPath.row == 1) {
+            QYAboutViewController *aboutVC = [[QYAboutViewController alloc] init];
+            aboutVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:aboutVC animated:YES];
+        }
     }
-    return 20;
 }
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
