@@ -13,18 +13,21 @@
 #import "QYBrandViewController.h"
 #import "AppDelegate.h"
 
+#import <AFHTTPSessionManager.h>
+#import <MJRefresh.h>
+
+#import "QYDBFileManager.h"
 #import "QYCityModel.h"
 #import "QYCarModel.h"
 #import "QYBrandModel.h"
 #import "QYServiceModel.h"
 #import "QYParametersManager.h"
+#import "QYNetworkTools.h"
 
 #import "Header.h"
-#import <AFNetworking.h>
 #import "QYCarTableViewCell.h"
 #import "QYSortView.h"
 #import "QYPriceView.h"
-
 
 @interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -51,7 +54,7 @@
 @end
 
 @implementation QYBuyViewController
-static NSString *cellIdtifier = @"carCell";
+
 #pragma mark - ************* 懒加载
 //数据
 - (NSMutableArray *)dataArray {
@@ -81,6 +84,10 @@ static NSString *cellIdtifier = @"carCell";
     
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:cityVC];
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    if (_openView) {
+        [_openView removeFromSuperview];
+        _openBtnIndex = 0;
+    }
     [self presentViewController:navigaVC animated:YES completion:nil];
     
 }
@@ -158,7 +165,7 @@ static NSString *cellIdtifier = @"carCell";
             }
             // 添加排序方式
             [_parameters setObject:value forKey:key];
-            [weakSelf downloadDataFromNetwork:_parameters];
+            [weakSelf loadDataForType:1];
         };
         _openView = sortView;
         _openBtnIndex = sortButtonTag;
@@ -208,7 +215,7 @@ static NSString *cellIdtifier = @"carCell";
             [_parameters removeObjectForKey:kBrandName];
         }
         // 请求数据
-        [weakSelf downloadDataFromNetwork:_parameters];
+        [weakSelf loadDataForType:1];
     };
     
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:brandVC];
@@ -245,7 +252,7 @@ static NSString *cellIdtifier = @"carCell";
             
             //改变价格参数 请求数据
             [_parameters setObject:price forKey:kPrice];
-            [weakSelf downloadDataFromNetwork:_parameters];
+            [weakSelf loadDataForType:1];
         };
         
         _openView = priceView;
@@ -282,7 +289,7 @@ static NSString *cellIdtifier = @"carCell";
         [_vprBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         _sortModel = 2;
     }
-    [self downloadDataFromNetwork:_parameters];
+    [self loadDataForType:1];
 }
 
 #pragma mark - ************* 子视图
@@ -294,6 +301,8 @@ static NSString *cellIdtifier = @"carCell";
     _tableView.delegate = self;
     _tableView.rowHeight = 84;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerLoadData)];
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerLoadData)];
     
     //barBtnItem
     _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
@@ -302,19 +311,38 @@ static NSString *cellIdtifier = @"carCell";
     UIBarButtonItem *rightBarBtnItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchCars:)];
     self.navigationItem.rightBarButtonItem = rightBarBtnItem;
 }
+#pragma mark - 刷新数据
+// 下拉刷新
+- (void)headerLoadData {
+    _pageIndex = 1;
+    [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
+    [self loadDataForType:1];
+}
 
-#pragma mark - 请求数据
-// 请求数据
-- (void)downloadDataFromNetwork:(NSDictionary *)parameters {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+// 上拉加载
+- (void)footerLoadData {
+    _pageIndex ++;
+    [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
+    [self loadDataForType:2];
+}
 
-    [manager POST:kCarsListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        self.dataArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
-        [self.tableView reloadData];
+// 公共方法
+- (void)loadDataForType:(int)type {
+    [[[QYNetworkTools sharedNetworkTools] POST:kCarsListUrl parameters:_parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSMutableArray *tempArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
+
+        if (type == 1) {
+            self.dataArray = tempArray;
+            [_tableView.mj_header endRefreshing];
+            [_tableView reloadData];
+        }else if (type == 2) {
+            [self.dataArray addObjectsFromArray:tempArray];
+            [_tableView.mj_footer endRefreshing];
+            [_tableView reloadData];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
-    }];
+    }] resume];
 }
 
 #pragma mark - table view dataSource
@@ -324,7 +352,7 @@ static NSString *cellIdtifier = @"carCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    static NSString *cellIdtifier = @"carCell";
     QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdtifier];
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][0];
@@ -343,6 +371,8 @@ static NSString *cellIdtifier = @"carCell";
     carVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:carVC animated:YES];
     
+    // 存储到数据库的浏览历史
+    [[QYDBFileManager sharedDBManager] saveData2Local:self.dataArray[indexPath.row] class:kWatchTable];
 }
 
 #pragma mark - 公用方法
@@ -365,8 +395,7 @@ static NSString *cellIdtifier = @"carCell";
             [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         }
     }
-    
-    [self downloadDataFromNetwork:self.parameters];
+    [self loadDataForType:1];
 }
 
 // 改变上面四个btn的颜色和文字

@@ -71,7 +71,7 @@
     }
 
     //请求图片
-    [_iconImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] options:0 progress:nil completed:nil];
+    [_iconImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"image_replace"] options:0 progress:nil completed:nil];
 }
 
 // 第二种 头cell
@@ -133,7 +133,7 @@
     _images = [NSMutableArray array];
     for (int i = 0; i < imagesUrlArray.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kScreenWidth, 0, kScreenWidth, _imagesScrollView.frame.size.height)];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imagesUrlArray[i]] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] completed:nil];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imagesUrlArray[i]] placeholderImage:[UIImage imageNamed:@"image_replace"] completed:nil];
          [_imagesScrollView addSubview:imageView];
     }
 

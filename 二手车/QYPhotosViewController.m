@@ -87,7 +87,7 @@
 - (void)addZoomView:(UIScrollView *)scrollview {
     for (int i = 0; i < _imagesArray.count; i++) {
         UIImageView *zoomView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kScreenWidth, 0, kScreenWidth, scrollview.frame.size.height)];
-        [zoomView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:_imagesArray[i]] placeholderImage:[UIImage imageNamed:@"slider-default-trackBackground"] options:0 progress:nil completed:nil];
+        [zoomView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:_imagesArray[i]] placeholderImage:[UIImage imageNamed:@"image_replace"] options:0 progress:nil completed:nil];
         [scrollview addSubview:zoomView];
     }
 }

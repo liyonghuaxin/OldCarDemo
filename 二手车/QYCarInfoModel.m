@@ -28,6 +28,7 @@
         _brand_name = dict[@"brand_name"];
         _city = dict[@"city"];
         _carId = dict[@"id"];
+        _telStr = dict[@"tel"];
     }
     return self;
 }

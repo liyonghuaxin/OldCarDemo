@@ -53,9 +53,19 @@
 // weak 修饰
 #define MTWeak(var, weakVar) __weak __typeof(&*var) weakVar = var
 // 描述为空的字符串
-#define kNoDesc     @"暂无描述"
+#define kNoDesc      @"暂无描述"
+
+//数据库名
+#define DBNAME       @"car.db"
+
+// 表名
+#define kWatchTable  @"watchTable"
+#define kStarTable   @"starTable"
+#define kCarTable    @"carTable"
 
 
+// 购车指南
+#define kGuideBaseUrl   @"http://appapi.taoche.cn/get?"
 
 
 #endif /* Header_h */

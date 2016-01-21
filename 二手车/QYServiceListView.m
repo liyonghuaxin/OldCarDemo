@@ -60,6 +60,14 @@
     [headerView addSubview:titleLabel];
     titleLabel.text = @"收起";
     titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    imageBtn.backgroundColor = [UIColor blackColor];
+    imageBtn.frame = CGRectMake(10, 12, 16, 16);
+    [headerView addSubview:imageBtn];
+    [imageBtn setImage:[UIImage imageNamed:@"right_arrow"] forState:UIControlStateNormal];
+    imageBtn.layer.cornerRadius = 8;
+    imageBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
    
     // 添加手势
     [self addTap2HeaerView:headerView];

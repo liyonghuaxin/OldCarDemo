@@ -51,7 +51,7 @@ static NSString *cellIdentifier = @"brandCell";
 
     //导航栏设置
     self.title = @"车型选择";
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"prov_select"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_close.png"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
     self.navigationItem.leftBarButtonItem = backItem;
     
     //tablView

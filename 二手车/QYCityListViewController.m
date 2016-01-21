@@ -43,7 +43,7 @@
 - (void)createNavigationBar {
     self.title = @"地区选择";
     
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"prov_select"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_close.png"] style:UIBarButtonItemStyleDone target:self action:@selector(backToBuyVC)];
     self.navigationItem.leftBarButtonItem = backItem;
 }
 #pragma mark - ********点击事件

@@ -7,7 +7,7 @@
 //
 
 #import "QYCarDetailsViewController.h"
-#import <AFNetworking.h>
+#import <AFHTTPSessionManager.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Header.h"
 #import "QYCarModel.h"
@@ -15,7 +15,8 @@
 #import "QYCarTableViewCell.h"
 #import "QYPhotosViewController.h"
 #import "NSString+StringSize.h"
-
+#import "QYPhoneManager.h"
+#import "QYDBFileManager.h"
 
 @interface QYCarDetailsViewController () <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -24,6 +25,7 @@
 
 @property (nonatomic, assign) NSInteger currentIndex;// 当前的图片下标
 @property (nonatomic, assign) BOOL isLoad;// 是否已经请求过数据了
+
 @end
 
 @implementation QYCarDetailsViewController
@@ -54,13 +56,71 @@
 #pragma mark - ********** 添加视图
 - (void)createAndAddSubviews {
     self.title = @"车辆详情";
-    self.view.backgroundColor = [UIColor grayColor];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-50) style:UITableViewStylePlain];
+    self.view.backgroundColor = [UIColor whiteColor];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-40) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+
+    // 底部的视图
+    [self createToolBarView];
+}
+
+- (void)createToolBarView {
+    CGFloat btnWidth = kScreenWidth/2.0;
+    CGFloat btnHeigth = 40;
+    CGFloat btnY = kScreenHeight - 40;
+    
+    
+    
+    // 收藏
+    CGFloat btnX = 0;
+    UIButton *starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    starBtn.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:starBtn];
+    starBtn.frame = CGRectMake(btnX, btnY, btnWidth, btnHeigth);
+    
+    // 判断是否收藏过
+    QYCarModel *carModel = [[QYDBFileManager sharedDBManager] selectDataFromCarId:_carModel.carID tableName:kStarTable];
+    if (carModel) {
+        starBtn.selected = YES;
+    }
+    
+    [starBtn setImage:[UIImage imageNamed:@"detail_collect_btn_d.png"] forState:UIControlStateNormal];
+    [starBtn setImage:[UIImage imageNamed:@"detail_collect_btn_h_d.png"] forState:UIControlStateSelected];
+    
+    [starBtn setTitle:@"收藏" forState:UIControlStateNormal];
+    [starBtn setTitle:@"已收藏" forState:UIControlStateSelected];
+
+    [starBtn addTarget:self action:@selector(starBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 联系商家
+    CGFloat btn1X = kScreenWidth / 2.0 ;
+    UIButton *callBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    callBtn.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:callBtn];
+    callBtn.frame = CGRectMake(btn1X, btnY, btnWidth, btnHeigth);
+    [callBtn setImage:[UIImage imageNamed:@"details_phone"] forState:UIControlStateNormal];
+    [callBtn setTitle:@"联系商家" forState:UIControlStateNormal];
+    [callBtn addTarget:self action:@selector(callClick) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - 事件
+- (void)callClick {
+    [QYPhoneManager call:self.dataDict.telStr inViewController:self failBlock:^{
+        NSLog(@"打不通");
+    }];
+}
+
+- (void)starBtnClick:(UIButton *)sender {
+    if (sender.selected == YES) {
+        NSLog(@"123443");
+    }else {
+        NSLog(@"dfghhgh");
+    }
+    sender.selected = !sender.selected;
 }
 
 #pragma mark - ********** 请求网络数据
@@ -71,7 +131,9 @@
     [maneger GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dict = responseObject[@"success"];
         self.dataDict = [QYCarInfoModel carInfoWithDict:dict];
+
         [_tableView reloadData];
+        
         //请求推荐车辆
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
         [parameters setValue:self.dataDict.city forKey:@"city"];

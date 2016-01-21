@@ -62,6 +62,7 @@
     _keys = [NSMutableArray array];
     _dict = dict[@"brand"];
     _keys = dict[@"initial"];
+    [self downloadSeresList];
 }
 
 #pragma mark - 请求车系列表

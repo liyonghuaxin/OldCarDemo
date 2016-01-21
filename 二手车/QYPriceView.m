@@ -96,13 +96,16 @@
     _lowTextField.textAlignment = NSTextAlignmentCenter;
     _lowTextField.font = [UIFont systemFontOfSize:14];
     [self addLayer:_lowTextField];
+    _lowTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     _highTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX+btnW+spaceX, 40, btnW, btnH)];
     [priceView addSubview:_highTextField];
     _highTextField.placeholder = @"最高";
     _highTextField.textAlignment = NSTextAlignmentCenter;
     _highTextField.font = [UIFont systemFontOfSize:14];
+    _highTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self addLayer:_highTextField];
+    
     
     //确定按钮
     UIButton *choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -174,7 +177,8 @@
 - (void)btnClick:(UIButton *)sender {
     NSString *lowPrice = _lowTextField.text;
     NSString *highPrice = _highTextField.text;
-    if ([lowPrice isEqualToString:@""] | [highPrice isEqualToString:@""] | [lowPrice integerValue] >= [lowPrice integerValue]) {
+    
+    if ([lowPrice isEqualToString:@""] | [highPrice isEqualToString:@""] ) {
         return;
     }
     

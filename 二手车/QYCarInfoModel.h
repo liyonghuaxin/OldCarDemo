@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSString *source_name;//来源
 @property (nonatomic, strong) NSString *brand_name;
 
+@property (nonatomic, strong) NSString *telStr;// 电话
+
 @property (nonatomic, strong) NSString *car_desc;//描述
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
