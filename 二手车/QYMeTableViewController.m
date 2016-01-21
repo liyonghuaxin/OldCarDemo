@@ -58,6 +58,10 @@
 #pragma mark - tableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // 刚选中又马上取消选中，格子不变色
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             // 收藏界面

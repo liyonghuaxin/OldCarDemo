@@ -54,12 +54,12 @@ static NSString *Identifier = @"cell";
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"charset=utf-8",nil];
-//    manager.requestSerializer setValue:<#(nullable NSString *)#> forHTTPHeaderField:<#(nonnull NSString *)#>
+    [ manager.requestSerializer setValue:@"E899D5AC72C3358C6A9AA6F81B6AFE64" forHTTPHeaderField:@"signature"];
     
     [manager GET:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray*tempArr = responseObject[@"data"];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+  
     }];
 }
 //÷http://appapi.taoche.cn/get?action=getnewslist&appid=app.iphone&page=1&pagesize=20&type=1&v=5.6

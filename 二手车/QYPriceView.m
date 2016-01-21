@@ -182,6 +182,14 @@
         return;
     }
     
+    if ([lowPrice intValue] < 0 |) {
+        <#statements#>
+    }
+    
+    if ([lowPrice intValue] >= [highPrice intValue]) {
+        return;
+    }
+    
     // 保存选中的btn 下次进入时打开
     [[NSUserDefaults standardUserDefaults] setObject:@499 forKey:kSelectBtnTag];
     [[NSUserDefaults standardUserDefaults] synchronize];
