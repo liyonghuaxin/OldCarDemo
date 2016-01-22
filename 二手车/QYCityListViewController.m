@@ -70,9 +70,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section <= 1) {
-//        return 1;
-//    }
     NSString *key = _keys[section];
     NSArray *array = _dict[key];
     return array.count;

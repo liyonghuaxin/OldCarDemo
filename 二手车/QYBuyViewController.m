@@ -80,6 +80,7 @@
     MTWeak(self, weakSelf);
     cityVC.changeCityBlock = ^{
         [weakSelf loadDataWithBasicParameters];
+        [weakSelf loadDataForType:1];
     };
     
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:cityVC];
@@ -314,8 +315,7 @@
 #pragma mark - 刷新数据
 // 下拉刷新
 - (void)headerLoadData {
-    _pageIndex = 1;
-    [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
+    [self loadDataWithBasicParameters];
     [self loadDataForType:1];
 }
 
@@ -326,7 +326,7 @@
     [self loadDataForType:2];
 }
 
-// 公共方法
+// 请求数据
 - (void)loadDataForType:(int)type {
     [[[QYNetworkTools sharedNetworkTools] POST:kCarsListUrl parameters:_parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *tempArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
@@ -340,6 +340,14 @@
             [_tableView.mj_footer endRefreshing];
             [_tableView reloadData];
         }
+        
+        // 删除
+        [[QYDBFileManager sharedDBManager] deleteLocalAllData:kCarTable];
+        // 存储到数据库
+        for (QYCarModel *model in tempArray) {
+            [[QYDBFileManager sharedDBManager] saveData2Local:model class:kCarTable];
+        }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }] resume];
@@ -379,6 +387,7 @@
 
 // 请求数据 (改变城市)
 - (void)loadDataWithBasicParameters {
+    _parameters = [NSMutableDictionary dictionary];
     _pageIndex = 1;
     _parameters = [[QYParametersManager shaerdParameters] fristLoadParameters];
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
@@ -386,16 +395,16 @@
     _leftbarBtnItem.title = self.parameters[kCityName];
     
     // 改变价格btn 的名字和颜色
-//    NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
-//    if (priceBtnTitle) {
-//        if ([_parameters[kPrice] isEqualToString:@"0"]) {
-//            [self changBtnProperty:_priceBtn title:@"价格" titleColor:[UIColor darkGrayColor]];
-//        }else {
-//            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
-//            [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-//        }
-//    }
-    [self loadDataForType:1];
+    NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
+    if (priceBtnTitle) {
+        if ([priceBtnTitle isEqualToString:@"不限"]) {
+            [self changBtnProperty:_priceBtn title:@"价格" titleColor:[UIColor darkGrayColor]];
+        }else {
+            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
+            [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        }
+        
+    }
 }
 
 // 改变上面四个btn的颜色和文字
@@ -415,20 +424,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    
     // 判断是否第一次
     if (!_isFristLoad) {
-        _parameters = [NSMutableDictionary dictionary];
-        [self loadDataWithBasicParameters];
-        _isFristLoad = YES;
+        self.dataArray = [[QYDBFileManager sharedDBManager] selectAllData:kCarTable];
+        if (self.dataArray) {
+            [self loadDataWithBasicParameters];
+            [_tableView reloadData];
+        }else {
+            [self loadDataWithBasicParameters];
+            [self loadDataForType:1];
+            _isFristLoad = YES;
+        }
     }
 } 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 @end

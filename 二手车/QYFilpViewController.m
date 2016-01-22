@@ -86,9 +86,9 @@
     QYContentTableVC *currentVC = self.childViewControllers[index];
     currentVC.index = index;
     
-//    if (currentVC.view.superview) {
-//        return;
-//    }
+    if (currentVC.view.superview) {
+        return;
+    }
     
     currentVC.view.frame = CGRectMake(index * kScreenWidth, 0, kScreenWidth, _scrollView.frame.size.height);
     [_scrollView addSubview:currentVC.view];

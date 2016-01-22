@@ -14,6 +14,8 @@
 #define kScreenWidth     [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight    [UIScreen mainScreen].bounds.size.height
 
+// app 第一次运行的判断
+#define kAppRun @"appRun"
 
 //汽车列表的url
 #define kCarsListUrl      @"http://dingjia.che300.com/api/v224/util/car/car_list"
@@ -67,7 +69,8 @@
 // 购车指南
 #define kGuideBaseUrl   @"http://auto.news18a.com/init.php?m=price&c=index&a=getData"
 
-
+// 详情页面的基本url
+#define kDetailBaseUrl  @"http://auto.news18a.com"
 
 #endif /* Header_h */
 
