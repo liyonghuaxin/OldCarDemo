@@ -1,14 +1,14 @@
 //
-//  QYNewsTableViewCell.m
+//  QYCustomNewCell.m
 //  二手车
 //
-//  Created by qingyun on 16/1/21.
+//  Created by qingyun on 16/1/22.
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
-#import "QYNewsTableViewCell.h"
+#import "QYCustomNewCell.h"
 
-@implementation QYNewsTableViewCell
+@implementation QYCustomNewCell
 
 - (void)awakeFromNib {
     // Initialization code

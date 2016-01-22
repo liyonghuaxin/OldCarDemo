@@ -1,13 +1,13 @@
 //
-//  QYNewsTableViewCell.h
+//  QYCustomNewCell.h
 //  二手车
 //
-//  Created by qingyun on 16/1/21.
+//  Created by qingyun on 16/1/22.
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface QYNewsTableViewCell : UITableViewCell
+@interface QYCustomNewCell : UITableViewCell
 
 @end
