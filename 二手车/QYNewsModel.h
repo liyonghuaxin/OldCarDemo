@@ -10,4 +10,15 @@
 
 @interface QYNewsModel : NSObject
 
+@property (nonatomic, strong) NSString *author;// 作者
+@property (nonatomic, strong) NSString *newsId;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *title_pic1;
+@property (nonatomic, strong) NSString *pub;
+@property (nonatomic, strong) NSString *url;
+
+
+- (instancetype)initWithDict:(NSDictionary *)dict;
+
+
 @end

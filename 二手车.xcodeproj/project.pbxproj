@@ -84,6 +84,9 @@
 		CC7491531C4687CD00BF6D69 /* QYSearchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7491521C4687CD00BF6D69 /* QYSearchHeaderView.m */; };
 		CC784ABA1C493636002FA576 /* QYCustomCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC784AB81C493636002FA576 /* QYCustomCarCell.m */; };
 		CC784ABB1C493636002FA576 /* QYCustomCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC784AB91C493636002FA576 /* QYCustomCarCell.xib */; };
+		CC80DC141C51C86700BE8048 /* QYNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC80DC131C51C86700BE8048 /* QYNewsModel.m */; };
+		CC80DC1D1C51D55000BE8048 /* QYCustomNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC80DC1B1C51D55000BE8048 /* QYCustomNewCell.m */; };
+		CC80DC1E1C51D55000BE8048 /* QYCustomNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC80DC1C1C51D55000BE8048 /* QYCustomNewCell.xib */; };
 		CC85CA901C3A01A90090E4DB /* QYRaiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA8E1C3A01A90090E4DB /* QYRaiTableViewCell.m */; };
 		CC85CA911C3A01A90090E4DB /* QYRaiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC85CA8F1C3A01A90090E4DB /* QYRaiTableViewCell.xib */; };
 		CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */; };
@@ -99,8 +102,6 @@
 		CC95C5B41C507A160046DDF8 /* QYSegmentTapView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5B31C507A160046DDF8 /* QYSegmentTapView.m */; };
 		CC95C5B81C5084A50046DDF8 /* QYFilpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5B71C5084A50046DDF8 /* QYFilpViewController.m */; };
 		CC95C5BB1C508A6C0046DDF8 /* QYContentTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5BA1C508A6C0046DDF8 /* QYContentTableVC.m */; };
-		CC95C5BF1C5092A00046DDF8 /* QYNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5BD1C5092A00046DDF8 /* QYNewsTableViewCell.m */; };
-		CC95C5C01C5092A00046DDF8 /* QYNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5BE1C5092A00046DDF8 /* QYNewsTableViewCell.xib */; };
 		CC95C5C41C50E0630046DDF8 /* navbar_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5C11C50E0630046DDF8 /* navbar_close@3x.png */; };
 		CC95C5C51C50E0630046DDF8 /* navbar_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5C21C50E0630046DDF8 /* navbar_close@2x.png */; };
 		CC95C5C61C50E0630046DDF8 /* navbar_close.png in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5C31C50E0630046DDF8 /* navbar_close.png */; };
@@ -422,6 +423,11 @@
 		CC784AB71C493636002FA576 /* QYCustomCarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCustomCarCell.h; sourceTree = "<group>"; };
 		CC784AB81C493636002FA576 /* QYCustomCarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCustomCarCell.m; sourceTree = "<group>"; };
 		CC784AB91C493636002FA576 /* QYCustomCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYCustomCarCell.xib; sourceTree = "<group>"; };
+		CC80DC121C51C86700BE8048 /* QYNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYNewsModel.h; sourceTree = "<group>"; };
+		CC80DC131C51C86700BE8048 /* QYNewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYNewsModel.m; sourceTree = "<group>"; };
+		CC80DC1A1C51D55000BE8048 /* QYCustomNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCustomNewCell.h; sourceTree = "<group>"; };
+		CC80DC1B1C51D55000BE8048 /* QYCustomNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCustomNewCell.m; sourceTree = "<group>"; };
+		CC80DC1C1C51D55000BE8048 /* QYCustomNewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYCustomNewCell.xib; sourceTree = "<group>"; };
 		CC85CA8D1C3A01A90090E4DB /* QYRaiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYRaiTableViewCell.h; sourceTree = "<group>"; };
 		CC85CA8E1C3A01A90090E4DB /* QYRaiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYRaiTableViewCell.m; sourceTree = "<group>"; };
 		CC85CA8F1C3A01A90090E4DB /* QYRaiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYRaiTableViewCell.xib; sourceTree = "<group>"; };
@@ -448,9 +454,6 @@
 		CC95C5B71C5084A50046DDF8 /* QYFilpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYFilpViewController.m; sourceTree = "<group>"; };
 		CC95C5B91C508A6C0046DDF8 /* QYContentTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYContentTableVC.h; sourceTree = "<group>"; };
 		CC95C5BA1C508A6C0046DDF8 /* QYContentTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYContentTableVC.m; sourceTree = "<group>"; };
-		CC95C5BC1C5092A00046DDF8 /* QYNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYNewsTableViewCell.h; sourceTree = "<group>"; };
-		CC95C5BD1C5092A00046DDF8 /* QYNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYNewsTableViewCell.m; sourceTree = "<group>"; };
-		CC95C5BE1C5092A00046DDF8 /* QYNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYNewsTableViewCell.xib; sourceTree = "<group>"; };
 		CC95C5C11C50E0630046DDF8 /* navbar_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_close@3x.png"; sourceTree = "<group>"; };
 		CC95C5C21C50E0630046DDF8 /* navbar_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_close@2x.png"; sourceTree = "<group>"; };
 		CC95C5C31C50E0630046DDF8 /* navbar_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar_close.png; sourceTree = "<group>"; };
@@ -763,7 +766,6 @@
 		CC584EEA1C3934FF009F8690 /* 买车 */ = {
 			isa = PBXGroup;
 			children = (
-				CC91191E1C47C00600443C4E /* 买车 */,
 				CC9879D91C42668B0031E9A1 /* Model */,
 				CC9879D81C4266830031E9A1 /* View */,
 				CC9879D71C4266750031E9A1 /* Controller */,
@@ -812,6 +814,7 @@
 		CC584F0E1C393E0A009F8690 /* 攻略 */ = {
 			isa = PBXGroup;
 			children = (
+				CC80DC111C51C85100BE8048 /* Model */,
 				CC95C5B11C5079D40046DDF8 /* View */,
 				CC95C5B51C5084540046DDF8 /* Controller */,
 				CC584F121C3943FB009F8690 /* QYTitleLable.h */,
@@ -901,6 +904,15 @@
 			name = tableBar;
 			sourceTree = "<group>";
 		};
+		CC80DC111C51C85100BE8048 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CC80DC121C51C86700BE8048 /* QYNewsModel.h */,
+				CC80DC131C51C86700BE8048 /* QYNewsModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		CC85CA9E1C3A174F0090E4DB /* tool */ = {
 			isa = PBXGroup;
 			children = (
@@ -919,21 +931,14 @@
 			name = tool;
 			sourceTree = "<group>";
 		};
-		CC91191E1C47C00600443C4E /* 买车 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "买车";
-			sourceTree = "<group>";
-		};
 		CC95C5B11C5079D40046DDF8 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				CC95C5B21C507A160046DDF8 /* QYSegmentTapView.h */,
 				CC95C5B31C507A160046DDF8 /* QYSegmentTapView.m */,
-				CC95C5BC1C5092A00046DDF8 /* QYNewsTableViewCell.h */,
-				CC95C5BD1C5092A00046DDF8 /* QYNewsTableViewCell.m */,
-				CC95C5BE1C5092A00046DDF8 /* QYNewsTableViewCell.xib */,
+				CC80DC1A1C51D55000BE8048 /* QYCustomNewCell.h */,
+				CC80DC1B1C51D55000BE8048 /* QYCustomNewCell.m */,
+				CC80DC1C1C51D55000BE8048 /* QYCustomNewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1316,7 +1321,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCC44F471C44FB49008B3F63 /* b105.jpg in Resources */,
-				CC95C5C01C5092A00046DDF8 /* QYNewsTableViewCell.xib in Resources */,
 				CCC44F671C44FB49008B3F63 /* b137.jpg in Resources */,
 				CCC44F661C44FB49008B3F63 /* b136.jpg in Resources */,
 				CCC44F1E1C44FB49008B3F63 /* b64.jpg in Resources */,
@@ -1351,6 +1355,7 @@
 				CC584EC31C393330009F8690 /* LaunchScreen.storyboard in Resources */,
 				CCC44EFD1C44FB49008B3F63 /* b31.jpg in Resources */,
 				CCC44F361C44FB49008B3F63 /* b88.jpg in Resources */,
+				CC80DC1E1C51D55000BE8048 /* QYCustomNewCell.xib in Resources */,
 				CC784ABB1C493636002FA576 /* QYCustomCarCell.xib in Resources */,
 				CCC44F7C1C44FB49008B3F63 /* b158.jpg in Resources */,
 				CCC44EFC1C44FB49008B3F63 /* b30.jpg in Resources */,
@@ -1608,8 +1613,8 @@
 				CC584F111C393F22009F8690 /* QYGbaMainViewController.m in Sources */,
 				CC9879E11C4268F20031E9A1 /* QYCityListViewController.m in Sources */,
 				CCED83201C3FC0020025B3D1 /* QYCarInfoModel.m in Sources */,
-				CC95C5BF1C5092A00046DDF8 /* QYNewsTableViewCell.m in Sources */,
 				CC95C5BB1C508A6C0046DDF8 /* QYContentTableVC.m in Sources */,
+				CC80DC1D1C51D55000BE8048 /* QYCustomNewCell.m in Sources */,
 				CCC44F8A1C4528B3008B3F63 /* QYCarDetailsViewController.m in Sources */,
 				CC60139F1C4F69D600F1E490 /* QYMeTableViewController.m in Sources */,
 				CC5969ED1C49D098003B8044 /* QYPhotosViewController.m in Sources */,
@@ -1633,6 +1638,7 @@
 				CC6013CE1C4F791800F1E490 /* QYDBFileManager.m in Sources */,
 				CC95C5B41C507A160046DDF8 /* QYSegmentTapView.m in Sources */,
 				CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */,
+				CC80DC141C51C86700BE8048 /* QYNewsModel.m in Sources */,
 				CCA548361C4B6F0200F3FE19 /* QYPriceView.m in Sources */,
 				CC596A1D1C49F640003B8044 /* ViewController+MASAdditions.m in Sources */,
 				CC7491071C465DE800BF6D69 /* QYSearchHeaderCell.m in Sources */,

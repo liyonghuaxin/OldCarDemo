@@ -182,8 +182,8 @@
         return;
     }
     
-    if ([lowPrice intValue] < 0 |) {
-        <#statements#>
+    if ([lowPrice intValue] < 0 | [highPrice intValue] < 0 ) {
+        return;
     }
     
     if ([lowPrice intValue] >= [highPrice intValue]) {

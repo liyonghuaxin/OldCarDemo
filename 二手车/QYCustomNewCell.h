@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class QYNewsModel;
 
 @interface QYCustomNewCell : UITableViewCell
+
+@property (nonatomic, strong) QYNewsModel *newsModel;
 
 @end

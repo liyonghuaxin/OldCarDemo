@@ -9,32 +9,51 @@
 #import "QYContentTableVC.h"
 #import "QYNetworkTools.h"
 #import "Header.h"
+#import "QYNewsModel.h"
+#import "QYCustomNewCell.h"
 
 @interface QYContentTableVC ()
 
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger pageIndex;
-
+@property (nonatomic, strong) NSMutableDictionary *parameters;
 @property (nonatomic, strong) NSMutableArray *data;
 
 @end
 
 @implementation QYContentTableVC
 static NSString *Identifier = @"cell";
+
+#pragma mark - 懒加载
+- (NSMutableDictionary *)parameters {
+    if (_parameters == nil) {
+        _parameters = [NSMutableDictionary dictionary];
+        [_parameters setObject:@"0" forKey:@"flash"];
+        [_parameters setObject:@"10" forKey:@"num"];
+        [_parameters setObject:@"0" forKey:@"start"];
+    }
+    return _parameters;
+}
+
+#pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.tableView.rowHeight = 90;
     self.tableView.showsHorizontalScrollIndicator = NO;
-    [self.tableView registerNib:[UINib nibWithNibName:@"QYNewsTableViewCell" bundle:nil] forCellReuseIdentifier:Identifier];
-
+    [self.tableView registerNib:[UINib nibWithNibName:@"QYCustomNewCell" bundle:nil] forCellReuseIdentifier:Identifier];
+    if (_index == 0) {
+        NSDictionary *parameters = @{@"type":@"daogou",@"start":@"20",@"num":@"10",@"flash":@"0"};
+        
+        [self loadDataWithParameters:_parameters];
+    }else if (_index == 1) {
+        
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (_index == 0) {
-        [self loadDataWithType:1];
-    }
+  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,45 +61,35 @@ static NSString *Identifier = @"cell";
    
 }
 
-#pragma mark - 请求数据
-- (void)loadDataWithType:(NSInteger)type {
 
-        NSDictionary *parameters = @{@"action":@"getnewslist",@"appid":@"app.iphone",@"type":@"1",@"v":@"5.6",@"page":@"1",@"pagesize":@"20"};
-//    [[QYNetworkTools sharedNetworkTools] GET:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSArray *tempArray = responseObject[@"data"];
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@", error);
-//    }];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"charset=utf-8",nil];
-    [ manager.requestSerializer setValue:@"E899D5AC72C3358C6A9AA6F81B6AFE64" forHTTPHeaderField:@"signature"];
-    
-    [manager GET:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray*tempArr = responseObject[@"data"];
+#pragma mark - 请求数据
+- (void)loadDataWithParameters:(NSMutableDictionary *)parameters {
+    [[QYNetworkTools sharedNetworkTools] GET:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        _data = [NSMutableArray array];
+        for (NSDictionary *dict in responseObject) {
+            QYNewsModel *newsModel = [[QYNewsModel alloc] initWithDict:dict];
+            [_data addObject:newsModel];
+            [self.tableView reloadData];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-  
+        NSLog(@"%@", error);
     }];
+//    http://auto.news18a.com/m/news/story_85832_1_0.html
+
 }
-//÷http://appapi.taoche.cn/get?action=getnewslist&appid=app.iphone&page=1&pagesize=20&type=1&v=5.6
+
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return _data.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
-    cell.textLabel.text = [@(self.index) stringValue];
-    
-    
+    QYCustomNewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
+    QYNewsModel *newsModel = _data[indexPath.row];
+    cell.newsModel = newsModel;
     return cell;
 }
 

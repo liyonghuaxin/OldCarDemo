@@ -65,7 +65,8 @@
 
 
 // 购车指南
-#define kGuideBaseUrl   @"http://appapi.taoche.cn/get?"
+#define kGuideBaseUrl   @"http://auto.news18a.com/init.php?m=price&c=index&a=getData"
+
 
 
 #endif /* Header_h */

@@ -15,6 +15,7 @@
 
 @interface QYCarTableViewCell () <UIScrollViewDelegate>
 
+
 //car Model 第一种
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *carNameLable;

@@ -241,7 +241,7 @@
         priceView.changePriceBlock = ^(NSString *price, NSString *title){
             // 改变btn的颜色和字体
             if ([price isEqualToString:@"0"]) {
-                [weakSelf changBtnProperty:_priceBtn title:title titleColor:[UIColor darkGrayColor]];
+                [weakSelf changBtnProperty:_priceBtn title:@"价格" titleColor:[UIColor darkGrayColor]];
             }else {
                 [weakSelf changBtnProperty:_priceBtn title:title titleColor:[UIColor orangeColor]];
             }
@@ -386,15 +386,15 @@
     _leftbarBtnItem.title = self.parameters[kCityName];
     
     // 改变价格btn 的名字和颜色
-    NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
-    if (priceBtnTitle) {
-        if ([_parameters[kPrice] isEqualToString:@"0"]) {
-            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
-        }else {
-            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
-            [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        }
-    }
+//    NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
+//    if (priceBtnTitle) {
+//        if ([_parameters[kPrice] isEqualToString:@"0"]) {
+//            [self changBtnProperty:_priceBtn title:@"价格" titleColor:[UIColor darkGrayColor]];
+//        }else {
+//            [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
+//            [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//        }
+//    }
     [self loadDataForType:1];
 }
 
