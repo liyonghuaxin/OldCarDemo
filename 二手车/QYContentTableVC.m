@@ -13,6 +13,7 @@
 #import "QYCustomNewCell.h"
 #import "QYDetailNewsVC.h"
 #import <MJRefresh.h>
+#import <SVProgressHUD.h>
 
 @interface QYContentTableVC ()
 
@@ -44,14 +45,18 @@ static NSString *Identifier = @"cell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self selectControllerIndex];
+}
+
+- (void)selectControllerIndex {
+    [SVProgressHUD show];
     if (_index == 0) {
         [self initParameters];
-//         [_parameters setObject:@"xinche" forKey:@"tpye"];
+        [_parameters setObject:@"daogou" forKey:@"tpye"];
         [self loadDataWithParameters:_parameters andType:1];
     }else if (_index == 1) {
         [self initParameters];
-//        [_parameters setObject:@"xinche" forKey:@"tpye"];
+        [_parameters setObject:@"hangye" forKey:@"tpye"];
         [self loadDataWithParameters:_parameters andType:1];
     }
 }
@@ -67,6 +72,7 @@ static NSString *Identifier = @"cell";
 #pragma mark - 方法
 // 下拉刷新
 - (void)headerRefreshData {
+   
     _pageIndex = 1;
     [_parameters setObject:@((_pageIndex-1) * 10) forKey:@"start"];
     [self loadDataWithParameters:_parameters andType:1];
@@ -81,7 +87,10 @@ static NSString *Identifier = @"cell";
 
 #pragma mark - 请求数据
 - (void)loadDataWithParameters:(NSMutableDictionary *)parameters andType:(int)type {
-    [[[QYNetworkTools sharedNetworkTools] POST:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html",@"text/plain", nil];
+    
+    [manager POST:kGuideBaseUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (type == 1) {
             _data = [NSMutableArray array];
             for (NSDictionary *dict in responseObject) {
@@ -89,6 +98,7 @@ static NSString *Identifier = @"cell";
                 [_data addObject:newsModel];
                 [self.tableView reloadData];
                 [self.tableView.mj_header endRefreshing];
+                [SVProgressHUD dismiss];
             }
         }else if (type == 2) {
             for (NSDictionary *dict in responseObject) {
@@ -98,10 +108,10 @@ static NSString *Identifier = @"cell";
                 [self.tableView.mj_footer endRefreshing];
             }
         }
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         NSLog(@"%@", error);
-    }] resume];
+        NSLog(@"%@", error);
+    }];
 
 }
 

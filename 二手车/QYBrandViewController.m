@@ -13,6 +13,7 @@
 #import <AFHTTPSessionManager.h>
 #import "QYServiceListView.h"
 #import "QYServiceModel.h"
+#import <SVProgressHUD.h>
 
 @interface QYBrandViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -85,15 +86,20 @@ static NSString *cellIdentifier = @"brandCell";
 #pragma mark - 请求车系列表
 
 - (void)loadServiceList:(NSDictionary *)parameters {
+    [SVProgressHUD show];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
     [manager POST:kServiceListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *keys = responseObject[@"keys"];
         NSDictionary *data = responseObject[@"data"];
+
         // 添加车系视图
         [self addServiceListView:keys data:data];
+        [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error:%@", error);
+        [NSThread sleepForTimeInterval:2];
+        [SVProgressHUD setFont:[UIFont systemFontOfSize:14]];
+        [SVProgressHUD showImage:nil status:@"网络连接失败！请检查网络后重试"];
     }];
 }
 

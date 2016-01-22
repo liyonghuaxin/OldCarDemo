@@ -25,7 +25,8 @@
     NSDictionary *cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     // 判断程序是否是第一次加载
-    if (cityModel) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+    if (cityModel) {
+        // 城市
         [parameters setValue:cityModel[kCityId] forKey:kCityId];
         [parameters setValue:cityModel[kProvId] forKey:kProvId];
         [parameters setValue:cityModel[kCityName] forKey:kCityName];
@@ -35,6 +36,22 @@
         if (pricePara) {
             [parameters setValue:pricePara forKey:kPrice];
         }
+        // 品牌
+        NSString *brandId = [[NSUserDefaults standardUserDefaults] stringForKey:kBrandId];
+        if (brandId) {
+            NSString *brandName = [[NSUserDefaults standardUserDefaults] stringForKey:kBrandName];
+            [parameters setObject:brandName forKey:kBrandName];
+            [parameters setObject:brandId forKey:kBrandId];
+            
+            NSString *seresId = [[NSUserDefaults standardUserDefaults] stringForKey:kSeriesId];
+            if (seresId) {
+                NSString *seresName = [[NSUserDefaults standardUserDefaults] stringForKey:kSeriesName];
+                [parameters setObject:seresName forKey:kSeriesName];
+                [parameters setObject:seresId forKey:kSeriesId];
+                
+            }
+        }
+        
     }else {
         // 默认的选择的区域 (北京)
         [parameters setValue:@"1" forKey:kCityId];

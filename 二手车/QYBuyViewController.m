@@ -15,6 +15,7 @@
 
 #import <AFHTTPSessionManager.h>
 #import <MJRefresh.h>
+#import <SVProgressHUD.h>
 
 #import "QYDBFileManager.h"
 #import "QYCityModel.h"
@@ -194,28 +195,30 @@
             if ([serviceModel.series isEqualToString:@"0"]) {
                 // 不限车系
                 [weakSelf changBtnProperty:_brandBtn title:brandModel.brandName titleColor:[UIColor orangeColor]];
-                [_parameters removeObjectForKey:kSeriesId];
-                [_parameters removeObjectForKey:kSeriesName];
-                [_parameters setObject:brandModel.brandId forKey:kBrandId];
-                [_parameters setObject:brandModel.brandName forKey:kBrandName];
+                // 持久化存储
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesName];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesId];
+                [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandId forKey:kBrandId];
+                [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandName forKey:kBrandName];
             }else {
                 // 改变颜色
                 [weakSelf changBtnProperty:_brandBtn title:serviceModel.seriesName titleColor:[UIColor orangeColor]];
                 // 参数改变
-                [_parameters setObject:serviceModel.series forKey:kSeriesId];
-                [_parameters setObject:serviceModel.seriesName forKey:kSeriesName];
-                [_parameters setObject:brandModel.brandId forKey:kBrandId];
-                [_parameters setObject:brandModel.brandName forKey:kBrandName];
+                [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandId forKey:kBrandId];
+                [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandName forKey:kBrandName];
+                [[NSUserDefaults standardUserDefaults] setObject:serviceModel.series forKey:kSeriesId];
+                [[NSUserDefaults standardUserDefaults] setObject:serviceModel.seriesName forKey:kSeriesName];
             }
         }else {
             // 点击不限品牌时
             [weakSelf changBtnProperty:_brandBtn title:@"品牌" titleColor:[UIColor darkGrayColor]];
-            [_parameters removeObjectForKey:kSeriesId];
-            [_parameters removeObjectForKey:kSeriesName];
-            [_parameters removeObjectForKey:kBrandId];
-            [_parameters removeObjectForKey:kBrandName];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesName];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesId];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kBrandName];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kBrandId];
         }
         // 请求数据
+        [weakSelf loadDataWithBasicParameters];
         [weakSelf loadDataForType:1];
     };
     
@@ -315,7 +318,6 @@
 #pragma mark - 刷新数据
 // 下拉刷新
 - (void)headerLoadData {
-    [self loadDataWithBasicParameters];
     [self loadDataForType:1];
 }
 
@@ -328,13 +330,21 @@
 
 // 请求数据
 - (void)loadDataForType:(int)type {
-    [[[QYNetworkTools sharedNetworkTools] POST:kCarsListUrl parameters:_parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    if (type == 1) {
+        [SVProgressHUD show];
+    }
+    [[QYNetworkTools sharedNetworkTools] POST:kCarsListUrl parameters:_parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *tempArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
 
         if (type == 1) {
             self.dataArray = tempArray;
             [_tableView.mj_header endRefreshing];
             [_tableView reloadData];
+            if (tempArray.count == 0) {
+                [SVProgressHUD showImage:nil status:@"非常抱歉，没有找到你想要的车" duration:2 complete:nil];
+                return;
+            }
+            [SVProgressHUD dismiss];
         }else if (type == 2) {
             [self.dataArray addObjectsFromArray:tempArray];
             [_tableView.mj_footer endRefreshing];
@@ -348,9 +358,21 @@
             [[QYDBFileManager sharedDBManager] saveData2Local:model class:kCarTable];
         }
         
+        if (tempArray.count == 0) {
+            [SVProgressHUD showImage:nil status:@"非常抱歉，没有找到你想要的车" duration:2 complete:nil];
+        }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }] resume];
+        [NSThread sleepForTimeInterval:2];
+        if (type == 1) {
+            [_tableView.mj_header endRefreshing];
+        }else {
+            [_tableView.mj_footer endRefreshing];
+        }
+        [SVProgressHUD setFont:[UIFont systemFontOfSize:14]];
+        [SVProgressHUD showImage:nil status:@"网络连接失败！请检查网络后重试"];
+
+    }];
 }
 
 #pragma mark - table view dataSource
@@ -366,7 +388,9 @@
         cell = [[NSBundle mainBundle] loadNibNamed:@"QYCarTableViewCell" owner:nil options:nil][0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.dataArray[indexPath.row];
+    if (self.dataArray.count > 0) {
+         cell.model = self.dataArray[indexPath.row];
+    }
     return cell;
 }
 
@@ -387,14 +411,35 @@
 
 // 请求数据 (改变城市)
 - (void)loadDataWithBasicParameters {
-    _parameters = [NSMutableDictionary dictionary];
+     _parameters = [NSMutableDictionary dictionary];
     _pageIndex = 1;
     _parameters = [[QYParametersManager shaerdParameters] fristLoadParameters];
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
     // 改变城市的名字
     _leftbarBtnItem.title = self.parameters[kCityName];
     
-    // 改变价格btn 的名字和颜色
+    // 改变btn 的名字和颜色
+    if (!_isFristLoad) {
+        [self setBtnsTitleWithFristLoad];
+    }
+}
+
+// 第一次加载页面时btn的标题和颜色
+- (void)setBtnsTitleWithFristLoad {
+    // 品牌
+    NSString *brandName = [[NSUserDefaults standardUserDefaults] stringForKey:kBrandName];
+     NSString *seresName = [[NSUserDefaults standardUserDefaults] stringForKey:kSeriesName];
+    if (brandName) {
+        if (seresName) {
+            [self changBtnProperty:_brandBtn title:seresName titleColor:[UIColor orangeColor]];
+        }else {
+            [self changBtnProperty:_brandBtn title:brandName titleColor:[UIColor orangeColor]];
+        }
+    }else {
+        [self changBtnProperty:_brandBtn title:@"品牌" titleColor:[UIColor darkGrayColor]];
+    }
+    
+    // 价格
     NSString *priceBtnTitle = [[NSUserDefaults standardUserDefaults] stringForKey:KpriceBtnTitle];
     if (priceBtnTitle) {
         if ([priceBtnTitle isEqualToString:@"不限"]) {
@@ -403,7 +448,6 @@
             [_priceBtn setTitle:priceBtnTitle forState:UIControlStateNormal];
             [_priceBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         }
-        
     }
 }
 
@@ -417,8 +461,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [self addSubViews];
-    self.title = @"二手车";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -427,14 +471,14 @@
     // 判断是否第一次
     if (!_isFristLoad) {
         self.dataArray = [[QYDBFileManager sharedDBManager] selectAllData:kCarTable];
-        if (self.dataArray) {
+        if (self.dataArray.count != 0) {
             [self loadDataWithBasicParameters];
             [_tableView reloadData];
         }else {
             [self loadDataWithBasicParameters];
             [self loadDataForType:1];
-            _isFristLoad = YES;
         }
+        _isFristLoad = YES;
     }
 } 
 

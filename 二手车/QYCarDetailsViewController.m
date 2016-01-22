@@ -9,6 +9,7 @@
 #import "QYCarDetailsViewController.h"
 #import <AFHTTPSessionManager.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SVProgressHUD.h>
 #import "Header.h"
 #import "QYCarModel.h"
 #import "QYCarInfoModel.h"
@@ -33,7 +34,7 @@
 #pragma mark - ********** life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self createAndAddSubviews];
   
 }
@@ -55,6 +56,7 @@
 
 #pragma mark - ********** 添加视图
 - (void)createAndAddSubviews {
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     self.title = @"车辆详情";
     self.view.backgroundColor = [UIColor whiteColor];
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-40) style:UITableViewStylePlain];
@@ -72,8 +74,6 @@
     CGFloat btnWidth = kScreenWidth/2.0;
     CGFloat btnHeigth = 40;
     CGFloat btnY = kScreenHeight - 40;
-    
-    
     
     // 收藏
     CGFloat btnX = 0;
@@ -125,10 +125,10 @@
 - (void)starBtnClick:(UIButton *)sender {
     if (sender.selected == YES) {
         [[QYDBFileManager sharedDBManager] deleteLocalFromCarId:_carModel.carID tableName:kStarTable];
-        
+        [SVProgressHUD showImage:nil status:@"取消成功"];
     }else {
         [[QYDBFileManager sharedDBManager] saveData2Local:_carModel class:kStarTable];
-        NSLog(@"dfghhgh");
+        [SVProgressHUD showImage:nil status:@"收藏成功"];
     }
     sender.selected = !sender.selected;
 }
@@ -137,11 +137,12 @@
 - (void)loadDataFromnwtWork:(NSString *)url {
     AFHTTPSessionManager *maneger = [AFHTTPSessionManager manager];
     maneger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"application/xml",@"application/xhtml+xml", nil];
-    
+
+    [SVProgressHUD show];
     [maneger GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dict = responseObject[@"success"];
         self.dataDict = [QYCarInfoModel carInfoWithDict:dict];
-
+        [SVProgressHUD dismiss];
         [_tableView reloadData];
         
         //请求推荐车辆
@@ -152,8 +153,12 @@
         [self loadRecommendCars:kRecommendCarsUrl andParameters:parameters];
         _isLoad = YES;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
+        [NSThread sleepForTimeInterval:2];
+        [SVProgressHUD setFont:[UIFont systemFontOfSize:14]];
+        [SVProgressHUD showImage:nil status:@"网络连接失败！请检查网络后重试"];
+        self.view.userInteractionEnabled = NO;
     }];
+    
 }
 
 #pragma mark -  ********* 请求推荐车源

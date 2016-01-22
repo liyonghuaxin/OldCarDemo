@@ -58,11 +58,9 @@
 }
 
 - (void)setBarItem {
-    UIBarButtonItem  *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAllDatas)];
+    UIBarButtonItem  *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAllDatas)];
     self.navigationItem.rightBarButtonItem = deleteAllItem;
 }
-
-
 
 - (void)deleteAllDatas {
     [_dataArray removeAllObjects];

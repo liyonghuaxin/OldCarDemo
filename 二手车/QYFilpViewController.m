@@ -45,6 +45,7 @@
     MTWeak(self, weakSelf);
     _btnsView.selectIndexBlcok = ^(NSInteger index) {
         _currentIndex = index;
+        
         [weakSelf changScrollViewContentOffest:index];
     };
     
@@ -75,13 +76,11 @@
 #pragma mark - 方法
 - (void)changScrollViewContentOffest:(NSInteger)index {
     _scrollView.contentOffset = CGPointMake(index * kScreenWidth, 0);
+    [self showChildVC:index];
 }
 
-#pragma mark - scrollView delegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger index = scrollView.contentOffset.x / _scrollView.frame.size.width;
-    _btnsView.index = index;
-    
+
+- (void)showChildVC:(NSInteger)index {
     // 添加控制器
     QYContentTableVC *currentVC = self.childViewControllers[index];
     currentVC.index = index;
@@ -93,5 +92,16 @@
     currentVC.view.frame = CGRectMake(index * kScreenWidth, 0, kScreenWidth, _scrollView.frame.size.height);
     [_scrollView addSubview:currentVC.view];
 }
+
+
+#pragma mark - scrollView delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSInteger index = scrollView.contentOffset.x / _scrollView.frame.size.width;
+    _btnsView.index = index;
+    
+    [self showChildVC:index];
+}
+
+
 
 @end
