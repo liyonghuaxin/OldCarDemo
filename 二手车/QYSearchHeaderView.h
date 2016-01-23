@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^onBtnClickBlkT)(NSString *brandId, NSString *brandName);
 
 @interface QYSearchHeaderView : UIView
+
+@property (nonatomic, strong) onBtnClickBlkT brandParasBlock;
 
 @end

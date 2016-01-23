@@ -80,7 +80,12 @@
     // 回调
     MTWeak(self, weakSelf);
     cityVC.changeCityBlock = ^{
-        [weakSelf loadDataWithBasicParameters];
+        NSDictionary *cityModel = [[NSUserDefaults standardUserDefaults] objectForKey:kcityModel];
+        [_parameters setValue:cityModel[kCityId] forKey:kCityId];
+        [_parameters setValue:cityModel[kProvId] forKey:kProvId];
+        [_parameters setValue:cityModel[kCityName] forKey:kCityName];
+        // 改变城市的名字
+        _leftbarBtnItem.title = cityModel[kCityName];
         [weakSelf loadDataForType:1];
     };
     
@@ -98,7 +103,6 @@
 - (void)searchCars:(UIBarButtonItem *)sender {
     QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
-    navigaVC.navigationBar.tintColor = [UIColor orangeColor];
     self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:navigaVC animated:YES completion:nil];
 }
@@ -200,14 +204,23 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesId];
                 [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandId forKey:kBrandId];
                 [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandName forKey:kBrandName];
+               // 改变参数
+                [_parameters removeObjectsForKeys:@[kSeriesName,kSeriesId]];
+                [_parameters setObject:brandModel.brandName forKey:kBrandName];
+                [_parameters setObject:brandModel.brandId forKey:kBrandId];
             }else {
                 // 改变颜色
                 [weakSelf changBtnProperty:_brandBtn title:serviceModel.seriesName titleColor:[UIColor orangeColor]];
-                // 参数改变
+                // 持久化
                 [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandId forKey:kBrandId];
                 [[NSUserDefaults standardUserDefaults] setObject:brandModel.brandName forKey:kBrandName];
                 [[NSUserDefaults standardUserDefaults] setObject:serviceModel.series forKey:kSeriesId];
                 [[NSUserDefaults standardUserDefaults] setObject:serviceModel.seriesName forKey:kSeriesName];
+                // 参数改变
+                [_parameters setObject:brandModel.brandName forKey:kBrandName];
+                [_parameters setObject:brandModel.brandId forKey:kBrandId];
+                [_parameters setObject:serviceModel.seriesName forKey:kSeriesName];
+                [_parameters setObject:serviceModel.series forKey:kSeriesId];
             }
         }else {
             // 点击不限品牌时
@@ -216,9 +229,9 @@
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kSeriesId];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kBrandName];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kBrandId];
+            [_parameters removeObjectsForKeys:@[kBrandId,kBrandName,kSeriesId,kSeriesName]];
         }
         // 请求数据
-        [weakSelf loadDataWithBasicParameters];
         [weakSelf loadDataForType:1];
     };
     
@@ -450,6 +463,7 @@
         }
     }
 }
+
 
 // 改变上面四个btn的颜色和文字
 - (void)changBtnProperty:(UIButton *)sender title:(NSString *)title titleColor:(UIColor *)color {

@@ -139,11 +139,12 @@
     maneger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"application/xml",@"application/xhtml+xml", nil];
 
     [SVProgressHUD show];
+
     [maneger GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dict = responseObject[@"success"];
         self.dataDict = [QYCarInfoModel carInfoWithDict:dict];
-        [SVProgressHUD dismiss];
         [_tableView reloadData];
+        [SVProgressHUD dismiss];
         
         //请求推荐车辆
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
