@@ -51,10 +51,11 @@
         return NO;
     }
 
-    int result = [_dataBase executeUpdate:@"create table if not exists starTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"];
-    if (!result) {
-        NSLog(@"create table error -- %@",[_dataBase lastErrorMessage]);
+    if (![_dataBase executeUpdate:@"create table if not exists starTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"]) {
+        [_dataBase close];
+        return NO;
     }
+ 
     [_dataBase close];
     return YES;
 }
@@ -62,14 +63,14 @@
 // 浏览历史记录表
 - (BOOL)createTableWithWatch {
     if (![self.dataBase open]) {
-        NSLog(@"create-- open table error!!%@",[_dataBase lastErrorMessage]);
         return NO;
     }
     
-    int result = [_dataBase executeUpdate:@"create table if not exists watchTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"];
-    if (!result) {
-        NSLog(@"create table error -- %@",[_dataBase lastErrorMessage]);
+    if (![_dataBase executeUpdate:@"create table if not exists watchTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"]) {
+        [_dataBase close];
+        return NO;
     }
+    
     [_dataBase close];
     return YES;
 }
@@ -81,10 +82,11 @@
         return NO;
     }
     
-    int result = [_dataBase executeUpdate:@"create table if not exists carTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"];
-    if (!result) {
-        NSLog(@"create table error -- %@",[_dataBase lastErrorMessage]);
+    if (![_dataBase executeUpdate:@"create table if not exists carTable (id text primary key not null, model_name text not null, price text not null, city_name text not null, mile_age text not null, register_date text not null, vpr text not null, pic_url text not null)"]) {
+        [_dataBase close];
+        return NO;
     }
+  
     [_dataBase close];
     return YES;
 }
@@ -97,23 +99,24 @@
         return NO;
     }
     
-    int result;
-    
     if ([name isEqualToString:kWatchTable]) {
         // 浏览
-       result = [_dataBase executeUpdate:@"insert into watchTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl];
+        if (![_dataBase executeUpdate:@"insert into watchTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl]) {
+            [_dataBase close];
+            return NO;
+        }
     }else if ([name isEqualToString:kStarTable]) {
         // 收藏
-        result = [_dataBase executeUpdate:@"insert into starTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl];
+        if (![_dataBase executeUpdate:@"insert into starTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl]) {
+            [_dataBase close];
+            return NO;
+        }
     }else if ([name isEqualToString:kCarTable]) {
         // 首页列表
-        result = [_dataBase executeUpdate:@"insert into carTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl];
-    }
-
-    if (!result) {
-        NSLog(@"insert error --%@",[_dataBase lastErrorMessage]);
-        [_dataBase close];
-        return NO;
+        if (![_dataBase executeUpdate:@"insert into carTable values (?,?,?,?,?,?,?,?)", model.carID, model.carName, model.price, model.cityName, model.mileage, model.registerDate, model.vpr, model.iconUrl]) {
+            [_dataBase close];
+            return NO;
+        }
     }
 
     [_dataBase close];
@@ -156,6 +159,7 @@
     if (![self.dataBase open]) {
         return nil;
     }
+    
     FMResultSet *set;
     if ([name isEqualToString:kWatchTable]) {
         // 浏览历史
@@ -175,10 +179,7 @@
     }
     
     [_dataBase close];
-    if (carModel) {
-        return carModel;
-    }
-    return nil;
+    return carModel;
 }
 
 #pragma mark - 删除
@@ -188,22 +189,24 @@
         return NO;
     }
     
-    int result;
     if ([tableName isEqualToString:kWatchTable]) {
         // 浏览
-        result = [_dataBase executeUpdate:@"delete from watchTable"];
+        if (![_dataBase executeUpdate:@"delete from watchTable"]) {
+            [_dataBase close];
+            return NO;
+        }
     }else if ([tableName isEqualToString:kStarTable]) {
         // 收藏
-        result = [_dataBase executeUpdate:@"delete from starTable"];
+        if (![_dataBase executeUpdate:@"delete from starTable"]) {
+            [_dataBase close];
+            return NO;
+        }
     }else if ([tableName isEqualToString:kCarTable]) {
         // 首页列表
-        result = [_dataBase executeUpdate:@"delete from carTable"];
-    }
-    
-    if (!result) {
-        NSLog(@"delete error --%@",[_dataBase lastErrorMessage]);
-        [_dataBase close];
-        return NO;
+        if (![_dataBase executeUpdate:@"delete from carTable"]) {
+            [_dataBase close];
+            return NO;
+        }
     }
     
     [_dataBase close];
@@ -216,17 +219,18 @@
         return NO;
     }
     
-    int result;
     if ([tableName isEqualToString:kWatchTable]) {
-        result = [_dataBase executeUpdate:@"delete from watchTable where id = ?", carId];
+        // 浏览表
+        if (![_dataBase executeUpdate:@"delete from watchTable where id = ?", carId]) {
+            [_dataBase close];
+            return NO;
+        }
     }else if ([tableName isEqualToString:kStarTable]) {
-        result = [_dataBase executeUpdate:@"delete from starTable where id = ?", carId];
-    }
-    
-    if (!result) {
-        NSLog(@"delete error --%@",[_dataBase lastErrorMessage]);
-        [_dataBase close];
-        return NO;
+        // 收藏表
+        if (![_dataBase executeUpdate:@"delete from starTable where id = ?", carId]) {
+            [_dataBase close];
+            return NO;
+        }
     }
     
     [_dataBase close];
@@ -240,9 +244,9 @@
         return NO;
     }
     
-    int result = [_dataBase executeUpdate:@"create table if not exists guideTable (id text primary key not null, author text not null, title text not null, title_pic1 text not null, pub text not null, url text not null)"];
-    if (!result) {
-        NSLog(@"create table error -- %@",[_dataBase lastErrorMessage]);
+    if (![_dataBase executeUpdate:@"create table if not exists guideTable (id text primary key not null, author text not null, title text not null, title_pic1 text not null, pub text not null, url text not null)"]) {
+        [_dataBase close];
+        return NO;
     }
     
     [_dataBase close];
@@ -252,14 +256,11 @@
 // 存储
 - (BOOL)saveData2GuideTable:(QYNewsModel *)newsModel {
     if (![self.dataBase open]) {
-        NSLog(@"insert-- open table error!!%@",[_dataBase lastErrorMessage]);
         return NO;
     }
     
-    int result = [_dataBase executeUpdate:@"insert into guideTable values (?,?,?,?,?,?)", newsModel.newsId, newsModel.author, newsModel.title, newsModel.title_pic1, newsModel.pub, newsModel.url];
-    
-    if (!result) {
-        NSLog(@"insert guide error --%@",[_dataBase lastErrorMessage]);
+    if (![_dataBase executeUpdate:@"insert into guideTable values (?,?,?,?,?,?)", newsModel.newsId, newsModel.author, newsModel.title, newsModel.title_pic1, newsModel.pub, newsModel.url]) {
+        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
         return NO;
     }
@@ -273,11 +274,10 @@
     if (![self.dataBase open]) {
         return NO;
     }
-    int result = [_dataBase executeUpdate:@"delete from guideTable"];
     
-    if (!result) {
+    if (![_dataBase executeUpdate:@"delete from guideTable"]) {
+        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
-        NSLog(@"insert guide error --%@",[_dataBase lastErrorMessage]);
         return NO;
     }
     

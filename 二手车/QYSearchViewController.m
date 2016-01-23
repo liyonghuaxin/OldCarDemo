@@ -37,6 +37,8 @@
 @property (nonatomic, assign) NSInteger count;// 表示有多少品牌
 @property (nonatomic, assign) BOOL isSearching;
 
+@property (nonatomic, assign) BOOL isError;// 是否已经错误
+
 @end
 
 @implementation QYSearchViewController
@@ -49,6 +51,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if (!_isLoad) {
         [self loadBrandList];
         [self downloadSeresList];
@@ -71,14 +74,17 @@
 #pragma mark - 请求车系列表
 // 请求车系列表
 - (void)downloadSeresList {
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    
     _brandData = [NSMutableArray array];
     _seresData = [NSMutableArray array];
+    
     for (NSString *key in _keys) {
         for (NSDictionary *dict in _dict[key]) {
             QYBrandModel *brandModel = [[QYBrandModel alloc] initWithDict:dict];
-             [_brandData addObject:brandModel];
+            [_brandData addObject:brandModel];
             NSDictionary *parameters = @{@"brand":brandModel.brandId};
             [manager POST:kServiceListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSArray *keys = responseObject[@"keys"];
@@ -91,8 +97,9 @@
                     }
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [SVProgressHUD setFont:[UIFont systemFontOfSize:14]];
-                [SVProgressHUD showImage:nil status:@"网络连接失败！请检查网络后重试"];
+                if (!_isError) {
+                    _isError = YES;
+                }
             }];
         }
     }

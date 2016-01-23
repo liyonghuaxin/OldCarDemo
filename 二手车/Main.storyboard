@@ -297,7 +297,7 @@
         <scene sceneID="Wcc-hq-Ytd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VwG-dx-i3D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="购车指南" image="label_Raiders.png" selectedImage="label_Raiders_pre.png" id="yqj-Ec-cBt"/>
+                    <tabBarItem key="tabBarItem" title="购车指南" image="tabbar_discover.png" selectedImage="tabbar_discover.png" id="yqj-Ec-cBt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JYw-DN-JNp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -503,8 +503,6 @@
         <image name="guide1.jpg" width="320" height="568"/>
         <image name="guide2.jpg" width="320" height="568"/>
         <image name="guide3.jpg" width="320" height="568"/>
-        <image name="label_Raiders.png" width="24" height="24"/>
-        <image name="label_Raiders_pre.png" width="24" height="24"/>
         <image name="label_buy.png" width="24" height="24"/>
         <image name="label_buy_pre.png" width="24" height="24"/>
         <image name="my_list_browse.png" width="22" height="22"/>
@@ -512,6 +510,7 @@
         <image name="my_list_collection.png" width="22" height="22"/>
         <image name="my_list_ct.png" width="22" height="22"/>
         <image name="my_list_feedback.png" width="22" height="22"/>
+        <image name="tabbar_discover.png" width="23" height="23"/>
         <image name="tabbar_profile.png" width="30" height="30"/>
     </resources>
 </document>

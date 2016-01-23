@@ -118,7 +118,7 @@
 #pragma mark - 事件
 - (void)callClick {
     [QYPhoneManager call:self.dataDict.telStr inViewController:self failBlock:^{
-        NSLog(@"打不通");
+        [SVProgressHUD showImage:nil status:@"对不起! 拨打失败"];
     }];
 }
 

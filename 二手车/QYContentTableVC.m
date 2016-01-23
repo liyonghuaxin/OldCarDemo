@@ -46,7 +46,9 @@ static NSString *Identifier = @"cell";
 - (void)createAndSubviews {
     self.tableView.rowHeight = 90;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(selectControllerIndex)];
     self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshData)];
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"QYCustomNewCell" bundle:nil] forCellReuseIdentifier:Identifier];
 }
 
@@ -58,9 +60,13 @@ static NSString *Identifier = @"cell";
     if (!_isFristLoad) {
         if (_index == 0) {
             NSMutableArray *tempArr = [[QYDBFileManager sharedDBManager] selectAllDataFromGuide];
-            if (tempArr) {
+            if (tempArr.count != 0) {
                 self.data = tempArr;
                 [self.tableView reloadData];
+                _isFristLoad = YES;
+            }else {
+                [self selectControllerIndex];
+                _isFristLoad = YES;
             }
         }else {
             [self selectControllerIndex];
@@ -115,6 +121,7 @@ static NSString *Identifier = @"cell";
                 QYNewsModel *newsModel = [[QYNewsModel alloc] initWithDict:dict];
                 [self.data addObject:newsModel];
                 [self.tableView reloadData];
+                [self.tableView.mj_header endRefreshing];
                 [SVProgressHUD dismiss];
             }
             

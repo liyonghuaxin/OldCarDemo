@@ -22,7 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self setMemeryTitleLabel];
 }
 
@@ -33,12 +36,10 @@
     }else {
         _memeryTitle.text = @"暂无缓存";
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-   
 }
 
 #pragma mark - Table view data source
@@ -50,6 +51,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
         return 1;
+    }
+    if (section == 2) {
+        return 2;
     }
     return 2;
 }
@@ -96,10 +100,11 @@
         }
     }else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"开发者信息" message:@"QQ:839632616\nTel:15737972326\nemail:kangdexingaaaaa@sina.com" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-            [alert addAction:action];
-            [self presentViewController:alert animated:YES completion:nil];
+            NSString *massage = @"email:kdx874704561@icloud.com";
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"开发者信息" message:massage preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }else if (indexPath.row == 1) {
             QYAboutViewController *aboutVC = [[QYAboutViewController alloc] init];
             aboutVC.hidesBottomBarWhenPushed = YES;

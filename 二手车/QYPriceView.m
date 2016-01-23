@@ -9,7 +9,7 @@
 #import "QYPriceView.h"
 #import "Header.h"
 
-@interface QYPriceView ()
+@interface QYPriceView () <UITextFieldDelegate>
 @property (nonatomic, strong) NSArray *dataArray;// 显示的数组
 @property (nonatomic, strong) NSArray *priceArray;// 用于传递的数组
 
@@ -96,6 +96,7 @@
     _lowTextField.textAlignment = NSTextAlignmentCenter;
     _lowTextField.font = [UIFont systemFontOfSize:14];
     [self addLayer:_lowTextField];
+    _lowTextField.delegate = self;
     _lowTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     _highTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX+btnW+spaceX, 40, btnW, btnH)];
@@ -104,6 +105,7 @@
     _highTextField.textAlignment = NSTextAlignmentCenter;
     _highTextField.font = [UIFont systemFontOfSize:14];
     _highTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _highTextField.delegate = self;
     [self addLayer:_highTextField];
     
     
@@ -216,7 +218,10 @@
     }
 }
 
-
+#pragma mark - textFe
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    return YES;
+}
 
 
 

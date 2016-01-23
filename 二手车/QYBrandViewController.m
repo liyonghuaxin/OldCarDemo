@@ -205,6 +205,7 @@ static NSString *cellIdentifier = @"brandCell";
                 _changeBrandBlock(_brandModel, nil);
             }
         }];
+        return;
     }
     
     if (_isAnimation) {
