@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class QYCarModel;
+@class QYNewsModel;
 
 @interface QYDBFileManager : NSObject
 
@@ -28,4 +29,13 @@
 - (BOOL)deleteLocalFromCarId:(NSString *)carId tableName:(NSString *)tableName;
 
 
+// 导航列表
+// 存储
+- (BOOL)saveData2GuideTable:(QYNewsModel *)newsModel;
+
+// 删除
+- (BOOL)deleteDataFromGuideTable;
+
+// 查询
+- (NSMutableArray *)selectAllDataFromGuide;
 @end

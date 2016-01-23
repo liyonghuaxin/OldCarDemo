@@ -8,6 +8,7 @@
 
 #import "QYDetailNewsVC.h"
 #import "Header.h"
+#import <SVProgressHUD.h>
 
 @interface QYDetailNewsVC ()
 
@@ -17,13 +18,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    self.title = @"详情";
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SVProgressHUD show];
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:webView];
     
     NSURL *url = [NSURL URLWithString:[kDetailBaseUrl stringByAppendingString:self.url]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [webView loadRequest:request];
+     [SVProgressHUD dismissWithDelay:2];
 }
 
 - (void)didReceiveMemoryWarning {

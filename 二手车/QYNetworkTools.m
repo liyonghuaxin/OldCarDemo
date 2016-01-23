@@ -12,11 +12,11 @@
 
 + (instancetype)sharedNetworkTools
 {
-    static QYNetworkTools*instance;
+    static QYNetworkTools *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-
+        instance.requestSerializer.timeoutInterval = 15;
         NSURL *url = [NSURL URLWithString:@""];
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];

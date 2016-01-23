@@ -102,9 +102,8 @@
 // 搜素
 - (void)searchCars:(UIBarButtonItem *)sender {
     QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
-    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
-    self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:navigaVC animated:YES completion:nil];
+    searchVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 // buttons 事件
@@ -353,22 +352,22 @@
             self.dataArray = tempArray;
             [_tableView.mj_header endRefreshing];
             [_tableView reloadData];
-            if (tempArray.count == 0) {
-                [SVProgressHUD showImage:nil status:@"非常抱歉，没有找到你想要的车" duration:2 complete:nil];
-                return;
+            if (tempArray.count != 0) {
+                [SVProgressHUD dismiss];
             }
-            [SVProgressHUD dismiss];
         }else if (type == 2) {
             [self.dataArray addObjectsFromArray:tempArray];
             [_tableView.mj_footer endRefreshing];
             [_tableView reloadData];
         }
         
-        // 删除
-        [[QYDBFileManager sharedDBManager] deleteLocalAllData:kCarTable];
-        // 存储到数据库
-        for (QYCarModel *model in tempArray) {
-            [[QYDBFileManager sharedDBManager] saveData2Local:model class:kCarTable];
+        if (tempArray.count != 0) {
+            // 删除
+            [[QYDBFileManager sharedDBManager] deleteLocalAllData:kCarTable];
+            // 存储到数据库
+            for (QYCarModel *model in tempArray) {
+                [[QYDBFileManager sharedDBManager] saveData2Local:model class:kCarTable];
+            }
         }
         
         if (tempArray.count == 0) {

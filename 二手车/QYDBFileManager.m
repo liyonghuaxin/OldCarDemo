@@ -11,6 +11,7 @@
 #import "Header.h"
 #import <AFHTTPSessionManager.h>
 #import "QYCarModel.h"
+#import "QYNewsModel.h"
 
 @interface QYDBFileManager ()
 
@@ -28,6 +29,7 @@
         [manager createTableWithStar];
         [manager createTableWithWatch];
         [manager createTableWithCarlist];
+        [manager createTableWithGuide];
     });
     return manager;
 }
@@ -117,6 +119,8 @@
     [_dataBase close];
     return YES;
 }
+
+
 
 #pragma mark - 查询数据
 // 查询所有
@@ -227,6 +231,74 @@
     
     [_dataBase close];
     return YES;
+}
+
+#pragma mark - 导航页面
+// 指南首页表
+- (BOOL)createTableWithGuide {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    int result = [_dataBase executeUpdate:@"create table if not exists guideTable (id text primary key not null, author text not null, title text not null, title_pic1 text not null, pub text not null, url text not null)"];
+    if (!result) {
+        NSLog(@"create table error -- %@",[_dataBase lastErrorMessage]);
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 存储
+- (BOOL)saveData2GuideTable:(QYNewsModel *)newsModel {
+    if (![self.dataBase open]) {
+        NSLog(@"insert-- open table error!!%@",[_dataBase lastErrorMessage]);
+        return NO;
+    }
+    
+    int result = [_dataBase executeUpdate:@"insert into guideTable values (?,?,?,?,?,?)", newsModel.newsId, newsModel.author, newsModel.title, newsModel.title_pic1, newsModel.pub, newsModel.url];
+    
+    if (!result) {
+        NSLog(@"insert guide error --%@",[_dataBase lastErrorMessage]);
+        [_dataBase close];
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 删除
+- (BOOL)deleteDataFromGuideTable {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    int result = [_dataBase executeUpdate:@"delete from guideTable"];
+    
+    if (!result) {
+        [_dataBase close];
+        NSLog(@"insert guide error --%@",[_dataBase lastErrorMessage]);
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 查询
+- (NSMutableArray *)selectAllDataFromGuide {
+    if (![self.dataBase open]) {
+        return nil;
+    }
+    FMResultSet *set = [_dataBase executeQuery:@"select *from guideTable"];
+    
+    NSMutableArray *tempArr = [NSMutableArray array];
+    while ([set next]) {
+        QYNewsModel *model = [[QYNewsModel alloc] initWithDict:[set resultDictionary]];
+        [tempArr addObject:model];
+    }
+    [_dataBase close];
+    return tempArr;
 }
 
 

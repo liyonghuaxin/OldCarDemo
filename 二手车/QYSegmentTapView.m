@@ -20,7 +20,7 @@
 - (instancetype)initWithButtonsArr:(NSArray *)arr frame:(CGRect)frame {
     if (self = [super init]) {
         self.frame = frame;
-        self.backgroundColor = [UIColor colorWithRed:245.0/255 green:255.0/255 blue:250.0/255 alpha:1];
+        self.backgroundColor = [UIColor colorWithRed:244.0/255 green:244.0/255 blue:244.0/255 alpha:1];
         
         _selectColor = [UIColor orangeColor];
         [self createAndAddsubviews:arr];

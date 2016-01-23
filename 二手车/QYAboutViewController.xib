@@ -22,7 +22,7 @@
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="zYs-OK-Hz5"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-che-2.png" translatesAutoresizingMaskIntoConstraints="NO" id="0Zc-uk-XlC">
@@ -32,9 +32,13 @@
                         <constraint firstAttribute="width" constant="64" id="cVk-9o-Ell"/>
                     </constraints>
                 </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="       星星二手车是一个人性化的查询品台，有最详细的全国二手车信息，为你提供了大量的参考数据，希望你能找到你心仪的爱车。" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4wV-G8-Nda">
-                    <rect key="frame" x="10" y="226" width="580" height="325"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="       星星二手车是一个人性化的查询平台，有最详细的全国二手车信息，为你提供了大量的参考数据，希望你能找到你心仪的爱车。" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vZg-HH-Gxw">
+                    <rect key="frame" x="180" y="223" width="240" height="128"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="128" id="axg-0u-5Yk"/>
+                        <constraint firstAttribute="width" constant="240" id="qyi-aY-K2u"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
@@ -42,10 +46,8 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="0Zc-uk-XlC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0Ew-Pw-xyl"/>
-                <constraint firstItem="4wV-G8-Nda" firstAttribute="top" secondItem="Nhy-ix-X2o" secondAttribute="bottom" constant="17" id="C9H-KR-Pek"/>
-                <constraint firstItem="4wV-G8-Nda" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="CKs-zf-XNp"/>
-                <constraint firstAttribute="trailing" secondItem="4wV-G8-Nda" secondAttribute="trailing" constant="10" id="E1n-r8-y3k"/>
-                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="4wV-G8-Nda" secondAttribute="bottom" constant="50" id="VUJ-fa-YVq"/>
+                <constraint firstItem="vZg-HH-Gxw" firstAttribute="top" secondItem="Nhy-ix-X2o" secondAttribute="bottom" constant="15" id="9jS-F0-Jrj"/>
+                <constraint firstItem="vZg-HH-Gxw" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="iV0-ib-5Ow"/>
                 <constraint firstItem="Nhy-ix-X2o" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tHI-VQ-AQy"/>
                 <constraint firstItem="0Zc-uk-XlC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="103" id="ubU-Wx-XWq"/>
                 <constraint firstItem="Nhy-ix-X2o" firstAttribute="top" secondItem="0Zc-uk-XlC" secondAttribute="bottom" constant="20" id="yN4-3s-81I"/>

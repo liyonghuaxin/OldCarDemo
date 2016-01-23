@@ -32,7 +32,7 @@
 
 - (NSArray *)titleArray {
     if (_titleArray == nil) {
-        _titleArray = @[@"全部文章",@"购车常识",@"选车导购",@"二手车实拍"];
+        _titleArray = @[@"推荐",@"导购",@"行业"];
     }
     return _titleArray;
 }
@@ -78,7 +78,6 @@
     _scrollView.contentOffset = CGPointMake(index * kScreenWidth, 0);
     [self showChildVC:index];
 }
-
 
 - (void)showChildVC:(NSInteger)index {
     // 添加控制器
