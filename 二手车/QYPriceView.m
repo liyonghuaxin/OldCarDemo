@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UIButton *selectBtn;// 选中的btn
 
+@property (nonatomic, strong) UIButton *choseBtn;
+
 @end
 
 @implementation QYPriceView
@@ -98,7 +100,6 @@
     [self addLayer:_lowTextField];
     _lowTextField.delegate = self;
     _lowTextField.keyboardType = UIKeyboardTypeNumberPad;
-    
     _highTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX+btnW+spaceX, 40, btnW, btnH)];
     [priceView addSubview:_highTextField];
     _highTextField.placeholder = @"最高";
@@ -110,19 +111,24 @@
     
     
     //确定按钮
-    UIButton *choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [priceView addSubview:choseBtn];
-    choseBtn.frame = CGRectMake(marginX+(btnW+spaceX)*2, 40, btnW, btnH);
-    choseBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [choseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    choseBtn.tag = 499;
-    [choseBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [choseBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    choseBtn.layer.cornerRadius = 5;
-    if (choseBtn.tag == selectBtnTag) {
-        [choseBtn setBackgroundColor:[UIColor orangeColor]];
+    _choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [priceView addSubview:_choseBtn];
+    _choseBtn.frame = CGRectMake(marginX+(btnW+spaceX)*2, 40, btnW, btnH);
+    _choseBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_choseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _choseBtn.tag = 499;
+    [_choseBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [_choseBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _choseBtn.layer.cornerRadius = 5;
+    if (_choseBtn.tag == selectBtnTag) {
+        [_choseBtn setBackgroundColor:[UIColor orangeColor]];
+         NSString *priceStr = [[NSUserDefaults standardUserDefaults] stringForKey:kPrice];
+        NSArray *separeArr = [priceStr componentsSeparatedByString:@"-"];
+        _lowTextField.text = separeArr.firstObject;
+        _highTextField.text = separeArr.lastObject;
     }else {
-        [choseBtn setBackgroundColor:[UIColor lightGrayColor]];
+        [_choseBtn setBackgroundColor:[UIColor lightGrayColor]];
+        _choseBtn.userInteractionEnabled = NO;
     }
     
     //添加修饰的view 和 label
@@ -177,27 +183,14 @@
 #pragma mark - 点击事件
 // 自定义价格
 - (void)btnClick:(UIButton *)sender {
-    NSString *lowPrice = _lowTextField.text;
-    NSString *highPrice = _highTextField.text;
-    
-    if ([lowPrice isEqualToString:@""] | [highPrice isEqualToString:@""] ) {
-        return;
-    }
-    
-    if ([lowPrice intValue] < 0 | [highPrice intValue] < 0 ) {
-        return;
-    }
-    
-    if ([lowPrice intValue] >= [highPrice intValue]) {
-        return;
-    }
+    NSString *priceStr = [NSString stringWithFormat:@"%@-%@", _lowTextField.text, _highTextField.text];
+     NSString *titleStr = [NSString stringWithFormat:@"%@-%@万", _lowTextField.text, _highTextField.text];
     
     // 保存选中的btn 下次进入时打开
     [[NSUserDefaults standardUserDefaults] setObject:@499 forKey:kSelectBtnTag];
+    [[NSUserDefaults standardUserDefaults] setObject:priceStr forKey:kPrice];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSString *priceStr = [NSString stringWithFormat:@"%@-%@", _lowTextField.text, _highTextField.text];
-    NSString *titleStr = [NSString stringWithFormat:@"%@-%@万", _lowTextField.text, _highTextField.text];
     if (_changePriceBlock) {
         _changePriceBlock(priceStr, titleStr);
     }
@@ -220,10 +213,50 @@
 
 #pragma mark - textFe
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (range.location > 4) {
+        return NO;
+    }
+
+    NSString *lowPrice;
+    NSString *highPrice;
+    
+    // 判断当前是删除还是在输入数据5
+    if (![string isEqualToString:@""]) {
+        //当前在添加
+        // 判断当前是哪个在编辑
+        if (_lowTextField.editing == YES) {
+            lowPrice = [_lowTextField.text stringByAppendingString:string];
+            highPrice = _highTextField.text;
+        }else {
+            lowPrice = _lowTextField.text;
+            highPrice = [_highTextField.text stringByAppendingString:string];
+        }
+    }else {
+        // 删除
+        if (_lowTextField.editing == YES) {
+            lowPrice = [_lowTextField.text substringWithRange:NSMakeRange(0, range.location)];
+            highPrice = _highTextField.text;
+        }else {
+            lowPrice = _lowTextField.text;
+            highPrice = [_highTextField.text substringWithRange:NSMakeRange(0, range.location)];
+        }
+    }
+    
+    /** 
+     *  判断输入框中数字是否合法
+     *  输入框中不能为空
+     *  价格低的输入框要小于高价格的输入中的数字
+     */
+    if (![lowPrice isEqualToString:@""] && ![highPrice isEqualToString:@""] && [lowPrice intValue] < [highPrice intValue]) {
+        [_choseBtn setBackgroundColor:[UIColor orangeColor]];
+        _choseBtn.userInteractionEnabled = YES;
+    }else {
+        [_choseBtn setBackgroundColor:[UIColor lightGrayColor]];
+        _choseBtn.userInteractionEnabled = NO;
+    }
+    
     return YES;
 }
-
-
 
 
 @end

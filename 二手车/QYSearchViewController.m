@@ -206,6 +206,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.tintColor = [UIColor grayColor];
     cell.textLabel.text = _data[indexPath.row];
     return cell;
 }

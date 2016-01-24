@@ -101,6 +101,10 @@
 
 // 搜素
 - (void)searchCars:(UIBarButtonItem *)sender {
+    if (_openView) {
+        [_openView removeFromSuperview];
+        _openBtnIndex = 0;
+    }
     QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
     searchVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:searchVC animated:YES];

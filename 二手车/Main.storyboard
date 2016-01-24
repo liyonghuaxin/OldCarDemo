@@ -135,11 +135,11 @@
             </objects>
             <point key="canvasLocation" x="-1772" y="-1647"/>
         </scene>
-        <!--买车-->
+        <!--首页-->
         <scene sceneID="F8D-kM-v1E">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="k4M-Fw-11T" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="买车" image="label_buy.png" selectedImage="label_buy_pre.png" id="R8N-iC-lgf"/>
+                    <tabBarItem key="tabBarItem" title="首页" image="tabbar_shouye.png" id="R8N-iC-lgf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="e8m-bf-aA0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -297,7 +297,7 @@
         <scene sceneID="Wcc-hq-Ytd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VwG-dx-i3D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="指南" image="tabbar_discover.png" selectedImage="tabbar_discover.png" id="yqj-Ec-cBt"/>
+                    <tabBarItem key="tabBarItem" title="指南" image="tabbar_discover.png" id="yqj-Ec-cBt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JYw-DN-JNp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -335,7 +335,7 @@
         <scene sceneID="w6V-5Q-CKL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OZg-mK-AWv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" image="tabbar_profile.png" id="fZT-rC-bKo"/>
+                    <tabBarItem key="tabBarItem" title="我" image="tabbar_me.png" id="fZT-rC-bKo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ewb-1G-5ar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -396,7 +396,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="my_list_browse.png" id="Xyt-xz-K7B">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="my_list_order_history.png" id="Xyt-xz-K7B">
                                                     <rect key="frame" x="15" y="10" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -503,14 +503,13 @@
         <image name="guide1.jpg" width="320" height="568"/>
         <image name="guide2.jpg" width="320" height="568"/>
         <image name="guide3.jpg" width="320" height="568"/>
-        <image name="label_buy.png" width="24" height="24"/>
-        <image name="label_buy_pre.png" width="24" height="24"/>
-        <image name="my_list_browse.png" width="22" height="22"/>
         <image name="my_list_business.png" width="22" height="22"/>
         <image name="my_list_collection.png" width="22" height="22"/>
         <image name="my_list_ct.png" width="22" height="22"/>
         <image name="my_list_feedback.png" width="22" height="22"/>
+        <image name="my_list_order_history.png" width="22" height="22"/>
         <image name="tabbar_discover.png" width="23" height="23"/>
-        <image name="tabbar_profile.png" width="30" height="30"/>
+        <image name="tabbar_me.png" width="23" height="23"/>
+        <image name="tabbar_shouye.png" width="23" height="23"/>
     </resources>
 </document>
