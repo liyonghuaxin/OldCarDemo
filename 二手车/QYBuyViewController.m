@@ -345,6 +345,7 @@
     if (type == 1) {
         [SVProgressHUD show];
     }
+    [QYNetworkTools sharedNetworkTools].requestSerializer.timeoutInterval = 10;
     [[QYNetworkTools sharedNetworkTools] POST:kCarsListUrl parameters:_parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *tempArray = [[QYCarModel alloc] objectArrayWithKeyValuesArray:responseObject];
 
@@ -493,6 +494,15 @@
         }
         _isFristLoad = YES;
     }
-} 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
 
 @end

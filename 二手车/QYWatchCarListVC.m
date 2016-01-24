@@ -13,6 +13,7 @@
 #import "QYCarTableViewCell.h"
 #import "QYCarDetailsViewController.h"
 #import <MJRefresh.h>
+#import <SVProgressHUD.h>
 
 @interface QYWatchCarListVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -31,11 +32,13 @@
     [self createAndAddSubviews];
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-   
 }
 
 - (void)loadDataFromLocal {
@@ -63,11 +66,14 @@
 }
 
 - (void)deleteAllDatas {
-    [_dataArray removeAllObjects];
-    [[QYDBFileManager sharedDBManager] deleteLocalAllData:kWatchTable];
-    [_tableView.mj_header endRefreshing];
-    self.navigationItem.rightBarButtonItem = nil;
-    [_tableView reloadData];
+    if ([[QYDBFileManager sharedDBManager] deleteLocalAllData:kWatchTable]) {
+        [_dataArray removeAllObjects];
+        [_tableView.mj_header endRefreshing];
+        self.navigationItem.rightBarButtonItem = nil;
+        [_tableView reloadData];
+        [SVProgressHUD showImage:nil status:@"浏览记录已清空"];
+    }
+    
 }
 
 #pragma mark - table view dataSource
@@ -153,7 +159,6 @@
             [[QYDBFileManager sharedDBManager] deleteLocalFromCarId:model.carID tableName:kWatchTable];
         }
     }
-    
 }
 
 

@@ -13,6 +13,7 @@
 #import "QYCarTableViewCell.h"
 #import "QYCarDetailsViewController.h"
 #import <MJRefresh.h>
+#import <SVProgressHUD.h>
 
 @interface QYStarViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -30,9 +31,14 @@
     [self loadDataFromLocal];
     [self createAndAddSubviews];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
 
 #pragma mark - 添加子视图
@@ -43,7 +49,6 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDataFromLocal)];
-    
 }
 
 - (void)loadDataFromLocal {
@@ -63,11 +68,12 @@
 }
 
 - (void)deleteAllDatas {
-    [_dataArray removeAllObjects];
-    [[QYDBFileManager sharedDBManager] deleteLocalAllData:kStarTable];
-    
-    self.navigationItem.rightBarButtonItem = nil;
-    [_tableView reloadData];
+    if ([[QYDBFileManager sharedDBManager] deleteLocalAllData:kStarTable]) {
+        self.navigationItem.rightBarButtonItem = nil;
+        [_dataArray removeAllObjects];
+        [_tableView reloadData];
+        [SVProgressHUD showImage:nil status:@"已清空"];
+    }
 }
 
 #pragma mark - table view dataSource
@@ -91,12 +97,13 @@
         cell.model = _dataArray[indexPath.row];
         return cell;
     }
+    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"newCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-200)/2, 200, 200, 20)];
     title.textAlignment = NSTextAlignmentCenter;
-    title.text = @"亲! 你当前还没有收藏~";
+    title.text = @"亲! 你当前还没有收藏记录~";
     title.font = [UIFont systemFontOfSize:12];
     title.tintColor = [UIColor lightGrayColor];
     title.alpha = 0.7;
@@ -153,7 +160,6 @@
             [[QYDBFileManager sharedDBManager] deleteLocalFromCarId:model.carID tableName:kStarTable];
         }
     }
-    
 }
 
 

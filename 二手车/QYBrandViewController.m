@@ -47,6 +47,11 @@ static NSString *cellIdentifier = @"brandCell";
     [self loadBrandList];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
 #pragma mark - **********  添加子视图
 - (void)createAndAddSubviews {
 
@@ -88,6 +93,7 @@ static NSString *cellIdentifier = @"brandCell";
 - (void)loadServiceList:(NSDictionary *)parameters {
     [SVProgressHUD show];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 10;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
     [manager POST:kServiceListUrl parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *keys = responseObject[@"keys"];

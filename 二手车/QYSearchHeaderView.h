@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 typedef void (^onBtnClickBlkT)(NSString *brandId, NSString *brandName);
+typedef void(^onDeleteBtnClick)(void);
 
 @interface QYSearchHeaderView : UIView
 
 @property (nonatomic, strong) onBtnClickBlkT brandParasBlock;
+@property (nonatomic, strong) onDeleteBtnClick deleteRecentLooksBlock;
 
 @end

@@ -43,6 +43,15 @@ static NSString *Identifier = @"cell";
     [self createAndSubviews];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
 - (void)createAndSubviews {
     self.tableView.rowHeight = 90;
     self.tableView.showsHorizontalScrollIndicator = NO;

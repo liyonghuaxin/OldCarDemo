@@ -84,6 +84,7 @@
     [deleteBtn setTitle:@"清除浏览历史" forState:UIControlStateNormal];
     deleteBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [deleteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [deleteBtn addTarget:self action:@selector(deleteAllRecntLooksData) forControlEvents:UIControlEventTouchUpInside];
     
     //添加一条线
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 179, kScreenWidth, 1)];
@@ -110,6 +111,7 @@
 
 #pragma mark - 点击事件
 
+// 选择热门城市
 - (void)buttonsClick:(UIButton *)sender {
     //这里的index就是品牌的 id
     NSInteger index = sender.tag - 300;
@@ -117,7 +119,11 @@
     _brandParasBlock(dict[@"id"], dict[@"name"]);
 }
 
-
-
+// 删除所有的浏览历史
+- (void)deleteAllRecntLooksData {
+    if (_deleteRecentLooksBlock) {
+        _deleteRecentLooksBlock();
+    }
+}
 
 @end

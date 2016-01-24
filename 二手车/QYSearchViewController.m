@@ -14,6 +14,7 @@
 #import <AFHTTPSessionManager.h>
 #import "QYSearchCarListVC.h"
 #import <SVProgressHUD.h>
+#import "QYDBFileManager.h"
 
 @interface QYSearchViewController () <UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate>
 
@@ -21,8 +22,8 @@
 @property (nonatomic, strong) QYSearchHeaderView *HeaderView;// 热门的view
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSString *filePath; // 最近浏览的路径
-@property (nonatomic, strong) NSMutableArray *recentLooks;//最近浏览的数据
+@property (nonatomic, strong) NSMutableArray *recentLookDatas;//最近浏览的数据
+@property (nonatomic, strong) NSMutableArray *recentLookKeys;// 最近浏览的数据的id
 
 @property (nonatomic, strong) NSMutableArray *keys;// 品牌的键
 @property (nonatomic, strong) NSMutableDictionary *dict;
@@ -53,22 +54,53 @@
     [super viewWillAppear:animated];
     
     if (!_isLoad) {
+        [self loadRecentDataList];
         [self loadBrandList];
         [self downloadSeresList];
         _isLoad = YES;
     }
 }
 
-#pragma mark - 加载最近浏览的数据
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+
+#pragma mark - 加载数据
+// 加载品牌数据
 - (void)loadBrandList {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"brand" ofType:@"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-    _data = [NSMutableArray array];
-    
+
     _dict = [NSMutableDictionary dictionary];
     _keys = [NSMutableArray array];
     _dict = dict[@"brand"];
     _keys = dict[@"initial"];
+}
+
+// 加载最近浏览的品牌或车系
+- (void)loadRecentDataList {
+    _data = [NSMutableArray array];
+    _dataID = [NSMutableArray array];
+    // 加载最近浏览的品牌
+    NSMutableArray *tempArr1 = [[QYDBFileManager sharedDBManager] selectAllSearchData:kSearchBrandTable];
+    _count = tempArr1.count;
+    for (QYBrandModel *brandModel in tempArr1) {
+        [_data addObject:brandModel.brandName];
+        [_dataID addObject:brandModel.brandId];
+    }
+    
+    // 加载最近浏览的车系
+    NSMutableArray *tempArr2 = [[QYDBFileManager sharedDBManager] selectAllSearchData:ksearchSeriesTbale];
+    for (QYServiceModel *seriesModel in tempArr2) {
+        [_data addObject:seriesModel.seriesName];
+        [_dataID addObject:seriesModel.series];
+    }
 }
 
 #pragma mark - 请求车系列表
@@ -116,8 +148,9 @@
     _searchController.searchBar.showsCancelButton = NO;
     _searchController.searchBar.placeholder = @"请输入品牌/车系";
     //searchBar添加在导航栏上
+    [self dismissViewControllerAnimated:NO completion:nil];
     self.navigationItem.titleView = _searchController.searchBar;
-    
+  
     // 创建并添加tableView
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
@@ -131,6 +164,7 @@
     _HeaderView = [[QYSearchHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 180)];
     _tableView.tableHeaderView = _HeaderView;
     MTWeak(self, weakSelf);
+    // 热门品牌选择1
     _HeaderView.brandParasBlock = ^(NSString *brandId, NSString *brandName) {
         QYSearchCarListVC *carListVC = [[QYSearchCarListVC alloc] init];
         carListVC.brandId = brandId;
@@ -138,20 +172,28 @@
         carListVC.type = 1;
         [weakSelf.navigationController pushViewController:carListVC animated:YES];
     };
+    // 删除最近浏览的数据
+    MTWeak(_tableView, weakTableView);
+    _HeaderView.deleteRecentLooksBlock = ^{
+        if ([[QYDBFileManager sharedDBManager] deleteLocalAllSearchData]) {
+            [weakSelf loadRecentDataList];
+             [weakTableView reloadData];
+            [SVProgressHUD showImage:nil status:@"已清空"];
+        }else {
+            [SVProgressHUD showImage:nil status:@"清除失败"];
+        }
+    };
 }
 
 #pragma mark - 点击事件
 - (void)backToSuperViewController {
-    [_searchController dismissViewControllerAnimated:YES completion:nil];
+    [_searchController dismissViewControllerAnimated:nil completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - table view dataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (!_isSearching) {
-        return 0;
-    }
     return _data.count ;
 }
 
@@ -163,9 +205,8 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    if (_isSearching == YES) {
-        cell.textLabel.text = _data[indexPath.row];
-    }
+
+    cell.textLabel.text = _data[indexPath.row];
     return cell;
 }
 
@@ -173,18 +214,22 @@
 // 选中cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     QYSearchCarListVC *carListVC = [[QYSearchCarListVC alloc] init];
+    NSDictionary *dict = @{@"id":_dataID[indexPath.row], @"name":_data[indexPath.row]};
     
     if (indexPath.row < _count) {
         carListVC.brandName = _data[indexPath.row];
         carListVC.brandId = _dataID[indexPath.row];
         carListVC.type = 1;
+        // 存到数据库
+         [[QYDBFileManager sharedDBManager] saveSearchDataWithbrandTable:[[QYBrandModel alloc] initWithDict:dict]];
     }else {
         carListVC.seriesName = _data[indexPath.row];
         carListVC.seriesId = _dataID[indexPath.row];
         carListVC.type = 2;
+        [[QYDBFileManager sharedDBManager] saveSearchDataWithSeriesTable:[[QYServiceModel alloc] initWithDict:dict]]
+        ;
     }
     [self.navigationController pushViewController:carListVC animated:YES];
-   
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -192,7 +237,7 @@
     if ([searchController.searchBar.text isEqualToString:@""]) {
         _isSearching = NO;
         _tableView.tableHeaderView = _HeaderView;
-        _data = nil;
+        [self loadRecentDataList];
         [_tableView reloadData];
         return;
     }

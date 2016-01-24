@@ -30,6 +30,10 @@
     [self createAndAddSubViews];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
 - (NSArray *)titleArray {
     if (_titleArray == nil) {
         _titleArray = @[@"推荐",@"导购",@"行业"];

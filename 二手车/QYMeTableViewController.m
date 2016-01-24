@@ -29,6 +29,11 @@
     [self setMemeryTitleLabel];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+
 - (void)setMemeryTitleLabel {
     CGFloat size = [[SDImageCache sharedImageCache] getSize];
     if (size > 0) {
@@ -36,10 +41,6 @@
     }else {
         _memeryTitle.text = @"暂无缓存";
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Table view data source

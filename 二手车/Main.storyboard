@@ -293,11 +293,11 @@
             </objects>
             <point key="canvasLocation" x="-33" y="-1124"/>
         </scene>
-        <!--购车指南-->
+        <!--指南-->
         <scene sceneID="Wcc-hq-Ytd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VwG-dx-i3D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="购车指南" image="tabbar_discover.png" selectedImage="tabbar_discover.png" id="yqj-Ec-cBt"/>
+                    <tabBarItem key="tabBarItem" title="指南" image="tabbar_discover.png" selectedImage="tabbar_discover.png" id="yqj-Ec-cBt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JYw-DN-JNp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -312,7 +312,7 @@
             </objects>
             <point key="canvasLocation" x="-676" y="-409"/>
         </scene>
-        <!--购车指南-->
+        <!--指南-->
         <scene sceneID="lG9-Ba-vKb">
             <objects>
                 <viewController id="MOL-II-TWq" customClass="QYFilpViewController" sceneMemberID="viewController">
@@ -325,7 +325,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="购车指南" id="bgG-AM-9DU"/>
+                    <navigationItem key="navigationItem" title="指南" id="bgG-AM-9DU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hJD-fo-N3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -350,7 +350,7 @@
             </objects>
             <point key="canvasLocation" x="-676" y="369"/>
         </scene>
-        <!--个人中心-->
+        <!--我-->
         <scene sceneID="aKX-40-rJL">
             <objects>
                 <tableViewController id="tsG-qS-PQh" customClass="QYMeTableViewController" sceneMemberID="viewController">
@@ -489,7 +489,7 @@
                             <outlet property="delegate" destination="tsG-qS-PQh" id="2DZ-uf-CqP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="个人中心" id="KRm-Br-50A"/>
+                    <navigationItem key="navigationItem" title="我" id="KRm-Br-50A"/>
                     <connections>
                         <outlet property="memeryTitle" destination="LHY-Cs-ncD" id="SkV-Rc-jKe"/>
                     </connections>

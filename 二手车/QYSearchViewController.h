@@ -10,4 +10,5 @@
 
 @interface QYSearchViewController : UIViewController
 
+
 @end

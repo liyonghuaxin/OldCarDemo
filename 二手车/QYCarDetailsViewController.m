@@ -34,10 +34,9 @@
 #pragma mark - ********** life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self createAndAddSubviews];
-  
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -47,6 +46,11 @@
         //请求数据
         [self loadDataFromnwtWork:url];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,7 +141,7 @@
 - (void)loadDataFromnwtWork:(NSString *)url {
     AFHTTPSessionManager *maneger = [AFHTTPSessionManager manager];
     maneger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"application/xml",@"application/xhtml+xml", nil];
-
+    maneger.requestSerializer.timeoutInterval = 10;
     [SVProgressHUD show];
 
     [maneger GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -159,7 +163,6 @@
         [SVProgressHUD showImage:nil status:@"网络连接失败！请检查网络后重试"];
         self.view.userInteractionEnabled = NO;
     }];
-    
 }
 
 #pragma mark -  ********* 请求推荐车源

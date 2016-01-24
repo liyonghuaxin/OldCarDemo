@@ -12,6 +12,8 @@
 #import <AFHTTPSessionManager.h>
 #import "QYCarModel.h"
 #import "QYNewsModel.h"
+#import "QYBrandModel.h"
+#import "QYServiceModel.h"
 
 @interface QYDBFileManager ()
 
@@ -30,6 +32,9 @@
         [manager createTableWithWatch];
         [manager createTableWithCarlist];
         [manager createTableWithGuide];
+        
+        [manager createTableWithSearchWithSeries];
+        [manager createTableWithSearchWithBrands];
     });
     return manager;
 }
@@ -231,6 +236,124 @@
             [_dataBase close];
             return NO;
         }
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+#pragma mark - 最近搜索的品牌和车系
+
+/**
+ *  解释一下 为什么不用一个表存这两个数据
+ *  因为在请求参数时参数的键对应不一样
+ *  必须要判断 不然会发生错误
+ */
+
+// 最近查询的品牌
+- (BOOL)createTableWithSearchWithBrands {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    if (![_dataBase executeUpdate:@"create table if not exists searchBrand (id text primary key not null,name text not null)"]) {
+        [_dataBase close];
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 最近查询的车系
+- (BOOL)createTableWithSearchWithSeries {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    if (![_dataBase executeUpdate:@"create table if not exists searchSeries (id text primary key not null,name text not null)"]) {
+        [_dataBase close];
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 存储
+- (BOOL)saveSearchDataWithbrandTable:(QYBrandModel *)brandModel {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    if (![_dataBase executeUpdate:@"insert into searchBrand values (?,?)", brandModel.brandId, brandModel.brandName]) {
+        NSLog(@"%@", [_dataBase lastErrorMessage]);
+        [_dataBase close];
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+- (BOOL)saveSearchDataWithSeriesTable:(QYServiceModel *)seriesModel {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    if (![_dataBase executeUpdate:@"insert into searchSeries values (?,?)", seriesModel.series, seriesModel.seriesName]) {
+        NSLog(@"%@", [_dataBase lastErrorMessage]);
+        [_dataBase close];
+        return NO;
+    }
+    
+    [_dataBase close];
+    return YES;
+}
+
+// 查询
+- (NSMutableArray *)selectAllSearchData:(NSString *)tableName {
+    if (![self.dataBase open]) {
+        return nil;
+    }
+    
+    FMResultSet *set;
+    NSMutableArray *tempArr = [NSMutableArray array];
+    
+    if ([tableName isEqualToString:kSearchBrandTable]) {
+        set = [_dataBase executeQuery:@"select *from searchBrand"];
+        while ([set next]) {
+            QYBrandModel *model = [[QYBrandModel alloc] initWithDict:[set resultDictionary]];
+            [tempArr addObject:model];
+        }
+    }else if ([tableName isEqualToString:ksearchSeriesTbale]) {
+        set = [_dataBase executeQuery:@"select *from searchSeries"];
+        while ([set next]) {
+            QYServiceModel *model = [[QYServiceModel alloc] initWithDict:[set resultDictionary]];
+            [tempArr addObject:model];
+        }
+    }
+    
+    [_dataBase close];
+    return tempArr;
+}
+
+// 删除
+- (BOOL)deleteLocalAllSearchData {
+    if (![self.dataBase open]) {
+        return NO;
+    }
+    
+    // 删除品牌
+    if (![_dataBase executeUpdate:@"delete from searchBrand"]) {
+        [_dataBase close];
+        return NO;
+    }
+    
+    // 删除车系
+    if (![_dataBase executeUpdate:@"delete from searchSeries"]) {
+        [_dataBase close];
+        return NO;
     }
     
     [_dataBase close];

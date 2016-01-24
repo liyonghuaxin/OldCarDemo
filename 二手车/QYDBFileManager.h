@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 @class QYCarModel;
 @class QYNewsModel;
+@class QYBrandModel;
+@class QYServiceModel;
 
 @interface QYDBFileManager : NSObject
 
@@ -38,4 +40,17 @@
 
 // 查询
 - (NSMutableArray *)selectAllDataFromGuide;
+
+// 搜索历史
+// 存储
+- (BOOL)saveSearchDataWithbrandTable:(QYBrandModel *)brandModel;
+- (BOOL)saveSearchDataWithSeriesTable:(QYServiceModel *)seriesModel;
+
+// 查询
+- (NSMutableArray *)selectAllSearchData:(NSString *)tableName;
+
+// 删除
+- (BOOL)deleteLocalAllSearchData;
+
+
 @end

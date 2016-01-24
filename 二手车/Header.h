@@ -58,13 +58,15 @@
 #define kNoDesc      @"暂无描述"
 
 //数据库名
-#define DBNAME       @"car.db"
+#define DBNAME                 @"car.db"
 
 // 表名
-#define kWatchTable  @"watchTable"
-#define kStarTable   @"starTable"
-#define kCarTable    @"carTable"
+#define kWatchTable           @"watchTable"
+#define kStarTable            @"starTable"
+#define kCarTable             @"carTable"
 
+#define kSearchBrandTable     @"searchBrand"
+#define ksearchSeriesTbale    @"searchSeries"
 
 // 购车指南
 #define kGuideBaseUrl   @"http://auto.news18a.com/init.php?m=price&c=index&a=getData"
