@@ -26,7 +26,7 @@
 #pragma mark - 初始化 view
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        _dataArray = @[@"不限",@"3万以下",@"3-5万",@"5-10万",@"10-15万",@"15-20万",@"20-25万",@"25-30万",@"30-50万",@"50-100万",@"100-200万",@"200万以上"];
+        _dataArray = @[@"不限",@"3万以下",@"3-5万",@"5-10万",@"10-15万",@"15-20万",@"20-30万", @"30-50万",@"50万以上"];
         
         // 添加子视图
         [self createAndAddSubviews];
@@ -37,7 +37,7 @@
 #pragma mark - 懒加载
 - (NSArray *)priceArray {
     if (_priceArray == nil) {
-        _priceArray = @[@"0",@"0-3",@"3-5",@"5-10",@"10-15",@"15-20",@"20-25",@"25-30",@"30-50",@"50-100",@"100-200",@"200"];
+        _priceArray = @[@"0",@"0-3",@"3-5",@"5-10",@"10-15",@"15-20",@"20-30",@"30-50",@"50"];
     }
     return _priceArray;
 }
@@ -62,7 +62,7 @@
     [self createAndAddPriceView];
     
     // 添加下面的view 用于点击
-    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 300, self.frame.size.width, self.frame.size.height)];
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 250, self.frame.size.width, self.frame.size.height)];
     [self addSubview:tempView];
     tempView.backgroundColor = [UIColor blackColor];
     tempView.alpha = 0.5;
@@ -75,7 +75,7 @@
 - (void)createAndAddPriceView {
     NSInteger selectBtnTag =  [[NSUserDefaults standardUserDefaults] integerForKey:kSelectBtnTag];
     
-    UIView *priceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 300)];
+    UIView *priceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 250)];
     [self addSubview:priceView];
     priceView.backgroundColor = [UIColor whiteColor];
     
@@ -108,7 +108,6 @@
     _highTextField.keyboardType = UIKeyboardTypeNumberPad;
     _highTextField.delegate = self;
     [self addLayer:_highTextField];
-    
     
     //确定按钮
     _choseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -163,7 +162,6 @@
             [self addLayer:btn];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
-        
     }
 }
 

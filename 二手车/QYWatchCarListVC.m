@@ -12,7 +12,6 @@
 #import "QYCarModel.h"
 #import "QYCarTableViewCell.h"
 #import "QYCarDetailsViewController.h"
-#import <MJRefresh.h>
 #import <SVProgressHUD.h>
 
 @interface QYWatchCarListVC () <UITableViewDataSource, UITableViewDelegate>
@@ -47,7 +46,6 @@
     if (_dataArray.count > 0) {
         [self setBarItem];
     }
-    [_tableView.mj_header endRefreshing];
     [_tableView reloadData];
 }
 #pragma mark - 添加子视图
@@ -57,7 +55,6 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDataFromLocal)];
 }
 
 - (void)setBarItem {
@@ -68,12 +65,10 @@
 - (void)deleteAllDatas {
     if ([[QYDBFileManager sharedDBManager] deleteLocalAllData:kWatchTable]) {
         [_dataArray removeAllObjects];
-        [_tableView.mj_header endRefreshing];
         self.navigationItem.rightBarButtonItem = nil;
         [_tableView reloadData];
         [SVProgressHUD showImage:nil status:@"浏览记录已清空"];
     }
-    
 }
 
 #pragma mark - table view dataSource
@@ -100,9 +95,13 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"newCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-64)/2, 100, 64, 64)];
+    imageView.image = [UIImage imageNamed:@"iconfont-che-2.png"];
+    [cell.contentView addSubview:imageView];
+    
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-200)/2, 200, 200, 20)];
     title.textAlignment = NSTextAlignmentCenter;
-    title.text = @"浏览记录为空~";
+    title.text = @"当前浏览记录为空~";
     title.font = [UIFont systemFontOfSize:12];
     title.tintColor = [UIColor lightGrayColor];
     title.alpha = 0.7;

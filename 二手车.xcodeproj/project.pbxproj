@@ -69,6 +69,10 @@
 		CC80DC311C52084C00BE8048 /* guide1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC80DC2E1C52084C00BE8048 /* guide1@2x.jpg */; };
 		CC80DC321C52084C00BE8048 /* guide2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC80DC2F1C52084C00BE8048 /* guide2@2x.jpg */; };
 		CC80DC331C52084C00BE8048 /* guide3@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC80DC301C52084C00BE8048 /* guide3@2x.jpg */; };
+		CC8420481C55F203001C7BF4 /* appicon40x40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8420471C55F203001C7BF4 /* appicon40x40@3x.png */; };
+		CC84204A1C55F232001C7BF4 /* appicon40x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8420491C55F232001C7BF4 /* appicon40x40@2x.png */; };
+		CC84204C1C55F24A001C7BF4 /* appicon60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC84204B1C55F24A001C7BF4 /* appicon60x60@2x.png */; };
+		CC84204E1C55F270001C7BF4 /* appicon60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC84204D1C55F270001C7BF4 /* appicon60x60@3x.png */; };
 		CC85CA951C3A10890090E4DB /* QYCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */; };
 		CC85CA961C3A10890090E4DB /* QYCarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */; };
 		CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC85CA981C3A15E50090E4DB /* QYCarModel.m */; };
@@ -369,6 +373,10 @@
 		CC80DC2E1C52084C00BE8048 /* guide1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "guide1@2x.jpg"; sourceTree = "<group>"; };
 		CC80DC2F1C52084C00BE8048 /* guide2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "guide2@2x.jpg"; sourceTree = "<group>"; };
 		CC80DC301C52084C00BE8048 /* guide3@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "guide3@2x.jpg"; sourceTree = "<group>"; };
+		CC8420471C55F203001C7BF4 /* appicon40x40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon40x40@3x.png"; sourceTree = "<group>"; };
+		CC8420491C55F232001C7BF4 /* appicon40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon40x40@2x.png"; sourceTree = "<group>"; };
+		CC84204B1C55F24A001C7BF4 /* appicon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon60x60@2x.png"; sourceTree = "<group>"; };
+		CC84204D1C55F270001C7BF4 /* appicon60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon60x60@3x.png"; sourceTree = "<group>"; };
 		CC85CA921C3A10890090E4DB /* QYCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCarTableViewCell.h; sourceTree = "<group>"; };
 		CC85CA931C3A10890090E4DB /* QYCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCarTableViewCell.m; sourceTree = "<group>"; };
 		CC85CA941C3A10890090E4DB /* QYCarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYCarTableViewCell.xib; sourceTree = "<group>"; };
@@ -662,6 +670,7 @@
 				CC8913C71C41462400DA9BB0 /* Assets.xcassets */,
 				CC584EC11C393330009F8690 /* LaunchScreen.storyboard */,
 				CC584EC41C393330009F8690 /* Info.plist */,
+				CC8420281C55E632001C7BF4 /* iconImage */,
 				CC80DC2D1C52082000BE8048 /* GuideImages */,
 				CC6013AA1C4F6FB300F1E490 /* My_icon */,
 				CCC44E3F1C44FAAC008B3F63 /* BrandImages */,
@@ -797,6 +806,17 @@
 				CC80DC301C52084C00BE8048 /* guide3@2x.jpg */,
 			);
 			name = GuideImages;
+			sourceTree = "<group>";
+		};
+		CC8420281C55E632001C7BF4 /* iconImage */ = {
+			isa = PBXGroup;
+			children = (
+				CC84204D1C55F270001C7BF4 /* appicon60x60@3x.png */,
+				CC84204B1C55F24A001C7BF4 /* appicon60x60@2x.png */,
+				CC8420491C55F232001C7BF4 /* appicon40x40@2x.png */,
+				CC8420471C55F203001C7BF4 /* appicon40x40@3x.png */,
+			);
+			name = iconImage;
 			sourceTree = "<group>";
 		};
 		CC85CA9E1C3A174F0090E4DB /* tool */ = {
@@ -1213,6 +1233,7 @@
 				CCC44F281C44FB49008B3F63 /* b74.jpg in Resources */,
 				CCC44F501C44FB49008B3F63 /* b114.jpg in Resources */,
 				CC6013C51C4F6FCA00F1E490 /* my_list_feedback@3x.png in Resources */,
+				CC84204C1C55F24A001C7BF4 /* appicon60x60@2x.png in Resources */,
 				CCC44F7B1C44FB49008B3F63 /* b157.jpg in Resources */,
 				CCC44EF41C44FB49008B3F63 /* b22.jpg in Resources */,
 				CCC44F311C44FB49008B3F63 /* b83.jpg in Resources */,
@@ -1269,6 +1290,7 @@
 				CC80DC311C52084C00BE8048 /* guide1@2x.jpg in Resources */,
 				CC6013BF1C4F6FCA00F1E490 /* my_list_business@2x.png in Resources */,
 				CCC44F3C1C44FB49008B3F63 /* b94.jpg in Resources */,
+				CC84204A1C55F232001C7BF4 /* appicon40x40@2x.png in Resources */,
 				CCC44F461C44FB49008B3F63 /* b104.jpg in Resources */,
 				CCC44F711C44FB49008B3F63 /* b147.jpg in Resources */,
 				CCC44F241C44FB49008B3F63 /* b70.jpg in Resources */,
@@ -1295,6 +1317,7 @@
 				CCC44F161C44FB49008B3F63 /* b56.jpg in Resources */,
 				CCC44F111C44FB49008B3F63 /* b51.jpg in Resources */,
 				CCC44F621C44FB49008B3F63 /* b132.jpg in Resources */,
+				CC84204E1C55F270001C7BF4 /* appicon60x60@3x.png in Resources */,
 				CCC44F181C44FB49008B3F63 /* b58.jpg in Resources */,
 				CC95C5D71C5113220046DDF8 /* iconfont-che-2.png in Resources */,
 				CCC44EF21C44FB49008B3F63 /* b20.jpg in Resources */,
@@ -1360,6 +1383,7 @@
 				CCC44F6F1C44FB49008B3F63 /* b145.jpg in Resources */,
 				CC95C5C61C50E0630046DDF8 /* navbar_close.png in Resources */,
 				CCC44F4A1C44FB49008B3F63 /* b108.jpg in Resources */,
+				CC8420481C55F203001C7BF4 /* appicon40x40@3x.png in Resources */,
 				CC6013BA1C4F6FCA00F1E490 /* my_list_ask@2x.png in Resources */,
 				CCC44F521C44FB49008B3F63 /* b116.jpg in Resources */,
 				CCC44EE81C44FB49008B3F63 /* b10.jpg in Resources */,
@@ -1657,6 +1681,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1672,6 +1697,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

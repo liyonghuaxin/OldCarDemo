@@ -12,7 +12,6 @@
 #import "QYCarModel.h"
 #import "QYCarTableViewCell.h"
 #import "QYCarDetailsViewController.h"
-#import <MJRefresh.h>
 #import <SVProgressHUD.h>
 
 @interface QYStarViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -48,7 +47,6 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDataFromLocal)];
 }
 
 - (void)loadDataFromLocal {
@@ -57,14 +55,24 @@
     if (_dataArray.count > 0) {
         [self setBarItem];
     }
-    [_tableView.mj_header endRefreshing];
     [_tableView reloadData];
 }
 
-
 - (void)setBarItem {
-    UIBarButtonItem *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAllDatas)];
+    UIBarButtonItem *deleteAllItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(deleteAlertController)];
     self.navigationItem.rightBarButtonItem = deleteAllItem;
+}
+
+// 提示是否删除
+- (void)deleteAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认清空收藏?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancelAction];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [self deleteAllDatas];
+    }];
+   [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)deleteAllDatas {
@@ -100,6 +108,10 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"newCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-64)/2, 100, 64, 64)];
+    imageView.image = [UIImage imageNamed:@"iconfont-che-2.png"];
+    [cell.contentView addSubview:imageView];
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-200)/2, 200, 200, 20)];
     title.textAlignment = NSTextAlignmentCenter;

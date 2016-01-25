@@ -96,7 +96,6 @@
         _openBtnIndex = 0;
     }
     [self presentViewController:navigaVC animated:YES completion:nil];
-    
 }
 
 // 搜素
