@@ -96,17 +96,6 @@
     _tableView.rowHeight = 84;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    
-    [self addNavigationBar];
-}
-
-- (void)addNavigationBar {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_close"] style:UIBarButtonItemStyleDone target:self action:@selector(backSearchVC)];
-    self.navigationItem.leftBarButtonItem = backItem;
-}
-
-- (void)backSearchVC {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - 方法

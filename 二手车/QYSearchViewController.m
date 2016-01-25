@@ -16,9 +16,8 @@
 #import <SVProgressHUD.h>
 #import "QYDBFileManager.h"
 
-@interface QYSearchViewController () <UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate>
+@interface QYSearchViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) QYSearchHeaderView *HeaderView;// 热门的view
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -140,27 +139,18 @@
 #pragma mark - 添加视图
 - (void)createAndAddSubviews {
     // 添加搜索框
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    _searchController.searchResultsUpdater = self;
-    _searchController.searchBar.frame = CGRectMake(0, 0, kScreenWidth-200, 44);
-    _searchController.dimsBackgroundDuringPresentation = NO;
-    _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.showsCancelButton = NO;
-    _searchController.searchBar.placeholder = @"请输入品牌/车系";
-    _searchController.searchBar.backgroundColor = [UIColor clearColor];
-    //searchBar添加在导航栏上
-    
-//    [self dismissViewControllerAnimated:NO completion:nil];
-    self.navigationItem.titleView = _searchController.searchBar;
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-100, 44)];
+    searchBar.delegate = self;
+    searchBar.showsCancelButton = YES;
+    searchBar.placeholder = @"请输入品牌/车系";
+    self.navigationItem.titleView = searchBar;
+    [searchBar becomeFirstResponder];
   
     // 创建并添加tableView
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    
-    UIBarButtonItem *leftBarBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"common_backButton.png"] style:UIBarButtonItemStyleDone target:self action:@selector(backToSuperViewController)];
-    self.navigationItem.leftBarButtonItem = leftBarBtnItem;
     
     // 头视图
     _HeaderView = [[QYSearchHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 180)];
@@ -172,8 +162,7 @@
         carListVC.brandId = brandId;
         carListVC.brandName = brandName;
         carListVC.type = 1;
-        UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:carListVC];
-        [weakSelf presentViewController:navigaVC  animated:YES completion:nil];
+        [weakSelf.navigationController pushViewController:carListVC animated:YES];
     };
     // 删除最近浏览的数据
     MTWeak(_tableView, weakTableView);
@@ -186,12 +175,6 @@
             [SVProgressHUD showImage:nil status:@"清除失败"];
         }
     };
-}
-
-#pragma mark - 点击事件
-- (void)backToSuperViewController {
-    [_searchController dismissViewControllerAnimated:nil completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - table view dataSource
@@ -234,30 +217,46 @@
         [[QYDBFileManager sharedDBManager] saveSearchDataWithSeriesTable:[[QYServiceModel alloc] initWithDict:dict]]
         ;
     }
-    
-    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:carListVC];
-    [self presentViewController:navigaVC  animated:YES completion:nil];
+    [self.navigationController pushViewController:carListVC animated:YES];
 }
 
-#pragma mark - UISearchResultsUpdating
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    if ([searchController.searchBar.text isEqualToString:@""]) {
+#pragma mark -  **************  searchBar delegate ***********
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchBar.text.length == 0) {
+        [searchBar resignFirstResponder];
         _isSearching = NO;
         _tableView.tableHeaderView = _HeaderView;
         [self loadRecentDataList];
         [_tableView reloadData];
         return;
+        
+    }else {
+        // 正在搜索
+        [self searchingDataWith:searchBar];
     }
-    
-    // 正在搜索
-    [self searchingDataWith:searchController];
-    
 }
-- (void)searchingDataWith:(UISearchController *)searchController {
+
+//点击搜索按钮的时候调用
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    // 正在搜索
+    [self searchingDataWith:searchBar];
+}
+
+- (void)searchingDataWith:(UISearchBar *)searchBar {
     _isSearching = YES;
     // 创建谓词
-    NSPredicate *brandPredicate = [NSPredicate predicateWithFormat:@"SELF.brandName CONTAINS[CD] %@",searchController.searchBar.text];
-    NSPredicate *seriesPredicate = [NSPredicate predicateWithFormat:@"SELF.seriesName CONTAINS[CD] %@",searchController.searchBar.text];
+    NSPredicate *brandPredicate = [NSPredicate predicateWithFormat:@"SELF.brandName CONTAINS[CD] %@",searchBar.text];
+    NSPredicate *seriesPredicate = [NSPredicate predicateWithFormat:@"SELF.seriesName CONTAINS[CD] %@", searchBar.text];
     NSMutableArray *filterArray1  = [NSMutableArray array];
     NSMutableArray *filterArray2  = [NSMutableArray array];
     

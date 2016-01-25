@@ -58,7 +58,7 @@
     }
     _btnsArray = tempArr;
     
-    _lineSliderView = [[UIView alloc] initWithFrame:CGRectMake((btnW-32)/2, self.frame.size.height - 1, 32, 1)];
+    _lineSliderView = [[UIView alloc] initWithFrame:CGRectMake((btnW-64)/2, self.frame.size.height - 1, 64, 1)];
     [self addSubview:_lineSliderView];
     _lineSliderView.backgroundColor = [UIColor orangeColor];
 }
@@ -83,7 +83,7 @@
     
     _index = index;
     CGRect frame = _lineSliderView.frame;
-    frame.origin.x = _index * (self.frame.size.width / _btnsArray.count)+ ((kScreenWidth / _btnsArray.count)-32)/2;
+    frame.origin.x = _index * (self.frame.size.width / _btnsArray.count)+ ((kScreenWidth / _btnsArray.count)-64)/2;
     [UIView animateWithDuration:0.3f animations:^{
         _lineSliderView.frame = frame;
     }];

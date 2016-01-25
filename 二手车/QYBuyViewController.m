@@ -105,8 +105,8 @@
         _openBtnIndex = 0;
     }
     QYSearchViewController *searchVC = [[QYSearchViewController alloc] init];
-    searchVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:searchVC animated:YES];
+    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
+    [self presentViewController:navigaVC animated:YES completion:nil];
 }
 
 // buttons 事件

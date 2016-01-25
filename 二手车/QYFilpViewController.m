@@ -36,7 +36,7 @@
 
 - (NSArray *)titleArray {
     if (_titleArray == nil) {
-        _titleArray = @[@"推荐",@"导购",@"行业"];
+        _titleArray = @[@"新闻推荐",@"导购指南",@"行业新闻"];
     }
     return _titleArray;
 }

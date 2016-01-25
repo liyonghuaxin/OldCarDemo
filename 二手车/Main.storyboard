@@ -42,22 +42,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eve-4H-vy9">
-                                        <rect key="frame" x="0.0" y="0.0" width="2400" height="600"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1800" height="600"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="T76-ro-p9S">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideimage4.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="T76-ro-p9S">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="3tf-Le-PaB">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideimage2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="3tf-Le-PaB">
                                                 <rect key="frame" x="600" y="0.0" width="600" height="600"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide3.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="mGb-Kz-ZnO">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideimage1.png" translatesAutoresizingMaskIntoConstraints="NO" id="od9-DC-61y">
                                                 <rect key="frame" x="1200" y="0.0" width="600" height="600"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="od9-DC-61y">
-                                                <rect key="frame" x="1800" y="0.0" width="600" height="600"/>
-                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Gl-Y8-ryW">
-                                                <rect key="frame" x="2027" y="460" width="147" height="40"/>
+                                                <rect key="frame" x="1427" y="460" width="147" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="XWU-Iy-pH8"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fGt-VQ-rd4"/>
@@ -74,23 +71,19 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="0Gl-Y8-ryW" firstAttribute="centerX" secondItem="od9-DC-61y" secondAttribute="centerX" id="2Rm-K7-1ne"/>
-                                            <constraint firstItem="T76-ro-p9S" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="0.25" id="49X-8a-1MQ"/>
-                                            <constraint firstItem="mGb-Kz-ZnO" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="0.25" id="8Ht-lW-jjD"/>
+                                            <constraint firstItem="T76-ro-p9S" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="1/3" id="49X-8a-1MQ"/>
                                             <constraint firstItem="T76-ro-p9S" firstAttribute="height" secondItem="eve-4H-vy9" secondAttribute="height" id="EBD-o3-3w7"/>
                                             <constraint firstItem="3tf-Le-PaB" firstAttribute="centerY" secondItem="eve-4H-vy9" secondAttribute="centerY" id="Fan-e9-cej"/>
                                             <constraint firstItem="T76-ro-p9S" firstAttribute="centerY" secondItem="eve-4H-vy9" secondAttribute="centerY" id="IoF-H6-oCU"/>
                                             <constraint firstAttribute="bottom" secondItem="0Gl-Y8-ryW" secondAttribute="bottom" constant="100" id="NWD-uU-egZ"/>
-                                            <constraint firstItem="od9-DC-61y" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="0.25" id="PAh-yO-YXq"/>
+                                            <constraint firstItem="od9-DC-61y" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="1/3" id="PAh-yO-YXq"/>
                                             <constraint firstItem="3tf-Le-PaB" firstAttribute="height" secondItem="eve-4H-vy9" secondAttribute="height" id="TKa-1M-mqV"/>
-                                            <constraint firstItem="T76-ro-p9S" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="0.25" id="YwD-1S-AHF"/>
-                                            <constraint firstItem="mGb-Kz-ZnO" firstAttribute="centerY" secondItem="eve-4H-vy9" secondAttribute="centerY" id="bsM-u5-8sO"/>
-                                            <constraint firstItem="mGb-Kz-ZnO" firstAttribute="height" secondItem="eve-4H-vy9" secondAttribute="height" id="cDF-01-8fc"/>
-                                            <constraint firstItem="od9-DC-61y" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="1.75" id="dMS-Af-sXH"/>
-                                            <constraint firstItem="3tf-Le-PaB" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="0.75" id="eZq-SD-xH6"/>
+                                            <constraint firstItem="T76-ro-p9S" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="1/3" id="YwD-1S-AHF"/>
+                                            <constraint firstItem="od9-DC-61y" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="5/3" id="dMS-Af-sXH"/>
+                                            <constraint firstItem="3tf-Le-PaB" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" id="eZq-SD-xH6"/>
                                             <constraint firstItem="od9-DC-61y" firstAttribute="centerY" secondItem="eve-4H-vy9" secondAttribute="centerY" id="ftw-hN-d0V"/>
-                                            <constraint firstItem="mGb-Kz-ZnO" firstAttribute="centerX" secondItem="eve-4H-vy9" secondAttribute="centerX" multiplier="1.25" id="rEP-uF-KWW"/>
                                             <constraint firstItem="od9-DC-61y" firstAttribute="height" secondItem="eve-4H-vy9" secondAttribute="height" id="uDT-Az-gPD"/>
-                                            <constraint firstItem="3tf-Le-PaB" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="0.25" id="w14-5f-CHY"/>
+                                            <constraint firstItem="3tf-Le-PaB" firstAttribute="width" secondItem="eve-4H-vy9" secondAttribute="width" multiplier="1/3" id="w14-5f-CHY"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -100,20 +93,20 @@
                                     <constraint firstAttribute="trailing" secondItem="eve-4H-vy9" secondAttribute="trailing" id="8ry-Es-RDQ"/>
                                     <constraint firstItem="eve-4H-vy9" firstAttribute="height" secondItem="zc2-iN-AxU" secondAttribute="height" id="9My-1s-cuu"/>
                                     <constraint firstAttribute="bottom" secondItem="eve-4H-vy9" secondAttribute="bottom" id="KF7-pF-BTf"/>
-                                    <constraint firstItem="eve-4H-vy9" firstAttribute="width" secondItem="zc2-iN-AxU" secondAttribute="width" multiplier="4" id="plY-Ji-aBM"/>
+                                    <constraint firstItem="eve-4H-vy9" firstAttribute="width" secondItem="zc2-iN-AxU" secondAttribute="width" multiplier="3" id="plY-Ji-aBM"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="Ndq-bP-H7r" id="xiz-hb-Xsh"/>
                                 </connections>
                             </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="6f0-dE-SRc">
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="6f0-dE-SRc">
                                 <rect key="frame" x="265" y="513" width="70" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="0zg-UW-u3s"/>
                                     <constraint firstAttribute="width" constant="70" id="eNk-nr-8ua"/>
                                 </constraints>
-                                <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="currentPageIndicatorTintColor" red="0.94117653369903564" green="0.81568634510040283" blue="0.7725490927696228" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -500,9 +493,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="guide1.jpg" width="320" height="568"/>
-        <image name="guide2.jpg" width="320" height="568"/>
-        <image name="guide3.jpg" width="320" height="568"/>
+        <image name="guideimage1.png" width="320" height="568"/>
+        <image name="guideimage2.jpg" width="400" height="640"/>
+        <image name="guideimage4.jpg" width="320" height="568"/>
         <image name="my_list_business.png" width="22" height="22"/>
         <image name="my_list_collection.png" width="22" height="22"/>
         <image name="my_list_ct.png" width="22" height="22"/>
