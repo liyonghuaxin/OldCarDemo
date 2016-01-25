@@ -50,6 +50,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    self.view.userInteractionEnabled = YES;
     [SVProgressHUD dismiss];
 }
 

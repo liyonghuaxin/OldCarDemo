@@ -8,7 +8,6 @@
 
 #import "QYPhotosViewController.h"
 #import "Header.h"
-#import "Masonry.h"
 #import <SDwebimage/UIImageView+WebCache.h>
 
 
@@ -94,16 +93,15 @@
 
 // 添加显示当前图片页数的label
 - (void)addTitLabel {
+    CGFloat labelW = 100;
+    CGFloat labelH = 20;
+    
     _titleLabel = [[UILabel alloc] init];
     [self.view addSubview:_titleLabel];
     _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld",(long)_currentCount,(unsigned long)_imagesArray.count];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view).with.offset(-30);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
-    }];
+    _titleLabel.frame = CGRectMake((kScreenWidth-labelW)/2, kScreenHeight-70, labelW, labelH);
 }
 
 #pragma mark - Scroll view delegate

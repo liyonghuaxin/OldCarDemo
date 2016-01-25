@@ -6,7 +6,7 @@
 target '二手车' do
 pod 'AFNetworking', '~> 3.0.4'
 pod 'FMDB', '~> 2.5'
-pod 'SDWebImage', '~> 3.7.3'
+pod 'SDWebImage', '~> 3.7.4'
 pod 'MJRefresh', '~> 3.1.0'
 pod 'SVProgressHUD-FE', '~> 2.0'
 end
