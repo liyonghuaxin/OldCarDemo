@@ -52,7 +52,6 @@
 // 收藏表
 - (BOOL)createTableWithStar {
     if (![self.dataBase open]) {
-        NSLog(@"create-- open table error!!%@",[_dataBase lastErrorMessage]);
         return NO;
     }
 
@@ -83,7 +82,6 @@
 // 首页存储的列表
 - (BOOL)createTableWithCarlist {
     if (![self.dataBase open]) {
-        NSLog(@"create-- open table error!!%@",[_dataBase lastErrorMessage]);
         return NO;
     }
     
@@ -100,7 +98,6 @@
 
 - (BOOL)saveData2Local:(QYCarModel *)model class:(NSString *)name {
     if (![self.dataBase open]) {
-        NSLog(@"insert-- open table error!!%@",[_dataBase lastErrorMessage]);
         return NO;
     }
     
@@ -127,8 +124,6 @@
     [_dataBase close];
     return YES;
 }
-
-
 
 #pragma mark - 查询数据
 // 查询所有
@@ -287,7 +282,6 @@
     }
     
     if (![_dataBase executeUpdate:@"insert into searchBrand values (?,?)", brandModel.brandId, brandModel.brandName]) {
-        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
         return NO;
     }
@@ -302,7 +296,6 @@
     }
     
     if (![_dataBase executeUpdate:@"insert into searchSeries values (?,?)", seriesModel.series, seriesModel.seriesName]) {
-        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
         return NO;
     }
@@ -383,7 +376,6 @@
     }
     
     if (![_dataBase executeUpdate:@"insert into guideTable values (?,?,?,?,?,?)", newsModel.newsId, newsModel.author, newsModel.title, newsModel.title_pic1, newsModel.pub, newsModel.url]) {
-        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
         return NO;
     }
@@ -399,7 +391,6 @@
     }
     
     if (![_dataBase executeUpdate:@"delete from guideTable"]) {
-        NSLog(@"%@", [_dataBase lastErrorMessage]);
         [_dataBase close];
         return NO;
     }

@@ -147,8 +147,10 @@
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.showsCancelButton = NO;
     _searchController.searchBar.placeholder = @"请输入品牌/车系";
+    _searchController.searchBar.backgroundColor = [UIColor clearColor];
     //searchBar添加在导航栏上
-    [self dismissViewControllerAnimated:NO completion:nil];
+    
+//    [self dismissViewControllerAnimated:NO completion:nil];
     self.navigationItem.titleView = _searchController.searchBar;
   
     // 创建并添加tableView
@@ -170,7 +172,8 @@
         carListVC.brandId = brandId;
         carListVC.brandName = brandName;
         carListVC.type = 1;
-        [weakSelf.navigationController pushViewController:carListVC animated:YES];
+        UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:carListVC];
+        [weakSelf presentViewController:navigaVC  animated:YES completion:nil];
     };
     // 删除最近浏览的数据
     MTWeak(_tableView, weakTableView);
@@ -231,7 +234,9 @@
         [[QYDBFileManager sharedDBManager] saveSearchDataWithSeriesTable:[[QYServiceModel alloc] initWithDict:dict]]
         ;
     }
-    [self.navigationController pushViewController:carListVC animated:YES];
+    
+    UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:carListVC];
+    [self presentViewController:navigaVC  animated:YES completion:nil];
 }
 
 #pragma mark - UISearchResultsUpdating
