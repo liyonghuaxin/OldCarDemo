@@ -85,7 +85,9 @@
 		CC8902E21C4DE823005F021A /* QYParametersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8902E11C4DE823005F021A /* QYParametersManager.m */; };
 		CC8913C81C41462400DA9BB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8913C71C41462400DA9BB0 /* Assets.xcassets */; };
 		CC8913FC1C41493100DA9BB0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */; };
-		CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */; };
+		CC8A71D91C59A48500460C92 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8A71D61C59A48500460C92 /* map.png */; };
+		CC8A71DA1C59A48500460C92 /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8A71D71C59A48500460C92 /* map@2x.png */; };
+		CC8A71DB1C59A48500460C92 /* map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC8A71D81C59A48500460C92 /* map@3x.png */; };
 		CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9119201C47C0BE00443C4E /* QYSortView.m */; };
 		CC95C5B41C507A160046DDF8 /* QYSegmentTapView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5B31C507A160046DDF8 /* QYSegmentTapView.m */; };
 		CC95C5B81C5084A50046DDF8 /* QYFilpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5B71C5084A50046DDF8 /* QYFilpViewController.m */; };
@@ -101,6 +103,8 @@
 		CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E31C4272B90031E9A1 /* QYCityModel.m */; };
 		CC9879E61C429D5A0031E9A1 /* brand.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC9879E51C429D5A0031E9A1 /* brand.plist */; };
 		CCA548361C4B6F0200F3FE19 /* QYPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA548351C4B6F0200F3FE19 /* QYPriceView.m */; };
+		CCB2EE9D1C5AF86700D2CC50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB2EE9C1C5AF86700D2CC50 /* CoreLocation.framework */; };
+		CCB2EF5E1C5B522A00D2CC50 /* QYCityPositionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCB2EF5D1C5B522A00D2CC50 /* QYCityPositionView.m */; };
 		CCC44D9F1C4499F2008B3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC44D9E1C4499F2008B3F63 /* Main.storyboard */; };
 		CCC44EDF1C44FB49008B3F63 /* b1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CCC44E401C44FB49008B3F63 /* b1.jpg */; };
 		CCC44EE01C44FB49008B3F63 /* b2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CCC44E411C44FB49008B3F63 /* b2.jpg */; };
@@ -398,8 +402,9 @@
 		CC8902E11C4DE823005F021A /* QYParametersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYParametersManager.m; sourceTree = "<group>"; };
 		CC8913C71C41462400DA9BB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityCustomCell.h; sourceTree = "<group>"; };
-		CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityCustomCell.m; sourceTree = "<group>"; };
+		CC8A71D61C59A48500460C92 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		CC8A71D71C59A48500460C92 /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
+		CC8A71D81C59A48500460C92 /* map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@3x.png"; sourceTree = "<group>"; };
 		CC91191F1C47C0BE00443C4E /* QYSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSortView.h; sourceTree = "<group>"; };
 		CC9119201C47C0BE00443C4E /* QYSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYSortView.m; sourceTree = "<group>"; };
 		CC95C5B21C507A160046DDF8 /* QYSegmentTapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYSegmentTapView.h; sourceTree = "<group>"; };
@@ -423,6 +428,9 @@
 		CC9879E51C429D5A0031E9A1 /* brand.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = brand.plist; sourceTree = "<group>"; };
 		CCA548341C4B6F0200F3FE19 /* QYPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYPriceView.h; sourceTree = "<group>"; };
 		CCA548351C4B6F0200F3FE19 /* QYPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYPriceView.m; sourceTree = "<group>"; };
+		CCB2EE9C1C5AF86700D2CC50 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CCB2EF5C1C5B522A00D2CC50 /* QYCityPositionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityPositionView.h; sourceTree = "<group>"; };
+		CCB2EF5D1C5B522A00D2CC50 /* QYCityPositionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityPositionView.m; sourceTree = "<group>"; };
 		CCC44D9E1C4499F2008B3F63 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		CCC44E401C44FB49008B3F63 /* b1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = b1.jpg; sourceTree = "<group>"; };
 		CCC44E411C44FB49008B3F63 /* b2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = b2.jpg; sourceTree = "<group>"; };
@@ -596,6 +604,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCB2EE9D1C5AF86700D2CC50 /* CoreLocation.framework in Frameworks */,
 				CC8913FC1C41493100DA9BB0 /* libsqlite3.0.tbd in Frameworks */,
 				03476EED4C5E06FD6FFB7FC1 /* libPods-二手车.a in Frameworks */,
 			);
@@ -621,6 +630,7 @@
 		8A19460D0591D2461F79B5AF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CCB2EE9C1C5AF86700D2CC50 /* CoreLocation.framework */,
 				CC8913FB1C41493100DA9BB0 /* libsqlite3.0.tbd */,
 				5ED573C92A07C9E32BED39E2 /* libPods-二手车.a */,
 			);
@@ -905,8 +915,8 @@
 				CC7491011C463F4400BF6D69 /* QYBrandTableViewCell.xib */,
 				CC1A192A1C4BBD1C0061E01E /* QYServiceListView.h */,
 				CC1A192B1C4BBD1C0061E01E /* QYServiceListView.m */,
-				CC9118D91C472CFF00443C4E /* QYCityCustomCell.h */,
-				CC9118DA1C472CFF00443C4E /* QYCityCustomCell.m */,
+				CCB2EF5C1C5B522A00D2CC50 /* QYCityPositionView.h */,
+				CCB2EF5D1C5B522A00D2CC50 /* QYCityPositionView.m */,
 				CC7491511C4687CD00BF6D69 /* QYSearchHeaderView.h */,
 				CC7491521C4687CD00BF6D69 /* QYSearchHeaderView.m */,
 				CC784AB71C493636002FA576 /* QYCustomCarCell.h */,
@@ -1117,6 +1127,9 @@
 				CC6013971C4F5CF200F1E490 /* image_replace.png */,
 				CC6013891C4F4DA800F1E490 /* right_arrow.png */,
 				CCC44F801C44FBB7008B3F63 /* loading.jpg */,
+				CC8A71D61C59A48500460C92 /* map.png */,
+				CC8A71D71C59A48500460C92 /* map@2x.png */,
+				CC8A71D81C59A48500460C92 /* map@3x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -1191,7 +1204,7 @@
 				TargetAttributes = {
 					CC584EAF1C393330009F8690 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3MNL697K64;
+						DevelopmentTeam = LSRRXAH5MP;
 					};
 					CC584EC81C393331009F8690 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1239,6 +1252,7 @@
 				CCC44F4B1C44FB49008B3F63 /* b109.jpg in Resources */,
 				CCC44EF81C44FB49008B3F63 /* b26.jpg in Resources */,
 				CCC44F2C1C44FB49008B3F63 /* b78.jpg in Resources */,
+				CC8A71DA1C59A48500460C92 /* map@2x.png in Resources */,
 				CCC44F281C44FB49008B3F63 /* b74.jpg in Resources */,
 				CCC44F501C44FB49008B3F63 /* b114.jpg in Resources */,
 				CC6013C51C4F6FCA00F1E490 /* my_list_feedback@3x.png in Resources */,
@@ -1310,6 +1324,7 @@
 				CCC44F251C44FB49008B3F63 /* b71.jpg in Resources */,
 				CCC44EFF1C44FB49008B3F63 /* b33.jpg in Resources */,
 				CCC44F131C44FB49008B3F63 /* b53.jpg in Resources */,
+				CC8A71D91C59A48500460C92 /* map.png in Resources */,
 				CC95C5D51C5112A40046DDF8 /* QYAboutViewController.xib in Resources */,
 				CC7491031C463F4400BF6D69 /* QYBrandTableViewCell.xib in Resources */,
 				CCC44F7D1C44FB49008B3F63 /* b159.jpg in Resources */,
@@ -1328,6 +1343,7 @@
 				CCC44F161C44FB49008B3F63 /* b56.jpg in Resources */,
 				CCC44F111C44FB49008B3F63 /* b51.jpg in Resources */,
 				CCC44F621C44FB49008B3F63 /* b132.jpg in Resources */,
+				CC8A71DB1C59A48500460C92 /* map@3x.png in Resources */,
 				CCC44F181C44FB49008B3F63 /* b58.jpg in Resources */,
 				CC95C5D71C5113220046DDF8 /* iconfont-che-2.png in Resources */,
 				CCC44EF21C44FB49008B3F63 /* b20.jpg in Resources */,
@@ -1532,8 +1548,8 @@
 				CC584EB81C393330009F8690 /* AppDelegate.m in Sources */,
 				CC80DC2C1C52032500BE8048 /* QYGuideViewController.m in Sources */,
 				CC85CA991C3A15E50090E4DB /* QYCarModel.m in Sources */,
-				CC9118DB1C472CFF00443C4E /* QYCityCustomCell.m in Sources */,
 				CC6013CE1C4F791800F1E490 /* QYDBFileManager.m in Sources */,
+				CCB2EF5E1C5B522A00D2CC50 /* QYCityPositionView.m in Sources */,
 				CC95C5B41C507A160046DDF8 /* QYSegmentTapView.m in Sources */,
 				CC9119211C47C0BE00443C4E /* QYSortView.m in Sources */,
 				CC80DC141C51C86700BE8048 /* QYNewsModel.m in Sources */,
@@ -1686,14 +1702,14 @@
 			baseConfigurationReference = D447782907780B0EBD41B4D0 /* Pods-二手车.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "二手车/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qy15094.kdx;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d05cb6c6-8017-4109-8f46-865da3594744";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1703,14 +1719,14 @@
 			baseConfigurationReference = 165D6651F954D6CE7B4909B2 /* Pods-二手车.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "二手车/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qy15094.kdx;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d05cb6c6-8017-4109-8f46-865da3594744";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

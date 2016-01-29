@@ -165,7 +165,7 @@ static NSString *Identifier = @"cell";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     QYCustomNewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
     QYNewsModel *newsModel = _data[indexPath.row];
     cell.newsModel = newsModel;

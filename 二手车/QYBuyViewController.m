@@ -16,6 +16,7 @@
 #import <AFHTTPSessionManager.h>
 #import <MJRefresh.h>
 #import <SVProgressHUD.h>
+#import <Masonry.h>
 
 #import "QYDBFileManager.h"
 #import "QYCityModel.h"
@@ -36,6 +37,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;// 保存数据的数组
 @property (nonatomic, strong) NSMutableDictionary *parameters;// 请求的参数的数组
 @property (nonatomic, strong) UIBarButtonItem *leftbarBtnItem;// 导航栏左侧的item
+//@property (nonatomic, strong) UIButton *leftBtnItem;// 导航栏左侧的城市
 
 @property (nonatomic, assign) BOOL isFristLoad;// 判断是否是第一次加载界面
 
@@ -65,6 +67,7 @@
     return _dataArray;
 }
 
+
 // 排序方式的键
 - (NSArray *)sortkeys {
     if (_sortkeys == nil) {
@@ -84,8 +87,10 @@
         [_parameters setValue:cityModel[kCityId] forKey:kCityId];
         [_parameters setValue:cityModel[kProvId] forKey:kProvId];
         [_parameters setValue:cityModel[kCityName] forKey:kCityName];
+        
         // 改变城市的名字
         _leftbarBtnItem.title = cityModel[kCityName];
+        
         [weakSelf loadDataForType:1];
     };
     
@@ -98,6 +103,7 @@
     [self presentViewController:navigaVC animated:YES completion:nil];
 }
 
+
 // 搜素
 - (void)searchCars:(UIBarButtonItem *)sender {
     if (_openView) {
@@ -108,6 +114,7 @@
     UINavigationController *navigaVC = [[UINavigationController alloc] initWithRootViewController:searchVC];
     [self presentViewController:navigaVC animated:YES completion:nil];
 }
+
 
 // buttons 事件
 - (IBAction)btnsClick:(UIButton *)sender {
@@ -183,6 +190,7 @@
     }
 }
 
+
 // 第二个品牌选择
 - (void)brandBtnClick {
     // 如果有打开的view 关闭
@@ -242,6 +250,7 @@
     [self presentViewController:navigaVC animated:YES completion:nil];
 }
 
+
 // 点击第三个价格按钮
 - (void)priceBtnClick {
     if (_openBtnIndex != priceButtonTag) {//当前打开的view不等于价格
@@ -281,6 +290,7 @@
         _openBtnIndex = 0;
     }
 }
+
 
 // 点击性价比的btn
 - (void)vprBtnClick {
@@ -323,18 +333,31 @@
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerLoadData)];
     _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerLoadData)];
     
-    //barBtnItem
+    // 城市
+//    _leftBtnItem = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_leftBtnItem setImage:[UIImage imageNamed:@"map"] forState:UIControlStateNormal];
+//    _leftBtnItem.frame = CGRectMake(0, 0, 80, 20);
+//    _leftBtnItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    [_leftBtnItem setTitle:@"北京" forState:UIControlStateNormal];
+//    _leftBtnItem.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [_leftBtnItem addTarget:self action:@selector(switchCity:) forControlEvents:UIControlEventTouchUpInside];
+    
     _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
     self.navigationItem.leftBarButtonItem = _leftbarBtnItem;
+
     
+    // 搜索
     UIBarButtonItem *rightBarBtnItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchCars:)];
     self.navigationItem.rightBarButtonItem = rightBarBtnItem;
 }
+
+
 #pragma mark - 刷新数据
 // 下拉刷新
 - (void)headerLoadData {
     [self loadDataForType:1];
 }
+
 
 // 上拉加载
 - (void)footerLoadData {
@@ -342,6 +365,7 @@
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
     [self loadDataForType:2];
 }
+
 
 // 请求数据
 - (void)loadDataForType:(int)type {
@@ -397,6 +421,7 @@
     return self.dataArray.count;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdtifier = @"carCell";
     QYCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdtifier];
@@ -423,6 +448,7 @@
     [[QYDBFileManager sharedDBManager] saveData2Local:self.dataArray[indexPath.row] class:kWatchTable];
 }
 
+
 #pragma mark - 公用方法
 
 // 请求数据 (改变城市)
@@ -431,6 +457,7 @@
     _pageIndex = 1;
     _parameters = [[QYParametersManager shaerdParameters] fristLoadParameters];
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
+
     // 改变城市的名字
     _leftbarBtnItem.title = self.parameters[kCityName];
     
@@ -439,6 +466,7 @@
         [self setBtnsTitleWithFristLoad];
     }
 }
+
 
 // 第一次加载页面时btn的标题和颜色
 - (void)setBtnsTitleWithFristLoad {
@@ -482,6 +510,7 @@
     [self addSubViews];
 }
 
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -499,10 +528,12 @@
     }
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

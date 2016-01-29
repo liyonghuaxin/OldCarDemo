@@ -9,6 +9,7 @@
 #import "QYCityListViewController.h"
 #import "Header.h"
 #import "QYCityModel.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface QYCityListViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSDictionary *dict;//字典
 @property (nonatomic, strong) NSMutableArray *recentChooseArr;//最近选择
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -28,8 +30,65 @@
     [self loadCityList];
     [self createTableView];
     [self createNavigationBar];
+
+//    // 定位
+//    [self startLocation];
 }
-#pragma mark - ********** 最近选择
+#pragma mark - 定位选择
+
+/**
+ *  界面太难看 没做
+ */
+
+- (void)startLocation {
+    if ([CLLocationManager locationServicesEnabled]) {
+        _locationManager = [[CLLocationManager alloc] init];
+//        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 10.f;
+        [_locationManager requestWhenInUseAuthorization];
+        [_locationManager startUpdatingLocation];
+    }else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"定位不成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    
+    // 获取最后一个地址
+    CLLocation *currentLocation = [locations lastObject];
+    
+    // 获取当前的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (error == nil && placemarks.count > 0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            // 获取信息显示
+            NSLog(@"%@", placemark.name);
+            
+            // 获取城市
+            NSString *cityName = placemark.locality;
+             NSLog(@"city:%@", cityName);
+            if (!cityName) {
+                cityName = placemark.administrativeArea;
+            }
+            NSLog(@"%@", cityName);
+        }
+    }];
+    
+    // 获取之后停止更新
+    [manager stopUpdatingLocation];
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"error >>> %@",error.description);
+}
 
 
 #pragma mark - ********** 加载数据
@@ -60,7 +119,7 @@
     [self.view addSubview:_tableView];
     _tableView.sectionIndexColor = [UIColor grayColor];
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
-
+    
 }
 
 #pragma mark - table view dataSource

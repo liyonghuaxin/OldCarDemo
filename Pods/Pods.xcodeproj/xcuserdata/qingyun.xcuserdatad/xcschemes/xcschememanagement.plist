@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-二手车.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,12 +42,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2A9F0090C62A236DAC5478EE6F14E4D2</key>
+		<key>205EB9BF1738B3F7ED4433E18D7A0C04</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>724B66FA5A1BC8A1264117AE8A29A77F</key>
+		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +67,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ABD28F564FA05C8F97FED3775F6E3A7E</key>
+		<key>B1CA51FEABEC4AEF25FB4BF543A04A62</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B4B5E5740F81B636900B8E04D9AC6A2C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

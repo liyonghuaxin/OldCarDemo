@@ -9,6 +9,7 @@ pod 'FMDB', '~> 2.5'
 pod 'SDWebImage', '~> 3.7.4'
 pod 'MJRefresh', '~> 3.1.0'
 pod 'SVProgressHUD-FE', '~> 2.0'
+pod 'Masonry', '~> 0.6.4'
 end
 
 target '二手车Tests' do
