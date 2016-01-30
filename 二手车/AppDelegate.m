@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "Header.h"
+//#import "Header.h"
 
 @interface AppDelegate ()
 
@@ -22,46 +22,11 @@
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [self instaniateRootVC];
-    [self.window makeKeyAndVisible];
-    
     return YES;
 }
 
 
-- (UIViewController *)instaniateRootVC {
-    // 根据应用打开情况，第一次打开，显示引导页，之后再打开应用，显示的是首页
-    // app 运行的版本号
-    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-    
-    // 取出以前的版本号
-    NSString *appRun = [[NSUserDefaults standardUserDefaults] objectForKey:kAppRun];
-    if ([appRun isEqualToString:currentVersion]) {
-        //已经运行过
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *vc = [storyBoard instantiateViewControllerWithIdentifier:@"main"];
-        return vc;
-    }else {
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *vc = [storyBoard instantiateViewControllerWithIdentifier:@"guide"];
-        return vc;
-    }
-}
 
-// 结束导航
-- (void)guideEnd {
-    //切换控制器
-    UIStoryboard *storyBaord = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIViewController *vc = [storyBaord instantiateViewControllerWithIdentifier:@"main"];
-    self.window.rootViewController = vc;
-    
-    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-    
-    //保存标记
-    [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:kAppRun];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

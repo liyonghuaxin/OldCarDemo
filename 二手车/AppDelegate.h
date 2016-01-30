@@ -13,7 +13,5 @@
 @property (strong, nonatomic) UIWindow *window;
 
 
-- (void)guideEnd;
-
 @end
 
