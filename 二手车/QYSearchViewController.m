@@ -18,6 +18,8 @@
 
 @interface QYSearchViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) UISearchBar *searchBar;
+
 @property (nonatomic, strong) QYSearchHeaderView *HeaderView;// 热门的view
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -142,10 +144,23 @@
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-100, 44)];
     searchBar.delegate = self;
     searchBar.showsCancelButton = YES;
+    
+    UIView *topView = searchBar.subviews[0];
+    for (UIView *subView in topView.subviews) {
+        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+            UIButton *cancelBtn = (UIButton *)subView;
+            [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+            [cancelBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+            break;
+        }
+    }
+    searchBar.tintColor = [UIColor orangeColor];
     searchBar.placeholder = @"请输入品牌/车系";
     self.navigationItem.titleView = searchBar;
+    
     [searchBar becomeFirstResponder];
-  
+    _searchBar = searchBar;
+    
     // 创建并添加tableView
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
@@ -177,6 +192,7 @@
     };
 }
 
+
 #pragma mark - table view dataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -198,6 +214,7 @@
     return cell;
 }
 
+
 #pragma mark - table view delegate
 // 选中cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -218,6 +235,11 @@
         ;
     }
     [self.navigationController pushViewController:carListVC animated:YES];
+}
+
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark -  **************  searchBar delegate ***********

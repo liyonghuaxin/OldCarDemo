@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^cityLocationBlock)(void);
+
 @interface QYCityPositionView : UIView
+
+@property (nonatomic, strong) cityLocationBlock locationCityBlock;
 
 @end

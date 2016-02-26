@@ -7,6 +7,7 @@
 //
 
 #import "QYBuyViewController.h"
+#import <CoreLocation/CoreLocation.h>
 #import "QYCarDetailsViewController.h"
 #import "QYCityListViewController.h"
 #import "QYSearchViewController.h"
@@ -31,13 +32,14 @@
 #import "QYSortView.h"
 #import "QYPriceView.h"
 
-@interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface QYBuyViewController () <UITableViewDataSource,UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;// 保存数据的数组
 @property (nonatomic, strong) NSMutableDictionary *parameters;// 请求的参数的数组
-@property (nonatomic, strong) UIBarButtonItem *leftbarBtnItem;// 导航栏左侧的item
-//@property (nonatomic, strong) UIButton *leftBtnItem;// 导航栏左侧的城市
+
+//@property (nonatomic, strong) UIBarButtonItem *leftbarBtnItem;// 导航栏左侧的item
+@property (nonatomic, strong) UIButton *leftBtnItem;// 导航栏左侧的城市
 
 @property (nonatomic, assign) BOOL isFristLoad;// 判断是否是第一次加载界面
 
@@ -54,6 +56,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *vprBtn;
 @property (nonatomic, assign) NSInteger openBtnIndex; // 记录打开的btn的下标
 @property (nonatomic, strong) UIView *openView; // 打开的view
+
+@property (nonatomic, strong) CLLocationManager *locationManger;
 @end
 
 @implementation QYBuyViewController
@@ -77,6 +81,7 @@
 }
 
 #pragma mark - *************** 点击事件
+
 // 跳转到城市列表
 - (void)switchCity:(UIBarButtonItem *)sender {
     QYCityListViewController *cityVC = [[QYCityListViewController alloc] init];
@@ -89,7 +94,9 @@
         [_parameters setValue:cityModel[kCityName] forKey:kCityName];
         
         // 改变城市的名字
-        _leftbarBtnItem.title = cityModel[kCityName];
+//        _leftbarBtnItem.title = cityModel[kCityName];
+        [_leftBtnItem setTitle:cityModel[kCityName] forState:UIControlStateNormal];
+        
         
         [weakSelf loadDataForType:1];
     };
@@ -334,16 +341,19 @@
     _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerLoadData)];
     
     // 城市
-//    _leftBtnItem = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_leftBtnItem setImage:[UIImage imageNamed:@"map"] forState:UIControlStateNormal];
-//    _leftBtnItem.frame = CGRectMake(0, 0, 80, 20);
-//    _leftBtnItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//    [_leftBtnItem setTitle:@"北京" forState:UIControlStateNormal];
-//    _leftBtnItem.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [_leftBtnItem addTarget:self action:@selector(switchCity:) forControlEvents:UIControlEventTouchUpInside];
+    _leftBtnItem = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_leftBtnItem setImage:[UIImage imageNamed:@"map"] forState:UIControlStateNormal];
+    _leftBtnItem.frame = CGRectMake(0, 0, 80, 20);
+    _leftBtnItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_leftBtnItem setTitle:@"北京" forState:UIControlStateNormal];
+    _leftBtnItem.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_leftBtnItem addTarget:self action:@selector(switchCity:) forControlEvents:UIControlEventTouchUpInside];
     
-    _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
-    self.navigationItem.leftBarButtonItem = _leftbarBtnItem;
+    UIBarButtonItem *cityBtnItem = [[UIBarButtonItem alloc] initWithCustomView:_leftBtnItem];
+    self.navigationItem.leftBarButtonItem = cityBtnItem;
+    
+//    _leftbarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStyleDone target:self action:@selector(switchCity:)];
+//    self.navigationItem.leftBarButtonItem = _leftbarBtnItem;
 
     
     // 搜索
@@ -459,7 +469,8 @@
     [_parameters setObject:[@(_pageIndex) stringValue] forKey:kPage];
 
     // 改变城市的名字
-    _leftbarBtnItem.title = self.parameters[kCityName];
+//    _leftbarBtnItem.title = self.parameters[kCityName];
+    [_leftBtnItem setTitle:self.parameters[kCityName] forState:UIControlStateNormal];
     
     // 改变btn 的名字和颜色
     if (!_isFristLoad) {
@@ -503,8 +514,12 @@
 }
 
 #pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self startLocation];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [self addSubViews];
@@ -516,6 +531,7 @@
     
     // 判断是否第一次
     if (!_isFristLoad) {
+    
         self.dataArray = [[QYDBFileManager sharedDBManager] selectAllData:kCarTable];
         if (self.dataArray.count != 0) {
             [self loadDataWithBasicParameters];
@@ -538,5 +554,151 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+
+#pragma mark - 定位选择
+
+/**
+ *  界面太难看 没做
+ */
+
+- (void)startLocation {
+    if ([CLLocationManager locationServicesEnabled]) {
+       
+        _locationManger = [[CLLocationManager alloc] init];
+        _locationManger.delegate = self;
+        _locationManger.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManger.distanceFilter = 10.f;
+        [_locationManger requestWhenInUseAuthorization];
+        [_locationManger startUpdatingLocation];
+    }else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"定位不成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    
+    // 获取最后一个地址
+    CLLocation *currentLocation = [locations lastObject];
+    
+    // 获取当前的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (error == nil && placemarks.count > 0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+//            NSLog(@"%@", placemark.name);
+            
+            // 获取城市
+            NSString *cityName = placemark.locality;
+//            NSLog(@"city:%@", cityName);
+            
+            NSString *subCityName = [cityName substringToIndex:(cityName.length - 1)];
+            
+            
+            NSString *loactionCityName = [[NSUserDefaults standardUserDefaults] stringForKey:kLocationCityName];
+           
+            /**
+             *  判断是否定位
+             *  判断是否现在的定位城市和当前显示定位的城市是否一样
+             */
+            
+            if (loactionCityName == nil) {
+                [self changeLocationCityWithLocationCityName:subCityName];
+                [[NSUserDefaults standardUserDefaults] setObject:subCityName forKey:kLocationCityName];
+            }else {
+                if (![subCityName isEqualToString:loactionCityName]) {
+                    [self changeLocationCityWithLocationCityName:subCityName];
+                    [[NSUserDefaults standardUserDefaults] setObject:subCityName forKey:kLocationCityName];
+                }
+            }
+        }
+    }];
+    
+    // 获取之后停止更新
+    [manager stopUpdatingLocation];
+    
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+
+    if (status == 2) {
+        
+        NSString *isFirstLocation = [[NSUserDefaults standardUserDefaults] stringForKey:@"isFirstLocation"];
+        
+        if (![isFirstLocation isEqualToString:@"1"]) {
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"定位失败!请到手机系统的[设置]->[隐私]->[定位系统]中打开定位服务." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstLocation"];
+        }
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"error >>> %@",error.description);
+}
+
+
+/**
+ * 检测到城市 显示提示城市的切换
+ */
+- (void)changeLocationCityWithLocationCityName:(NSString *)locationCityName {
+    
+    UIAlertController *cityAlertConttoller = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"检测到您当前地区为%@,是否切换到当前地区", locationCityName] preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    
+    // 切换到当前的城市
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"city_data" ofType:@"plist"];
+        NSDictionary *cityDict = [NSDictionary dictionaryWithContentsOfFile:path];
+        NSArray *keys = cityDict.allKeys;
+        
+        for (int i = 0; i < keys.count; i++) {
+            for (NSDictionary *dict in cityDict[keys[i]]) {
+                QYCityModel *cityModel = [[QYCityModel alloc] initWithDict:dict];
+                
+                // 找到plist文件中与定位城市相同的名字
+                if ([cityModel.city_name isEqualToString:locationCityName]) {
+                  
+                    // 改变参数和左侧的btn的title 最后重新请求数据
+                    [_leftBtnItem setTitle:locationCityName forState:UIControlStateNormal];
+                    [_parameters setValue:cityModel.city_id forKey:kCityId];
+                    [_parameters setValue:cityModel.prov_id forKey:kProvId];
+                    [_parameters setValue:cityModel.city_name forKey:kCityName];
+                    
+                    [self loadDataForType:1];
+                    
+                    // 保存定位城市并持久化
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    [dict setValue:cityModel.city_id forKey:kCityId];
+                    [dict setValue:cityModel.city_name forKey:kCityName];
+                    [dict setValue:cityModel.prov_id forKey:kProvId];
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:kcityModel];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    return;
+                }
+            }
+        }
+    }];
+    
+    [cityAlertConttoller addAction:cancelAction];
+    [cityAlertConttoller addAction:okAction];
+    [self presentViewController:cityAlertConttoller animated:YES completion:nil];
+}
+
 
 @end

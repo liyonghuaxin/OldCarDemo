@@ -41,6 +41,12 @@
 #define kSeriesId         @"series"
 #define kSeriesName       @"seriesName"
 
+
+// 定位城市的名称
+#define kLocationCityName  @"locationCityName"
+
+#define  kIsLocation      @"isLocation"
+
 // 请求的价格参数
 #define kPrice            @"price"
 

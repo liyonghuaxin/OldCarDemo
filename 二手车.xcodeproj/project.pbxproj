@@ -94,6 +94,7 @@
 		CC95C5D41C5112A40046DDF8 /* QYAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC95C5D21C5112A40046DDF8 /* QYAboutViewController.m */; };
 		CC95C5D51C5112A40046DDF8 /* QYAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5D31C5112A40046DDF8 /* QYAboutViewController.xib */; };
 		CC95C5D71C5113220046DDF8 /* iconfont-che-2.png in Resources */ = {isa = PBXBuildFile; fileRef = CC95C5D61C5113220046DDF8 /* iconfont-che-2.png */; };
+		CC97FAFD1C80332B00F87830 /* csb-slider-default-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC97FAFC1C80332B00F87830 /* csb-slider-default-track@2x.png */; };
 		CC9879D61C4263000031E9A1 /* city_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC9879D51C4263000031E9A1 /* city_data.plist */; };
 		CC9879E11C4268F20031E9A1 /* QYCityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */; };
 		CC9879E41C4272B90031E9A1 /* QYCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9879E31C4272B90031E9A1 /* QYCityModel.m */; };
@@ -411,6 +412,7 @@
 		CC95C5D21C5112A40046DDF8 /* QYAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYAboutViewController.m; sourceTree = "<group>"; };
 		CC95C5D31C5112A40046DDF8 /* QYAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QYAboutViewController.xib; sourceTree = "<group>"; };
 		CC95C5D61C5113220046DDF8 /* iconfont-che-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-che-2.png"; sourceTree = "<group>"; };
+		CC97FAFC1C80332B00F87830 /* csb-slider-default-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "csb-slider-default-track@2x.png"; sourceTree = "<group>"; };
 		CC9879D51C4263000031E9A1 /* city_data.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = city_data.plist; sourceTree = "<group>"; };
 		CC9879DF1C4268F20031E9A1 /* QYCityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QYCityListViewController.h; sourceTree = "<group>"; };
 		CC9879E01C4268F20031E9A1 /* QYCityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QYCityListViewController.m; sourceTree = "<group>"; };
@@ -767,6 +769,7 @@
 		CC6013AA1C4F6FB300F1E490 /* My_icon */ = {
 			isa = PBXGroup;
 			children = (
+				CC97FAFC1C80332B00F87830 /* csb-slider-default-track@2x.png */,
 				CC95C5D61C5113220046DDF8 /* iconfont-che-2.png */,
 				CC6013AB1C4F6FCA00F1E490 /* my_list_ask@2x.png */,
 				CC6013AC1C4F6FCA00F1E490 /* my_list_ask@3x.png */,
@@ -1269,6 +1272,7 @@
 				CCC44EFC1C44FB49008B3F63 /* b30.jpg in Resources */,
 				CCC44F691C44FB49008B3F63 /* b139.jpg in Resources */,
 				CCC44EF11C44FB49008B3F63 /* b19.jpg in Resources */,
+				CC97FAFD1C80332B00F87830 /* csb-slider-default-track@2x.png in Resources */,
 				CCC44F011C44FB49008B3F63 /* b35.jpg in Resources */,
 				CCC44F0E1C44FB49008B3F63 /* b48.jpg in Resources */,
 				CCC44F0C1C44FB49008B3F63 /* b46.jpg in Resources */,
@@ -1684,14 +1688,14 @@
 			baseConfigurationReference = D447782907780B0EBD41B4D0 /* Pods-二手车.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "二手车/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qy15094.kdx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b25f4f29-9858-44a3-bec8-b1a8be42bedf";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1701,14 +1705,14 @@
 			baseConfigurationReference = 165D6651F954D6CE7B4909B2 /* Pods-二手车.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = "二手车/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hnqingyun.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qy15094.kdx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b25f4f29-9858-44a3-bec8-b1a8be42bedf";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

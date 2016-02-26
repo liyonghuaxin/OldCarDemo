@@ -32,12 +32,19 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:btn];
-    btn.frame = CGRectMake(18, 45, 90, 35);
-    [btn setTitle:@"定位城市" forState:UIControlStateNormal];
+    btn.frame = CGRectMake(18, 45, 80, 30);
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [btn setImage:[UIImage imageNamed:@"map"] forState:UIControlStateNormal];
-
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    // 判断是否有定位城市
+    NSString *locationCityName = [[NSUserDefaults standardUserDefaults] stringForKey:kLocationCityName];
+    if (locationCityName == nil) {
+        [btn setTitle:@"请定位" forState:UIControlStateNormal];
+    }else {
+        [btn setTitle:locationCityName forState:UIControlStateNormal];
+    }
+    
+    [btn addTarget:self action:@selector(btnclick:) forControlEvents:UIControlEventTouchUpInside];
    
     btn.layer.cornerRadius = 5;
     btn.layer.masksToBounds = YES;
@@ -45,5 +52,11 @@
     btn.layer.borderColor = [UIColor lightGrayColor].CGColor;
 }
 
+
+- (void)btnclick:(UIButton *)sender {
+    if (_locationCityBlock) {
+        _locationCityBlock();
+    }
+}
 
 @end

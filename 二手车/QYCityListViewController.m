@@ -9,7 +9,8 @@
 #import "QYCityListViewController.h"
 #import "Header.h"
 #import "QYCityModel.h"
-#import <CoreLocation/CoreLocation.h>
+#import "QYCityPositionView.h"
+
 
 @interface QYCityListViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -17,8 +18,6 @@
 @property (nonatomic, strong) NSArray *keys;//索引键值
 @property (nonatomic, strong) NSDictionary *dict;//字典
 @property (nonatomic, strong) NSMutableArray *recentChooseArr;//最近选择
-
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -31,19 +30,18 @@
     [self createTableView];
     [self createNavigationBar];
 
-//    // 定位
-//    [self startLocation];
 }
+
+
 #pragma mark - 定位选择
 
-/**
- *  界面太难看 没做
- */
+/*
+
 
 - (void)startLocation {
     if ([CLLocationManager locationServicesEnabled]) {
         _locationManager = [[CLLocationManager alloc] init];
-//        _locationManager.delegate = self;
+        _locationManager.delegate = self;
         _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.distanceFilter = 10.f;
         [_locationManager requestWhenInUseAuthorization];
@@ -85,11 +83,7 @@
     
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"error >>> %@",error.description);
-}
-
+*/
 
 #pragma mark - ********** 加载数据
 - (void)loadCityList {
@@ -119,6 +113,36 @@
     [self.view addSubview:_tableView];
     _tableView.sectionIndexColor = [UIColor grayColor];
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    
+    QYCityPositionView *headerView = [[QYCityPositionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 90)];
+    _tableView.tableHeaderView = headerView;
+    
+    MTWeak(self, weakSelf);
+    headerView.locationCityBlock = ^{
+        NSString *locationCityName = [[NSUserDefaults standardUserDefaults] stringForKey:kLocationCityName];
+        
+        if (locationCityName == nil) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"定位失败!请到手机系统的[设置]->[隐私]->[定位系统]中打开定位服务." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:okAction];
+            [weakSelf presentViewController:alertController animated:YES completion:nil];
+        }else {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"city_data" ofType:@"plist"];
+            NSDictionary *cityDict = [NSDictionary dictionaryWithContentsOfFile:path];
+            NSArray *keys = cityDict.allKeys;
+            
+            for (int i = 0; i < keys.count; i++) {
+                for (NSDictionary *dict in cityDict[keys[i]]) {
+                    QYCityModel *model = [[QYCityModel alloc] initWithDict:dict];
+                    
+                    if ([model.city_name isEqualToString:locationCityName]) {
+                        [weakSelf chooseCityWithCityModel:model];
+                        return;
+                    }
+                }
+            }
+        }
+    };
     
 }
 
@@ -178,11 +202,19 @@
     NSArray *array = _dict[key];
     QYCityModel *model = [QYCityModel cityModelWithDict:array[indexPath.row]];
 
+    [self chooseCityWithCityModel:model];
+}
+
+
+/**
+ *  选择城市后要保存选择城市的信息 还要跳转到主页面去请求数据
+ */
+- (void)chooseCityWithCityModel:(QYCityModel *)model {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:model.city_id forKey:kCityId];
     [dict setValue:model.city_name forKey:kCityName];
     [dict setValue:model.prov_id forKey:kProvId];
-
+    
     //判断是否已经存在
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kcityModel]) {
         //删除
