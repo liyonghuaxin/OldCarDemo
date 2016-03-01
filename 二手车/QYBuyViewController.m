@@ -80,6 +80,19 @@
     return _sortkeys;
 }
 
+
+- (CLLocationManager *)locationManger {
+    if (_locationManger == nil) {
+        _locationManger = [[CLLocationManager alloc] init];
+        _locationManger.delegate = self;
+        [_locationManger requestWhenInUseAuthorization];
+        _locationManger.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        _locationManger.distanceFilter = 1000;
+        
+    }
+    return _locationManger;
+}
+
 #pragma mark - *************** 点击事件
 
 // 跳转到城市列表
@@ -559,18 +572,18 @@
 #pragma mark - 定位选择
 
 /**
- *  界面太难看 没做
+ *   开始定位
  */
-
 - (void)startLocation {
     if ([CLLocationManager locationServicesEnabled]) {
        
-        _locationManger = [[CLLocationManager alloc] init];
-        _locationManger.delegate = self;
-        _locationManger.desiredAccuracy = kCLLocationAccuracyBest;
-        _locationManger.distanceFilter = 10.f;
-        [_locationManger requestWhenInUseAuthorization];
-        [_locationManger startUpdatingLocation];
+//        _locationManger = [[CLLocationManager alloc] init];
+//        _locationManger.delegate = self;
+//        _locationManger.desiredAccuracy = kCLLocationAccuracyBest;
+//        _locationManger.distanceFilter = 10.f;
+//        [_locationManger requestWhenInUseAuthorization];
+//        [_locationManger startUpdatingLocation];
+        [self.locationManger startUpdatingLocation];
     }else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"定位不成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil];
@@ -583,7 +596,7 @@
     
     // 获取最后一个地址
     CLLocation *currentLocation = [locations lastObject];
-    
+
     // 获取当前的城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
@@ -597,7 +610,8 @@
 //            NSLog(@"city:%@", cityName);
             
             NSString *subCityName = [cityName substringToIndex:(cityName.length - 1)];
-            
+//            NSString *subCityName = @"洛阳";
+
             
             NSString *loactionCityName = [[NSUserDefaults standardUserDefaults] stringForKey:kLocationCityName];
            
@@ -608,11 +622,9 @@
             
             if (loactionCityName == nil) {
                 [self changeLocationCityWithLocationCityName:subCityName];
-                [[NSUserDefaults standardUserDefaults] setObject:subCityName forKey:kLocationCityName];
             }else {
                 if (![subCityName isEqualToString:loactionCityName]) {
                     [self changeLocationCityWithLocationCityName:subCityName];
-                    [[NSUserDefaults standardUserDefaults] setObject:subCityName forKey:kLocationCityName];
                 }
             }
         }
@@ -626,7 +638,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
 
-    if (status == 2) {
+    // 用户拒绝
+    if (status == kCLAuthorizationStatusDenied) {
         
         NSString *isFirstLocation = [[NSUserDefaults standardUserDefaults] stringForKey:@"isFirstLocation"];
         
@@ -671,7 +684,10 @@
                 
                 // 找到plist文件中与定位城市相同的名字
                 if ([cityModel.city_name isEqualToString:locationCityName]) {
-                  
+                    
+                    // 保存定位城市名字
+                    [[NSUserDefaults standardUserDefaults] setObject:locationCityName forKey:kLocationCityName];
+                    
                     // 改变参数和左侧的btn的title 最后重新请求数据
                     [_leftBtnItem setTitle:locationCityName forState:UIControlStateNormal];
                     [_parameters setValue:cityModel.city_id forKey:kCityId];
@@ -680,7 +696,7 @@
                     
                     [self loadDataForType:1];
                     
-                    // 保存定位城市并持久化
+                    // 保存定位城市模型并持久化
                     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                     [dict setValue:cityModel.city_id forKey:kCityId];
                     [dict setValue:cityModel.city_name forKey:kCityName];

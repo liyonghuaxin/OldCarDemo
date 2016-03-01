@@ -96,9 +96,26 @@
     _tableView.rowHeight = 84;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
+    // 左边的返回键
+//    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+//    [backBtn setImage:[UIImage imageNamed:@"common_backButton"] forState:UIControlStateNormal];
+//    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+////    [backBtn setBackgroundColor:[UIColor redColor]];
+////    backBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    
+//    backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    [backBtn addTarget:self action:@selector(backToPreVC) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backBarBtnItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+//    self.navigationItem.leftBarButtonItem = backBarBtnItem;
+//    self.navigationItem.leftBarButtonItem.
 }
 
 #pragma mark - 方法
+- (void)backToPreVC {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)refreshData {
     _pageIndex = 1;
     [_parameters setObject:@(_pageIndex) forKey:kPage];

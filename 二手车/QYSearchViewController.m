@@ -140,6 +140,9 @@
 
 #pragma mark - 添加视图
 - (void)createAndAddSubviews {
+    
+    self.title = @"返回";
+    
     // 添加搜索框
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-100, 44)];
     searchBar.delegate = self;
